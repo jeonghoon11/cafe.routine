@@ -87,6 +87,7 @@ import { spacing, typography } from '@sopt-mds/design-tokens';
 
 ## 구현 원칙
 
+- 폴더 배치나 공용화 여부를 판단할 때 `.agents/architecture.md`를 먼저 확인하고, 구조가 바뀌면 문서를 함께 갱신한다.
 - 필요한 기능만 구현하고 최소 변경을 우선한다.
 - 프론트엔드 코드 작성·리팩터링·리뷰에는 `toss-frontend-fundamentals` skill을 적용하되, 수치 기준과 예시는 휴리스틱으로 취급하고 새 의존성이나 추상화를 자동으로 추가하지 않는다.
 - 의미 있는 HTML, 키보드 조작, 보이는 포커스, 대체 텍스트 등 기본 접근성을 지킨다.
