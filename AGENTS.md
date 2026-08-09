@@ -38,7 +38,6 @@
   - `@seed-design/react`: React 컴포넌트
   - `@seed-design/css`: 디자인 토큰과 스타일
   - `@seed-design/icon`: 아이콘
-- `@sopt-mds/*`, `@sopt-makers/*` 패키지는 새 코드에 사용하지 않는다.
 - `@seed-design/react`에 있는 컴포넌트를 먼저 재사용하고 같은 역할의 로컬 컴포넌트나 다른 UI 라이브러리를 추가하지 않는다.
 - SEED의 공식 설치 및 사용법을 따르고, 설치하거나 올릴 때는 실제 최신 버전과 변경 사항을 확인한 뒤 잠금 파일을 함께 갱신한다.
 - 색상은 SEED의 시맨틱 토큰을 루틴의 흑백 팔레트에 맞게 적용하고, spacing, typography, radius처럼 브랜드와 충돌하지 않는 토큰은 임의 값보다 우선 사용한다.
