@@ -32,33 +32,16 @@
 - 웹에서 필요한 자산만 저장소 안으로 내보낸다. 로고는 가능하면 SVG, 사진은 WebP를 우선한다.
 - 로고, 메뉴명, 가격은 원본 자료를 먼저 확인하고 임의로 재구성하지 않는다.
 
-## Makers Design System 2.0
+## SEED Design System
 
-- UI 구현에는 npm에 공개된 Makers Design System 2.0의 `@sopt-mds/*` 패키지를 사용한다.
-  - `@sopt-mds/ui`
-  - `@sopt-mds/design-tokens`
-  - `@sopt-mds/icons`
-- 기존 세대인 `@sopt-makers/*` 패키지는 새 코드에 사용하지 않는다.
-- `@sopt-mds/ui`에 있는 컴포넌트를 먼저 재사용하고 같은 역할의 로컬 컴포넌트나 다른 UI 라이브러리를 추가하지 않는다.
-- 패키지는 React 및 React DOM 18 이상을 요구한다.
-- 전역 스타일 진입점에서 디자인 시스템 CSS를 로컬 전역 CSS보다 먼저 한 번만 불러온다.
-
-```ts
-import '@sopt-mds/ui/index.css';
-import './globals.css';
-```
-
-- 컴포넌트는 패키지 루트에서 가져온다.
-
-```ts
-import { ActionButton, Dialog, TextField } from '@sopt-mds/ui';
-import { spacing, typography } from '@sopt-mds/design-tokens';
-```
-
-- `@sopt-mds/ui`의 기본 브랜드 토큰은 주황색이므로 그대로 사용하지 않는다. 디자인 시스템 CSS 다음에 로컬 CSS를 불러오고 필요한 `--color-*-brand-*` CSS 변수를 흑백 팔레트로 재정의한다.
-- spacing, typography, radius처럼 브랜드와 충돌하지 않는 토큰은 임의 값보다 우선 사용한다.
-- 디자인 시스템 컴포넌트의 접근성 동작과 포커스 처리를 제거하지 않는다.
-- 확인 기준일인 2026-08-08의 npm 최신 버전은 `@sopt-mds/ui@1.10.0`, `@sopt-mds/design-tokens@1.0.7`, `@sopt-mds/icons@0.2.0`이다. 설치하거나 올릴 때는 실제 최신 버전과 변경 사항을 다시 확인하고 잠금 파일을 함께 갱신한다.
+- UI 구현에는 당근의 오픈소스 디자인 시스템인 SEED의 `@seed-design/*` 패키지를 사용한다.
+  - `@seed-design/react`: React 컴포넌트
+  - `@seed-design/css`: 디자인 토큰과 스타일
+  - `@seed-design/icon`: 아이콘
+- `@seed-design/react`에 있는 컴포넌트를 먼저 재사용하고 같은 역할의 로컬 컴포넌트나 다른 UI 라이브러리를 추가하지 않는다.
+- SEED의 공식 설치 및 사용법을 따르고, 설치하거나 올릴 때는 실제 최신 버전과 변경 사항을 확인한 뒤 잠금 파일을 함께 갱신한다.
+- 색상은 SEED의 시맨틱 토큰을 루틴의 흑백 팔레트에 맞게 적용하고, spacing, typography, radius처럼 브랜드와 충돌하지 않는 토큰은 임의 값보다 우선 사용한다.
+- `vanilla-extract`는 페이지 레이아웃과 SEED로 충족할 수 없는 커스텀 스타일에만 사용하며, SEED 컴포넌트의 접근성 동작과 포커스 처리를 제거하지 않는다.
 
 ## 기술 스택과 앱 형태
 
@@ -68,8 +51,26 @@ import { spacing, typography } from '@sopt-mds/design-tokens';
 - 모든 화면은 모바일과 데스크톱에서 자연스럽게 동작하는 반응형 UI로 구현한다.
 - PWA를 지원하며, 구현 시 웹 앱 매니페스트, 서비스 워커, 설치 가능 여부를 함께 확인한다.
 
+## SEO 원칙
+
+- SEO를 이 프로젝트의 최우선 품질 기준으로 둔다. UI나 기능을 결정할 때 검색엔진의 크롤링·인덱싱 가능성, 검색 결과의 이해도, Core Web Vitals에 미치는 영향을 먼저 검토한다.
+- 검색 유입만 노린 키워드 반복, 숨은 텍스트, 지역명별 유사 페이지, `meta keywords`는 만들지 않는다. 방문자가 매장을 이해하고 방문을 결정하는 데 실제로 필요한 공식 정보와 고유한 콘텐츠를 우선한다.
+- 검색 노출 대상 페이지는 매장명, 주소, 영업시간, 메뉴와 같은 핵심 콘텐츠 및 SEO 메타데이터를 JavaScript 실행 전 초기 HTML 응답에 포함한다. 정적인 카페 콘텐츠는 빌드 시점 프리렌더링/SSG를 우선하고, 요청 시점 데이터가 꼭 필요한 경우에만 SSR을 검토한다.
+- 메타데이터는 React 19의 기본 `<title>`, `<meta>`, `<link>` 지원을 먼저 사용한다. 클라이언트에서 `<head>`만 바꾸는 라이브러리를 초기 HTML 생성의 대안으로 보지 않으며, 새 SEO 라이브러리나 렌더링 도구는 기존 기능으로 충족할 수 없을 때만 사전 확인 후 추가한다.
+- 페이지마다 내용을 정확히 설명하는 고유한 `title`, `meta description`, 절대 URL canonical을 제공한다. 대표 이미지가 있는 페이지는 내용과 일치하는 `og:title`, `og:description`, `og:image`도 제공하되 검색엔진이 이를 그대로 노출한다고 가정하지 않는다.
+- 공개 URL은 사람이 이해할 수 있는 안정적인 경로를 사용한다. 내부 링크, canonical, sitemap에는 동일한 대표 URL만 사용하고 hash routing은 피한다. 삭제·이동·오류는 JavaScript가 아닌 실제 `301`/`302`/`404` HTTP 상태 코드로 응답하고, 정적 호스팅의 SPA fallback이나 PWA 서비스 워커가 존재하지 않는 URL을 `200`으로 바꾸지 않게 해 soft 404와 중복 색인을 막는다.
+- `robots.txt`는 공개 페이지와 렌더링에 필요한 CSS, JavaScript, 이미지 수집을 허용하고 sitemap의 절대 URL을 알린다. sitemap에는 색인할 canonical URL만 넣고, 실제 콘텐츠가 변경된 경우에만 정확한 `lastmod`를 갱신한다.
+- 문서 언어는 `<html lang="ko">`로 명시하고 의미 있는 HTML 요소와 자연스러운 제목 계층을 사용하며 페이지의 대표 `h1`은 하나로 유지한다. 탐색 링크는 설명 가능한 문구가 있는 `<a href>`로 제공하고, 버튼 클릭이나 JavaScript 이벤트만으로 공개 페이지를 연결하지 않는다.
+- 로컬 SEO를 위해 화면에 보이는 매장명, 주소, 전화번호, 영업시간을 공식 자료, Google Business Profile, 네이버 플레이스에서 일관되게 유지한다. 정보 변경 시 홈페이지와 외부 매장 프로필을 함께 갱신하고, 확인되지 않은 지역명·좌표·가격·평점·리뷰는 만들지 않는다.
+- 구조화 데이터는 JSON-LD와 schema.org의 `CafeOrCoffeeShop`을 우선 사용한다. `name`, `address`, `telephone`, `url`, `openingHoursSpecification`, `image`, 메뉴 URL 등 검증된 값만 넣고 화면에 보이는 정보와 일치시키며, Google Rich Results Test와 Schema Markup Validator로 검사한다.
+- 메뉴와 공간 사진은 검색 가능한 `<img>` 또는 `<picture>`로 제공하고 `<img src>` fallback, 문맥에 맞는 파일명과 대체 텍스트, 반응형 크기, `width`/`height`를 지정한다. 첫 화면의 LCP 이미지는 lazy loading하지 않고, 화면 밖 이미지만 지연 로딩한다.
+- Core Web Vitals는 모바일과 데스크톱 각각 실제 사용자 데이터의 75번째 백분위에서 `LCP ≤ 2.5s`, `INP ≤ 200ms`, `CLS ≤ 0.1`을 목표로 한다. 배포 전후에는 Lighthouse/PageSpeed Insights로 회귀를 찾고, 충분한 실제 사용자 데이터가 쌓인 뒤에는 Search Console 보고서를 기준으로 판단한다.
+- 배포 시 Google Search Console과 네이버 서치어드바이저에서 사이트 소유권, sitemap, 대표 URL의 색인 가능 여부를 확인한다. 배포 후에는 색인 오류, 구조화 데이터 오류, Core Web Vitals, 검색어·노출·클릭 변화를 주기적으로 확인하고 근거 없이 순위를 보장하거나 일회성 점수만 최적화하지 않는다.
+- SEO 관련 변경은 최소 3단계로 검증한다. 먼저 빌드 결과의 초기 HTML과 HTTP 상태 코드를 확인하고, 다음으로 메타데이터·canonical·robots·sitemap·구조화 데이터를 검사하며, 마지막으로 배포 URL을 Search Console과 네이버 서치어드바이저에서 확인한다.
+
 ## 구현 원칙
 
+- 폴더 배치나 공용화 여부를 판단할 때 `.agents/architecture.md`를 먼저 확인하고, 구조가 바뀌면 문서를 함께 갱신한다.
 - 필요한 기능만 구현하고 최소 변경을 우선한다.
 - 프론트엔드 코드 작성·리팩터링·리뷰에는 `toss-frontend-fundamentals` skill을 적용하되, 수치 기준과 예시는 휴리스틱으로 취급하고 새 의존성이나 추상화를 자동으로 추가하지 않는다.
 - 의미 있는 HTML, 키보드 조작, 보이는 포커스, 대체 텍스트 등 기본 접근성을 지킨다.
