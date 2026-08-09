@@ -1,0 +1,36 @@
+:root {
+  color: #000;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: grid;
+  min-height: 100svh;
+  place-content: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+h1,
+p,
+address {
+  margin: 0;
+}
+
+address {
+  font-style: normal;
+}
+
+a {
+  color: inherit;
+}
