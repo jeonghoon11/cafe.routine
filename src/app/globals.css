@@ -23,8 +23,14 @@ main {
 
 h1,
 p,
-address {
+address,
+ul {
   margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
 }
 
 address {
