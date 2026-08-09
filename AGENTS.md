@@ -32,33 +32,17 @@
 - 웹에서 필요한 자산만 저장소 안으로 내보낸다. 로고는 가능하면 SVG, 사진은 WebP를 우선한다.
 - 로고, 메뉴명, 가격은 원본 자료를 먼저 확인하고 임의로 재구성하지 않는다.
 
-## Makers Design System 2.0
+## SEED Design System
 
-- UI 구현에는 npm에 공개된 Makers Design System 2.0의 `@sopt-mds/*` 패키지를 사용한다.
-  - `@sopt-mds/ui`
-  - `@sopt-mds/design-tokens`
-  - `@sopt-mds/icons`
-- 기존 세대인 `@sopt-makers/*` 패키지는 새 코드에 사용하지 않는다.
-- `@sopt-mds/ui`에 있는 컴포넌트를 먼저 재사용하고 같은 역할의 로컬 컴포넌트나 다른 UI 라이브러리를 추가하지 않는다.
-- 패키지는 React 및 React DOM 18 이상을 요구한다.
-- 전역 스타일 진입점에서 디자인 시스템 CSS를 로컬 전역 CSS보다 먼저 한 번만 불러온다.
-
-```ts
-import '@sopt-mds/ui/index.css';
-import './globals.css';
-```
-
-- 컴포넌트는 패키지 루트에서 가져온다.
-
-```ts
-import { ActionButton, Dialog, TextField } from '@sopt-mds/ui';
-import { spacing, typography } from '@sopt-mds/design-tokens';
-```
-
-- `@sopt-mds/ui`의 기본 브랜드 토큰은 주황색이므로 그대로 사용하지 않는다. 디자인 시스템 CSS 다음에 로컬 CSS를 불러오고 필요한 `--color-*-brand-*` CSS 변수를 흑백 팔레트로 재정의한다.
-- spacing, typography, radius처럼 브랜드와 충돌하지 않는 토큰은 임의 값보다 우선 사용한다.
-- 디자인 시스템 컴포넌트의 접근성 동작과 포커스 처리를 제거하지 않는다.
-- 확인 기준일인 2026-08-08의 npm 최신 버전은 `@sopt-mds/ui@1.10.0`, `@sopt-mds/design-tokens@1.0.7`, `@sopt-mds/icons@0.2.0`이다. 설치하거나 올릴 때는 실제 최신 버전과 변경 사항을 다시 확인하고 잠금 파일을 함께 갱신한다.
+- UI 구현에는 당근의 오픈소스 디자인 시스템인 SEED의 `@seed-design/*` 패키지를 사용한다.
+  - `@seed-design/react`: React 컴포넌트
+  - `@seed-design/css`: 디자인 토큰과 스타일
+  - `@seed-design/icon`: 아이콘
+- `@sopt-mds/*`, `@sopt-makers/*` 패키지는 새 코드에 사용하지 않는다.
+- `@seed-design/react`에 있는 컴포넌트를 먼저 재사용하고 같은 역할의 로컬 컴포넌트나 다른 UI 라이브러리를 추가하지 않는다.
+- SEED의 공식 설치 및 사용법을 따르고, 설치하거나 올릴 때는 실제 최신 버전과 변경 사항을 확인한 뒤 잠금 파일을 함께 갱신한다.
+- 색상은 SEED의 시맨틱 토큰을 루틴의 흑백 팔레트에 맞게 적용하고, spacing, typography, radius처럼 브랜드와 충돌하지 않는 토큰은 임의 값보다 우선 사용한다.
+- `vanilla-extract`는 페이지 레이아웃과 SEED로 충족할 수 없는 커스텀 스타일에만 사용하며, SEED 컴포넌트의 접근성 동작과 포커스 처리를 제거하지 않는다.
 
 ## 기술 스택과 앱 형태
 
