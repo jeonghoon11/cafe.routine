@@ -1,8 +1,9 @@
 # Agent Harness
 
 - status: `completed`
-- branch: `chore/agent-harness`
-- worktree: `/Users/jangjeonghoon/git/cafe.routine-agent-harness`
+- pull-request branch: `feat/agent-harness-setup`
+- task branch: `chore/update-branch-workflow`
+- worktree: `/Users/jangjeonghoon/git/cafe.routine-branch-workflow`
 
 ## Goal
 
@@ -16,6 +17,10 @@ Keep `main` and `develop` clean, isolate change tasks in worktrees, turn
 - Updated the commit skill to reject base-branch commits.
 - Added a Codex `PreToolUse` hook that blocks `git commit` on `main` and
   `develop`.
+- Added a skill for creating English-named pull-request branches from
+  `develop`.
+- Changed task worktrees to branch from the pull-request branch and fast-forward
+  verified commits back into it.
 
 ## Decisions
 
@@ -25,11 +30,13 @@ Keep `main` and `develop` clean, isolate change tasks in worktrees, turn
   continuation state and useful follow-ups.
 - Use an explicit handoff prompt at about 40% visible context remaining because
   current Codex hooks cannot detect that percentage or open a new chat.
+- Use English lowercase kebab-case for branch names and Korean Conventional
+  Commit summaries.
 
 ## Verification
 
 - `git diff --check`
-- `AGENTS.md` line count: 43
+- `AGENTS.md` line count: 45
 - Skill frontmatter and hook JSON parsed successfully.
 - Hook self-test passed and denied a simulated commit from `develop`.
 
@@ -37,4 +44,5 @@ Keep `main` and `develop` clean, isolate change tasks in worktrees, turn
 
 - Review and trust the repository hook with `/hooks` after this branch is used.
 - Push and open a pull request only after user instruction.
-- Merge only after explicit user instruction.
+- Merge the pull-request branch into `develop` only after explicit user
+  instruction.

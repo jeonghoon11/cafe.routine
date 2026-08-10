@@ -1,20 +1,22 @@
 ---
 name: work-on-task-worktree
-description: "Prepare and use an isolated git worktree and task branch before modifying this repository. Use whenever Codex starts a file-changing task from `main` or `develop`, or when the user asks to separate work by worktree or task branch."
+description: "Prepare an isolated task branch and git worktree from the current top-level pull-request branch, then merge verified task commits back into that branch. Use whenever Codex starts a file-changing task after the user has created or selected a feature, fix, refactor, docs, or chore branch."
 ---
 
 # Work on Task Worktree
 
-Keep `main` and `develop` as clean integration branches. Perform one coherent task in one dedicated worktree.
+Keep the top-level pull-request branch as the visible integration point. Perform one coherent task in one dedicated worktree.
 
 ## Workflow
 
 1. Inspect `git branch --show-current`, `git status --short`, and `git worktree list`.
-2. If already in a worktree on a task branch that matches the request, continue there. Do not create a nested worktree.
-3. If `main` or `develop` has local changes, do not move or copy them automatically. Ask the user how to handle them.
-4. Choose a short branch name with `feat/`, `fix/`, `refactor/`, `docs/`, or `chore/` according to the task.
-5. Base new work on local `develop`. Fetch or pull only after the user permits network access.
-6. Create a sibling worktree with `git worktree add -b <branch> <path> develop` and run all edits, checks, and commits from that path.
-7. Report the worktree path and branch.
+2. If already in a task worktree that matches the request, continue there. Do not create a nested worktree.
+3. Require a clean top-level branch other than `main` or `develop`. Treat it as the pull-request branch and remember its name.
+4. Choose a short lowercase English kebab-case task branch with `feat/`, `fix/`, `refactor/`, `docs/`, or `chore/`.
+5. Create a sibling worktree with `git worktree add -b <task-branch> <path> <pull-request-branch>` and run all edits, checks, and commits there.
+6. Commit verified changes with Korean Conventional Commit titles through `commit-task-changes`.
+7. When the task is complete, confirm both checkouts are clean and run `git merge --ff-only <task-branch>` from the pull-request branch checkout.
+8. If fast-forward merge is impossible, stop and report the divergence instead of rebasing or creating a merge commit automatically.
+9. Report the worktree path, task branch, commit, and resulting pull-request branch head.
 
-Do not merge, remove the worktree, delete the branch, push, or open a pull request unless the user explicitly requests that action.
+Do not remove the worktree, delete a branch, push, open a pull request, or merge the pull-request branch into `develop` unless the user explicitly requests that action.

@@ -5,10 +5,13 @@
 - 파일을 변경하기 전에 현재 branch와 worktree를 확인한다.
 - `main`과 `develop`은 통합 전용 branch다. 두 branch에서 파일을 변경하거나
   commit하지 않는다.
-- 변경 작업은 최신 `develop`을 기준으로 작업 단위별 branch와 git worktree를
-  만든 뒤 그 worktree에서 수행한다.
-- branch는 목적에 맞게 `feat/`, `fix/`, `refactor/`, `docs/`, `chore/` 중
-  하나를 사용한다.
+- 먼저 `develop`에서 PR 단위의 상위 branch를 만든다. 이 branch가 검증된
+  작업 commit을 모으고 `develop`을 대상으로 하나의 PR을 올리는 기준이다.
+- 실제 변경은 상위 branch에서 작업 단위별 branch와 git worktree를 만든 뒤
+  그 worktree에서 수행한다. 상위 branch에는 직접 commit하지 않는다.
+- 모든 branch는 목적에 맞게 `feat/`, `fix/`, `refactor/`, `docs/`, `chore/` 중
+  하나와 소문자 영어 kebab-case 요약을 사용한다. 예: `feat/menu-page`.
+- commit은 `<type>: <한글 요약>` 형식을 사용한다. 예: `feat: 메뉴 페이지 추가`.
 - 이미 올바른 작업 branch의 worktree에 있다면 새 worktree를 중첩 생성하지
   않는다.
 
@@ -25,12 +28,15 @@
 
 ## Commit, PR, merge
 
-- 검증을 통과한 변경만 `commit-task-changes` skill로 commit한다.
-- 작업 branch를 push하거나 PR을 만들기 전에 사용자 지시를 확인한다.
-- feature를 포함한 작업 branch에서 `develop`으로 병합할 때는 squash merge를
-  사용한다.
+- 검증을 통과한 변경만 `commit-task-changes` skill로 작업 branch에 commit한다.
+- 작업이 완료되면 상위 branch checkout에서 작업 branch를 `--ff-only`로
+  병합한다. fast-forward가 불가능하면 자동 rebase나 merge commit을 만들지
+  않고 중단해 상태를 보고한다.
+- 상위 branch를 push하거나 PR을 만들기 전에 사용자 지시를 확인한다.
+- 상위 branch에서 `develop`으로 병합할 때는 squash merge를 사용한다.
 - `develop`에서 `main`으로 병합할 때는 merge commit을 사용한다.
-- merge는 사용자가 명시적으로 지시한 경우에만 수행한다.
+- 상위 branch를 `develop`에 merge하는 작업은 사용자가 명시적으로 지시한
+  경우에만 수행한다.
 
 ## Context 연속성
 

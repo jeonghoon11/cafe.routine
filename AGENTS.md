@@ -21,8 +21,10 @@
 
 ## Skill 지도
 
+- [`create-feature-branch`](.agents/skills/create-feature-branch/SKILL.md):
+  `develop`에서 영어 이름의 PR 단위 상위 branch를 만든다.
 - [`work-on-task-worktree`](.agents/skills/work-on-task-worktree/SKILL.md): 변경
-  작업을 시작할 때 전용 worktree와 브랜치를 준비한다.
+  작업용 worktree와 branch를 준비하고 검증 후 상위 branch로 병합한다.
 - [`commit-task-changes`](.agents/skills/commit-task-changes/SKILL.md): 검증이
   끝난 변경을 작업 단위별 Conventional Commit으로 커밋한다.
 - [`record-task-context`](.agents/skills/record-task-context/SKILL.md): context가
