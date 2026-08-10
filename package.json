@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "check:harness": "python3 scripts/check-agent-harness.py",
     "lint": "eslint --flag unstable_native_nodejs_ts_config .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx}\"",

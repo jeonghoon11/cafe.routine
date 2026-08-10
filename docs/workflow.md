@@ -25,8 +25,6 @@
 - 패키지 설치와 외부 네트워크 접근은 사용자에게 먼저 확인한다.
 - 변경 영역 중심의 최소 검증을 먼저 실행한다. 기본 검증은 `pnpm typecheck`와
   `pnpm lint`이며, 라우팅·metadata·빌드 설정 변경은 `pnpm build`까지 실행한다.
-- `AGENTS.md`, `docs/`, `.agents/skills/`, `.codex/` 변경은
-  `pnpm check:harness`를 실행한다.
 - 실패는 숨기지 않고 핵심 로그와 재현 명령을 보고한다. 무관한 실패는 발견으로
   구분한다.
 

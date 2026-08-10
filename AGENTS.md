@@ -8,7 +8,7 @@
 
 - [docs/workflow.md](docs/workflow.md): worktree, 브랜치, 검증, 커밋,
   PR, merge 규칙. 모든 작업에 적용한다.
-- [docs/harness.md](docs/harness.md): 하네스 구조, 기계적 검증,
+- [docs/harness.md](docs/harness.md): 하네스 구조, 운영 원칙,
   알려진 한계. 하네스 자체를 변경할 때 읽는다.
 - [docs/product.md](docs/product.md): 매장 정보, 공식 URL, 원본 디자인
   자료. 콘텐츠나 자산을 다룰 때 읽는다.
@@ -34,15 +34,8 @@
 - [`toss-frontend-fundamentals`](.agents/skills/toss-frontend-fundamentals/SKILL.md):
   프론트엔드 코드 작성, 리팩터링, 리뷰에 적용한다.
 
-## Hook 지도
-
-- [`.codex/hooks.json`](.codex/hooks.json): Codex가 통합 branch와 기본
-  checkout에서 직접 `git commit`하지 못하도록 차단한다. 변경 후 `/hooks`에서
-  다시 검토하고 신뢰해야 한다.
-
 ## 공통 원칙
 
 - 필요한 기능만 구현하고 minimal diff를 우선한다.
-- 하네스 변경 후 `pnpm check:harness`를 실행한다.
 - 확인되지 않은 매장 정보, 메뉴, 가격, 좌표, 평점, 리뷰를 만들지 않는다.
 - 지침이 바뀌면 원문 문서와 이 지도의 설명을 함께 갱신한다.
