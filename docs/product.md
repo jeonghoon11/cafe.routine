@@ -17,11 +17,11 @@
 
 ## 공식 디자인 원본
 
-- `/Users/jangjeonghoon/Downloads/routine_logo.ai`
-- `/Users/jangjeonghoon/Downloads/ROUTINE LOGO.ai`
-- `/Users/jangjeonghoon/Downloads/Preview루틴외부용-가격_new_260522.ai`
-- `/Users/jangjeonghoon/Downloads/260724 루틴_메뉴.ai`
+- `assets/source/routine_logo.ai`
+- `assets/source/ROUTINE LOGO.ai`
+- `assets/source/Preview루틴외부용-가격_new_260522.ai`
+- `assets/source/260724 루틴_메뉴.ai`
 
 - 원본 `.ai` 파일을 직접 수정하거나 덮어쓰지 않는다.
-- 웹에 필요한 자산만 저장소로 내보낸다. 로고는 SVG, 사진은 WebP를 우선한다.
+- 웹에서 사용할 자산은 원본과 분리해 내보낸다. 로고는 SVG, 사진은 WebP를 우선한다.
 - 로고, 메뉴명, 가격은 원본을 확인하고 임의로 재구성하지 않는다.
