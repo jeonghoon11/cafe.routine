@@ -1,0 +1,4 @@
+interface:
+  display_name: "작업 컨텍스트 기록"
+  short_description: "작업 상태를 기록하고 새 대화에서 이어갈 수 있게 합니다"
+  default_prompt: "Use $record-task-context to save the current task state for a later session."

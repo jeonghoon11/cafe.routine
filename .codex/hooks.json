@@ -1,0 +1,18 @@
+{
+  "description": "Protect integration branches from direct Codex commits.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/protect-base-branch.py\"",
+            "timeout": 5,
+            "statusMessage": "Checking commit branch"
+          }
+        ]
+      }
+    ]
+  }
+}

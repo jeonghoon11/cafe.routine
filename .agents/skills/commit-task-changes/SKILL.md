@@ -10,12 +10,13 @@ Commit only the changes produced for the completed task. Preserve unrelated user
 ## Workflow
 
 1. Run `git status --short` and inspect relevant diffs.
-2. Confirm the task is complete and its required checks passed. Do not hide failed checks by committing.
-3. Divide changes only when they have independent reasons to change. Keep implementation, its tests, and directly related documentation together.
-4. Stage explicit paths with `git add -- <paths>`. Never use `git add .` or `git add -A` when unrelated changes exist.
-5. Review `git diff --cached --stat` and `git diff --cached` before committing.
-6. Commit each unit with `<type>: <Korean summary>`.
-7. Run `git status --short` and report the commit hash, title, checks, and intentionally uncommitted files.
+2. Stop if the current branch is `main` or `develop`. Move the task to a dedicated worktree before committing.
+3. Confirm the task is complete and its required checks passed. Do not hide failed checks by committing.
+4. Divide changes only when they have independent reasons to change. Keep implementation, its tests, and directly related documentation together.
+5. Stage explicit paths with `git add -- <paths>`. Never use `git add .` or `git add -A` when unrelated changes exist.
+6. Review `git diff --cached --stat` and `git diff --cached` before committing.
+7. Commit each unit with `<type>: <Korean summary>`.
+8. Run `git status --short` and report the commit hash, title, checks, and intentionally uncommitted files.
 
 ## Commit Types
 
