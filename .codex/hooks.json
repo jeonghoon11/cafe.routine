@@ -1,5 +1,5 @@
 {
-  "description": "Protect integration branches from direct Codex commits.",
+  "description": "Protect integration branches and the primary checkout from direct Codex commits.",
   "hooks": {
     "PreToolUse": [
       {

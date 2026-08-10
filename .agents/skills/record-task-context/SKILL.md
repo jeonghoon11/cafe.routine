@@ -29,7 +29,7 @@ When visible context remaining reaches about 40%, save the record before doing m
 Read AGENTS.md and .agents/tasks/<branch-slug>.md, then continue the task in the recorded worktree.
 ```
 
-Current Codex hooks do not expose a remaining-context percentage or an API that opens a new chat. Do not claim an automatic fork occurred; prepare the handoff and ask the user to open or fork the new chat.
+Current Codex hooks do not expose a remaining-context percentage. Do not claim an automatic fork occurred; prepare the handoff, then ask the user to run `/fork` in the CLI or `codex fork --last` from another terminal and paste the continuation prompt.
 
 ## Complete
 

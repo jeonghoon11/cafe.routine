@@ -8,6 +8,8 @@
 
 - [`.agents/workflow.md`](.agents/workflow.md): worktree, 브랜치, 검증, 커밋,
   PR, merge 규칙. 모든 작업에 적용한다.
+- [`.agents/harness.md`](.agents/harness.md): 하네스 구조, 기계적 검증,
+  알려진 한계. 하네스 자체를 변경할 때 읽는다.
 - [`.agents/product.md`](.agents/product.md): 매장 정보, 공식 URL, 원본 디자인
   자료. 콘텐츠나 자산을 다룰 때 읽는다.
 - [`.agents/design.md`](.agents/design.md): Black & White 브랜드 방향, SEED,
@@ -41,5 +43,6 @@
 ## 공통 원칙
 
 - 필요한 기능만 구현하고 minimal diff를 우선한다.
+- 하네스 변경 후 `pnpm check:harness`를 실행한다.
 - 확인되지 않은 매장 정보, 메뉴, 가격, 좌표, 평점, 리뷰를 만들지 않는다.
 - 지침이 바뀌면 원문 문서와 이 지도의 설명을 함께 갱신한다.

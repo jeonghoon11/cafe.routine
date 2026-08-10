@@ -14,6 +14,9 @@
 - commit은 `<type>: <한글 요약>` 형식을 사용한다. 예: `feat: 메뉴 페이지 추가`.
 - 이미 올바른 작업 branch의 worktree에 있다면 새 worktree를 중첩 생성하지
   않는다.
+- 상위 branch 아래 task worktree는 순차 실행을 기본으로 한다. 같은 상위
+  branch에서 병렬 task가 필요하면 `--ff-only` 병합이 보장되지 않으므로 각
+  task를 별도 PR branch로 분리한다.
 
 ## 변경과 검증
 
@@ -23,6 +26,7 @@
 - 패키지 설치와 외부 네트워크 접근은 사용자에게 먼저 확인한다.
 - 변경 영역 중심의 최소 검증을 먼저 실행한다. 기본 검증은 `pnpm typecheck`와
   `pnpm lint`이며, 라우팅·metadata·빌드 설정 변경은 `pnpm build`까지 실행한다.
+- `AGENTS.md`, `.agents/`, `.codex/` 변경은 `pnpm check:harness`를 실행한다.
 - 실패는 숨기지 않고 핵심 로그와 재현 명령을 보고한다. 무관한 실패는 발견으로
   구분한다.
 

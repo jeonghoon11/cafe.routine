@@ -14,6 +14,8 @@ Keep the top-level pull-request branch as the visible integration point. Perform
 3. Require a clean top-level branch other than `main` or `develop`. Treat it as the pull-request branch and remember its name.
 4. Choose a short lowercase English kebab-case task branch with `feat/`, `fix/`, `refactor/`, `docs/`, or `chore/`.
 5. Create a sibling worktree with `git worktree add -b <task-branch> <path> <pull-request-branch>` and run all edits, checks, and commits there.
+   Use this parent-and-task flow sequentially. For parallel tasks, create independent pull-request branches because only one child can remain a fast-forward descendant after the parent advances.
+   If the pull-request checkout has an ignored `.env.local`, symlink it into the new worktree instead of copying secrets. Do not symlink `node_modules`; Next.js Turbopack rejects dependencies outside the worktree root. Ask before running `pnpm install --frozen-lockfile` in a new worktree.
 6. Commit verified changes with Korean Conventional Commit titles through `commit-task-changes`.
 7. When the task is complete, confirm both checkouts are clean and run `git merge --ff-only <task-branch>` from the pull-request branch checkout.
 8. If fast-forward merge is impossible, stop and report the divergence instead of rebasing or creating a merge commit automatically.
