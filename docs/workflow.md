@@ -31,11 +31,10 @@
 ## Commit, PR, merge
 
 - 검증을 통과한 변경만 `commit-task-changes` skill로 작업 branch에 commit한다.
-- 작업이 완료되면 상위 branch checkout에서 완료된 task branch를 하나씩
-  `git merge --no-ff -m "<type>: <한글 작업> 병합" <task-branch>`로 병합한다.
-  상위 branch의 merge commit은 직접 구현 commit 금지의 유일한 예외다.
-- 병렬 task 사이에 conflict가 발생하면 자동으로 추측해 해결하지 않고 병합을
-  중단한 뒤 충돌 파일과 원인을 보고한다.
+- 작업이 완료되면 task branch를 최신 상위 branch에 rebase하고, 상위 branch
+  checkout에서 `git merge --ff-only <task-branch>`로 하나씩 통합한다.
+- 병렬 task 사이에 conflict가 발생하면 rebase를 중단하고 원상 복구한 뒤 충돌
+  파일과 원인을 보고한다. 해결 방법을 자동으로 추측하지 않는다.
 - 상위 branch를 push하거나 PR을 만들기 전에 사용자 지시를 확인한다.
 - 상위 branch에서 `develop`으로 병합할 때는 squash merge를 사용한다.
 - `develop`에서 `main`으로 병합할 때는 merge commit을 사용한다.
