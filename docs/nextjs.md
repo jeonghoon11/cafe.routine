@@ -1,6 +1,7 @@
 # Next.js App Router
 
-최종 확인일: 2026-08-09  
+최종 확인일: 2026-08-11
+
 대상 버전: Next.js 16.3.0, React 19.2
 
 이 문서는 Cafe Routine의 Next.js App Router와 Supabase 사용 기준을
@@ -37,6 +38,31 @@ Server Component를 기본으로 사용한다.
   전체가 하나의 상호작용 단위일 때만 예외로 한다.
 - Provider는 root layout에 먼저 넣지 않고 실제 소비 범위를 감싸는
   가장 깊은 layout이나 Client Component에 둔다.
+
+## React Effect
+
+- `useEffect`를 작성하기 전에 외부 시스템과의 동기화인지 확인한다.
+  렌더링 중 계산할 수 있는 파생 값과 사용자 이벤트 처리는 effect로
+  옮기지 않는다.
+- 필요한 effect는 목적이 드러나는 named function expression으로 작성한다.
+
+```tsx
+useEffect(function synchronizeDocumentTitle() {
+  document.title = title;
+}, [title]);
+```
+
+- `onMount`, `runEffect`처럼 실행 시점을 나타내기보다
+  `connectToWebSocket`, `applyUserTheme`처럼 동기화 목적을 표현한다.
+- 명확한 이름을 붙이기 어렵거나 이름에 `And`가 필요하면 책임이 섞였거나
+  effect가 불필요한지 검토한다.
+- cleanup이 복잡할 때만 cleanup 함수에도 목적을 나타내는 이름을 붙인다.
+- 재사용되지 않는 단순 effect를 이름만 붙이려고 custom hook으로 추출하지
+  않는다.
+
+참고: [Name Your Effects](https://neciudan.dev/name-your-effects),
+[Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects),
+[You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect)
 
 ## 페이지와 layout
 
