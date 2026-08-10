@@ -1,4 +1,4 @@
-# Harness Audit
+# Completed: Harness Audit
 
 - status: `completed`
 - pull-request branch: `feat/agent-harness-setup`
@@ -45,3 +45,6 @@ repository practice, then make the smallest changes that improve real behavior.
   validating application changes there.
 - Add worktree-specific dev server and browser checks when real user flows are
   implemented.
+
+The later docs-and-parallel-worktrees task superseded the `.agents/` document
+boundary and sequential fast-forward workflow recorded here.

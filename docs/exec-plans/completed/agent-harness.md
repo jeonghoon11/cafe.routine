@@ -1,4 +1,4 @@
-# Agent Harness
+# Completed: Agent Harness
 
 - status: `completed`
 - pull-request branch: `feat/agent-harness-setup`

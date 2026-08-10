@@ -9,7 +9,7 @@ Keep durable knowledge in the repository instead of relying on chat history.
 
 ## Record
 
-Create or update `.agents/tasks/<branch-slug>.md` with only:
+Create or update `docs/exec-plans/active/<branch-slug>.md` with only:
 
 - status: `active` or `completed`
 - goal and acceptance criteria
@@ -26,11 +26,11 @@ Do not copy the transcript or facts already obvious from the diff. Update the re
 When visible context remaining reaches about 40%, save the record before doing more work and give the user this continuation prompt:
 
 ```text
-Read AGENTS.md and .agents/tasks/<branch-slug>.md, then continue the task in the recorded worktree.
+Read AGENTS.md and docs/exec-plans/active/<branch-slug>.md, then continue the task in the recorded worktree.
 ```
 
 Current Codex hooks do not expose a remaining-context percentage. Do not claim an automatic fork occurred; prepare the handoff, then ask the user to run `/fork` in the CLI or `codex fork --last` from another terminal and paste the continuation prompt.
 
 ## Complete
 
-Set the record status to `completed`, keep only durable decisions and useful follow-ups, and commit it with the task. Treat commits and the pull request as the detailed historical record.
+Set the record status to `completed`, keep only durable decisions and useful follow-ups, move it to `docs/exec-plans/completed/`, and commit it with the task. Treat commits and the pull request as the detailed historical record.

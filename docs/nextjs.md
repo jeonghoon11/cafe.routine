@@ -1,4 +1,4 @@
-# Next.js App Router Guide
+# Next.js App Router
 
 최종 확인일: 2026-08-09  
 대상 버전: Next.js 16.3.0, React 19.2

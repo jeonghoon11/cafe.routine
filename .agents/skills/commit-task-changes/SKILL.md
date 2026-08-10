@@ -10,7 +10,7 @@ Commit only the changes produced for the completed task. Preserve unrelated user
 ## Workflow
 
 1. Run `git status --short` and inspect relevant diffs.
-2. Stop if the current branch is `main`, `develop`, or the top-level pull-request branch. Commit only from its dedicated task worktree.
+2. Stop if the current branch is `main`, `develop`, or the top-level pull-request branch. Commit implementation only from its dedicated task worktree; integration merge commits are created by `work-on-task-worktree`.
 3. Confirm the task is complete and its required checks passed. Do not hide failed checks by committing.
 4. Divide changes only when they have independent reasons to change. Keep implementation, its tests, and directly related documentation together.
 5. Stage explicit paths with `git add -- <paths>`. Never use `git add .` or `git add -A` when unrelated changes exist.

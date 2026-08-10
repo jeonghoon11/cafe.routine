@@ -1,4 +1,4 @@
-# Brand and UI
+# Brand and UI Guide
 
 ## 브랜드 방향
 

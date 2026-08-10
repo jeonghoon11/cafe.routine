@@ -1,4 +1,4 @@
-# Development Workflow
+# Repository Workflow
 
 ## 작업 시작
 
@@ -14,9 +14,8 @@
 - commit은 `<type>: <한글 요약>` 형식을 사용한다. 예: `feat: 메뉴 페이지 추가`.
 - 이미 올바른 작업 branch의 worktree에 있다면 새 worktree를 중첩 생성하지
   않는다.
-- 상위 branch 아래 task worktree는 순차 실행을 기본으로 한다. 같은 상위
-  branch에서 병렬 task가 필요하면 `--ff-only` 병합이 보장되지 않으므로 각
-  task를 별도 PR branch로 분리한다.
+- 여러 task branch는 같은 상위 branch commit에서 각각 worktree를 만들어
+  병렬로 진행할 수 있다. 각 task는 다른 task branch를 직접 참조하지 않는다.
 
 ## 변경과 검증
 
@@ -26,16 +25,19 @@
 - 패키지 설치와 외부 네트워크 접근은 사용자에게 먼저 확인한다.
 - 변경 영역 중심의 최소 검증을 먼저 실행한다. 기본 검증은 `pnpm typecheck`와
   `pnpm lint`이며, 라우팅·metadata·빌드 설정 변경은 `pnpm build`까지 실행한다.
-- `AGENTS.md`, `.agents/`, `.codex/` 변경은 `pnpm check:harness`를 실행한다.
+- `AGENTS.md`, `docs/`, `.agents/skills/`, `.codex/` 변경은
+  `pnpm check:harness`를 실행한다.
 - 실패는 숨기지 않고 핵심 로그와 재현 명령을 보고한다. 무관한 실패는 발견으로
   구분한다.
 
 ## Commit, PR, merge
 
 - 검증을 통과한 변경만 `commit-task-changes` skill로 작업 branch에 commit한다.
-- 작업이 완료되면 상위 branch checkout에서 작업 branch를 `--ff-only`로
-  병합한다. fast-forward가 불가능하면 자동 rebase나 merge commit을 만들지
-  않고 중단해 상태를 보고한다.
+- 작업이 완료되면 상위 branch checkout에서 완료된 task branch를 하나씩
+  `git merge --no-ff -m "<type>: <한글 작업> 병합" <task-branch>`로 병합한다.
+  상위 branch의 merge commit은 직접 구현 commit 금지의 유일한 예외다.
+- 병렬 task 사이에 conflict가 발생하면 자동으로 추측해 해결하지 않고 병합을
+  중단한 뒤 충돌 파일과 원인을 보고한다.
 - 상위 branch를 push하거나 PR을 만들기 전에 사용자 지시를 확인한다.
 - 상위 branch에서 `develop`으로 병합할 때는 squash merge를 사용한다.
 - `develop`에서 `main`으로 병합할 때는 merge commit을 사용한다.
@@ -45,8 +47,9 @@
 ## Context 연속성
 
 - 화면에서 남은 context가 약 40%에 도달하거나 새 chat으로 넘기기 전에는
-  `record-task-context` skill로 `.agents/tasks/<branch-slug>.md`를 갱신한다.
+  `record-task-context` skill로 `docs/exec-plans/active/<branch-slug>.md`를
+  갱신한다.
 - 현재 hooks는 남은 context 비율 감지와 새 chat 자동 생성을 지원하지 않는다.
   기록 경로와 재개 prompt를 제공하고 사용자가 새 chat을 열도록 안내한다.
 - 작업 종료 시 durable decision은 관련 문서에 반영하고 task context를
-  `completed`로 갱신한다. 상세 이력은 commit과 PR에 둔다.
+  `docs/exec-plans/completed/`로 옮긴다. 상세 이력은 commit과 PR에 둔다.

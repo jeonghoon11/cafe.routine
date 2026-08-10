@@ -22,7 +22,11 @@ def check_docs() -> None:
     if line_count > 100:
         fail(f"AGENTS.md is {line_count} lines; keep it at 100 or fewer")
 
-    docs = [AGENTS, *sorted((ROOT / ".agents").glob("**/*.md"))]
+    docs = [
+        AGENTS,
+        *sorted((ROOT / "docs").glob("**/*.md")),
+        *sorted((ROOT / ".agents/skills").glob("**/*.md")),
+    ]
     for doc in docs:
         for target in LOCAL_LINK.findall(doc.read_text()):
             if not (doc.parent / target).resolve().exists():
@@ -30,6 +34,12 @@ def check_docs() -> None:
 
 
 def check_skills() -> None:
+    unexpected = sorted(
+        path.name for path in (ROOT / ".agents").iterdir() if path.name != "skills"
+    )
+    if unexpected:
+        fail(f".agents must contain only skills: {', '.join(unexpected)}")
+
     for skill in sorted((ROOT / ".agents/skills").glob("*/SKILL.md")):
         text = skill.read_text()
         if not text.startswith("---\n") or "\n---\n" not in text[4:]:

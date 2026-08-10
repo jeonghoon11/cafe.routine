@@ -1,4 +1,4 @@
-# Source Architecture
+# Architecture
 
 이 문서는 Cafe Routine의 파일 배치 기준을 정의한다. Next.js·Supabase
 동작 방식은 [nextjs.md](./nextjs.md)를 따른다.

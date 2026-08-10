@@ -1,4 +1,4 @@
-# SEO
+# SEO Guide
 
 SEO를 최우선 품질 기준으로 두고 크롤링, 인덱싱, 검색 결과 이해도, Core Web
 Vitals 영향을 먼저 검토한다.
