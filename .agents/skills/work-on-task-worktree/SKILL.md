@@ -1,25 +1,25 @@
 ---
 name: work-on-task-worktree
-description: "Prepare independent task branches and git worktrees from the current top-level pull-request branch so tasks can run in parallel, then merge each verified task back with a Korean merge commit. Use whenever Codex starts one or more file-changing tasks after the user has selected a pull-request branch."
+description: "현재 상위 pull-request branch에서 독립 task branch와 git worktree를 준비해 병렬로 작업하고, 검증된 task를 한국어 merge commit으로 상위 branch에 통합한다. 사용자가 pull-request branch를 선택한 뒤 Codex가 하나 이상의 파일 변경 작업을 시작할 때 사용한다."
 ---
 
 # Work on Task Worktree
 
-Keep the top-level pull-request branch as the visible integration point. Perform each coherent task in its own worktree; independent tasks may run in parallel.
+상위 pull-request branch를 눈에 보이는 통합 지점으로 유지한다. 각 작업 단위는 별도 worktree에서 수행하고, 독립 task는 병렬로 진행할 수 있다.
 
 ## Workflow
 
-1. Inspect `git branch --show-current`, `git status --short`, and `git worktree list`.
-2. If already in a task worktree that matches the request, continue there. Do not create a nested worktree.
-3. Require a clean top-level branch other than `main` or `develop`. Treat it as the pull-request branch and remember its name.
-4. Choose a short lowercase English kebab-case task branch with `feat/`, `fix/`, `refactor/`, `docs/`, or `chore/`.
-5. Create a sibling worktree with `git worktree add -b <task-branch> <path> <pull-request-branch>` and run all edits, checks, and commits there.
-   Multiple task branches may start from the same pull-request branch commit. Do not make one task branch depend on another.
-   If the pull-request checkout has an ignored `.env.local`, symlink it into the new worktree instead of copying secrets. Do not symlink `node_modules`; Next.js Turbopack rejects dependencies outside the worktree root. Ask before running `pnpm install --frozen-lockfile` in a new worktree.
-6. Commit verified changes with Korean Conventional Commit titles through `commit-task-changes`.
-7. When a task is complete, confirm its worktree and the pull-request checkout are clean. From the pull-request checkout, run `git merge --no-ff -m "<type>: <한글 작업 요약> 병합" <task-branch>`.
-8. Merge completed task branches one at a time. A merge commit on the pull-request branch is the only exception to the direct-commit prohibition.
-9. If a merge conflicts, stop and report the conflicting files and cause. Do not guess at a resolution or rebase the task automatically.
-10. Report the worktree path, task branch, task commit, merge commit, and resulting pull-request branch head.
+1. `git branch --show-current`, `git status --short`, `git worktree list`를 확인한다.
+2. 요청과 일치하는 task worktree에 이미 있다면 그곳에서 계속한다. 중첩 worktree를 만들지 않는다.
+3. `main`이나 `develop`이 아닌 깨끗한 상위 branch를 요구한다. 이를 pull-request branch로 취급하고 이름을 기억한다.
+4. `feat/`, `fix/`, `refactor/`, `docs/`, `chore/` 중 하나와 짧은 영어 소문자 kebab-case 요약으로 task branch 이름을 정한다.
+5. `git worktree add -b <task-branch> <path> <pull-request-branch>`로 형제 worktree를 만들고 모든 수정, 검증, commit을 그곳에서 수행한다.
+   여러 task branch는 같은 pull-request branch commit에서 시작할 수 있다. task branch끼리 서로 의존하게 만들지 않는다.
+   pull-request checkout에 ignore된 `.env.local`이 있으면 비밀 값을 복사하지 말고 새 worktree에 symlink한다. Next.js Turbopack은 worktree 밖 의존성을 거부하므로 `node_modules`는 symlink하지 않는다. 새 worktree에서 `pnpm install --frozen-lockfile`을 실행하기 전에 사용자에게 묻는다.
+6. 검증된 변경을 `commit-task-changes`로 한국어 Conventional Commit 제목과 함께 commit한다.
+7. task가 끝나면 task worktree와 pull-request checkout이 모두 깨끗한지 확인한다. pull-request checkout에서 `git merge --no-ff -m "<type>: <한글 작업 요약> 병합" <task-branch>`를 실행한다.
+8. 완료된 task branch는 한 번에 하나씩 merge한다. pull-request branch의 merge commit만 직접 commit 금지의 예외로 둔다.
+9. merge conflict가 발생하면 중단하고 충돌 파일과 원인을 보고한다. 해결 방법을 추측하거나 task를 자동 rebase하지 않는다.
+10. worktree 경로, task branch, task commit, merge commit, 최종 pull-request branch HEAD를 보고한다.
 
-Do not remove the worktree, delete a branch, push, open a pull request, or merge the pull-request branch into `develop` unless the user explicitly requests that action.
+사용자가 명시적으로 요청하지 않으면 worktree 제거, branch 삭제, push, pull request 생성, pull-request branch의 `develop` merge를 하지 않는다.

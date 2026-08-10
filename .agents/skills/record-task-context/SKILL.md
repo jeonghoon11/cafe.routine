@@ -1,36 +1,36 @@
 ---
 name: record-task-context
-description: "Record concise repository-backed task context for continuation or future work. Use when the visible context remaining approaches 40%, before compaction or handoff to a new chat, and when a non-trivial task finishes."
+description: "작업을 이어가거나 나중에 참고할 수 있도록 repository에 간결한 task context를 기록한다. 남은 화면 context가 약 40%에 가까워질 때, compaction이나 새 chat handoff 전, 중요 task를 마쳤을 때 사용한다."
 ---
 
 # Record Task Context
 
-Keep durable knowledge in the repository instead of relying on chat history.
+chat history에 의존하지 않고 지속해야 할 지식을 repository에 남긴다.
 
 ## Record
 
-Create or update `docs/exec-plans/active/<branch-slug>.md` with only:
+`docs/exec-plans/active/<branch-slug>.md`를 만들거나 갱신하되 다음 내용만 기록한다.
 
-- status: `active` or `completed`
-- goal and acceptance criteria
-- branch and worktree path
-- completed work and relevant files
-- decisions and their reasons
-- checks run and results
-- remaining work, risks, or follow-ups
+- status: `active` 또는 `completed`
+- goal과 acceptance criteria
+- branch와 worktree 경로
+- 완료한 작업과 관련 파일
+- decision과 이유
+- 실행한 검증과 결과
+- 남은 작업, risk, follow-up
 
-Do not copy the transcript or facts already obvious from the diff. Update the relevant product, design, architecture, Next.js, SEO, or workflow document when a decision is durable across tasks.
+대화 전문이나 diff만 봐도 알 수 있는 사실은 복사하지 않는다. 여러 task에서 지속할 decision은 관련 product, design, architecture, Next.js, SEO, workflow 문서에 반영한다.
 
 ## Continue in a New Chat
 
-When visible context remaining reaches about 40%, save the record before doing more work and give the user this continuation prompt:
+화면에 보이는 남은 context가 약 40%가 되면 추가 작업 전에 기록을 저장하고 사용자에게 다음 재개 prompt를 제공한다.
 
 ```text
-Read AGENTS.md and docs/exec-plans/active/<branch-slug>.md, then continue the task in the recorded worktree.
+AGENTS.md와 docs/exec-plans/active/<branch-slug>.md를 읽고 기록된 worktree에서 task를 계속해줘.
 ```
 
-Current Codex hooks do not expose a remaining-context percentage. Do not claim an automatic fork occurred; prepare the handoff, then ask the user to run `/fork` in the CLI or `codex fork --last` from another terminal and paste the continuation prompt.
+현재 Codex hook은 남은 context 비율을 제공하지 않는다. 자동 fork가 실행됐다고 말하지 않는다. handoff를 준비한 뒤 사용자에게 CLI에서 `/fork`를 실행하거나 다른 terminal에서 `codex fork --last`를 실행하고 재개 prompt를 붙여 넣도록 안내한다.
 
 ## Complete
 
-Set the record status to `completed`, keep only durable decisions and useful follow-ups, move it to `docs/exec-plans/completed/`, and commit it with the task. Treat commits and the pull request as the detailed historical record.
+기록 status를 `completed`로 바꾸고 지속할 decision과 유용한 follow-up만 남긴다. 파일을 `docs/exec-plans/completed/`로 옮겨 task와 함께 commit한다. 상세 이력은 commit과 pull request를 기준으로 삼는다.

@@ -1,22 +1,22 @@
 ---
 name: commit-task-changes
-description: "Review and commit completed repository changes as cohesive task units with Korean Conventional Commit titles such as `feat: ...`. Use after Codex finishes modifying files in this repository, or when the user asks to commit, create commits, split commits, or organize changes by commit unit."
+description: "완료된 repository 변경을 검토하고 `feat: ...` 같은 한국어 Conventional Commit 제목으로 응집된 작업 단위별 commit을 만든다. Codex가 파일 수정을 끝냈거나 사용자가 commit 생성, 분리, 작업 단위 정리를 요청할 때 사용한다."
 ---
 
 # Commit Task Changes
 
-Commit only the changes produced for the completed task. Preserve unrelated user changes.
+완료한 task에서 만든 변경만 commit하고 관련 없는 사용자 변경은 보존한다.
 
 ## Workflow
 
-1. Run `git status --short` and inspect relevant diffs.
-2. Stop if the current branch is `main`, `develop`, or the top-level pull-request branch. Commit implementation only from its dedicated task worktree; integration merge commits are created by `work-on-task-worktree`.
-3. Confirm the task is complete and its required checks passed. Do not hide failed checks by committing.
-4. Divide changes only when they have independent reasons to change. Keep implementation, its tests, and directly related documentation together.
-5. Stage explicit paths with `git add -- <paths>`. Never use `git add .` or `git add -A` when unrelated changes exist.
-6. Review `git diff --cached --stat` and `git diff --cached` before committing.
-7. Commit each unit with `<type>: <한글 요약>`. Branch names remain English; commit summaries remain Korean.
-8. Run `git status --short` and report the commit hash, title, checks, and intentionally uncommitted files.
+1. `git status --short`를 실행하고 관련 diff를 확인한다.
+2. 현재 branch가 `main`, `develop`, 상위 pull-request branch라면 중단한다. 구현 commit은 전용 task worktree에서만 만들고 통합 merge commit은 `work-on-task-worktree`에서 만든다.
+3. task가 완료되고 필요한 검증을 통과했는지 확인한다. 실패한 검증을 숨기기 위해 commit하지 않는다.
+4. 변경 이유가 서로 독립적일 때만 commit을 나눈다. 구현, test, 직접 관련된 문서는 함께 둔다.
+5. `git add -- <paths>`로 명시적인 경로만 stage한다. 관련 없는 변경이 있을 때 `git add .`이나 `git add -A`를 사용하지 않는다.
+6. commit 전에 `git diff --cached --stat`과 `git diff --cached`를 검토한다.
+7. 각 단위를 `<type>: <한글 요약>` 형식으로 commit한다. branch 이름은 영어, commit 요약은 한국어로 유지한다.
+8. `git status --short`를 실행하고 commit hash, 제목, 검증 결과, 의도적으로 commit하지 않은 파일을 보고한다.
 
 ## Commit Types
 
@@ -31,11 +31,11 @@ Commit only the changes produced for the completed task. Preserve unrelated user
 - `perf`: 성능 개선
 - `style`: 동작과 무관한 서식 변경
 
-Use the type that represents the primary reason for the change. Keep the title concise, omit a trailing period, and do not add a scope unless it materially improves clarity.
+변경의 주된 이유를 나타내는 type을 사용한다. 제목은 간결하게 쓰고 마침표를 붙이지 않는다. 명확성이 실제로 좋아질 때만 scope를 추가한다.
 
 ## Safety
 
-- Do not amend, rebase, reset, or force-push unless the user explicitly requests it.
-- Do not include secrets, `.env*`, generated credentials, or unrelated user work.
-- Do not create an empty commit.
-- If task changes cannot be separated safely from pre-existing edits, stop and ask the user which files or hunks to include.
+- 사용자가 명시적으로 요청하지 않으면 amend, rebase, reset, force-push하지 않는다.
+- 비밀 값, `.env*`, 생성된 인증 정보, 관련 없는 사용자 작업을 포함하지 않는다.
+- 빈 commit을 만들지 않는다.
+- task 변경을 기존 수정과 안전하게 분리할 수 없으면 중단하고 포함할 파일이나 hunk를 사용자에게 묻는다.

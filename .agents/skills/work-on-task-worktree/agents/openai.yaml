@@ -1,4 +1,4 @@
 interface:
   display_name: "병렬 작업 Worktree 준비"
   short_description: "병렬 작업 브랜치와 worktree를 준비하고 상위 브랜치에 병합합니다"
-  default_prompt: "Use $work-on-task-worktree to prepare parallel task worktrees and merge verified tasks into the pull-request branch."
+  default_prompt: "$work-on-task-worktree를 사용해 병렬 task worktree를 준비하고 검증된 작업을 pull-request branch에 merge해줘."

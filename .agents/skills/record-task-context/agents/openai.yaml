@@ -1,4 +1,4 @@
 interface:
   display_name: "작업 컨텍스트 기록"
   short_description: "작업 상태를 docs 실행 계획에 기록하고 다음 대화로 연결합니다"
-  default_prompt: "Use $record-task-context to save this task in docs/exec-plans for a later session."
+  default_prompt: "$record-task-context를 사용해 나중에 이어갈 수 있도록 현재 task를 docs/exec-plans에 기록해줘."

@@ -1,4 +1,4 @@
 interface:
   display_name: "Feature 브랜치 생성"
   short_description: "develop에서 영어 이름의 PR 브랜치를 안전하게 생성해요"
-  default_prompt: "Use $create-feature-branch to create an English-named feature branch from develop."
+  default_prompt: "$create-feature-branch를 사용해 develop에서 영어 이름의 feature branch를 생성해줘."
