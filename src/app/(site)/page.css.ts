@@ -16,61 +16,6 @@ const heroScale = keyframes({
 
 export const page = style({ overflow: 'clip' });
 
-globalStyle(`${page} a:focus-visible`, {
-  outline: '2px solid currentColor',
-  outlineOffset: 5,
-});
-
-export const skipLink = style({
-  position: 'fixed',
-  zIndex: 100,
-  top: 12,
-  left: 12,
-  padding: '12px 16px',
-  color: ink,
-  background: light,
-  transform: 'translateY(-180%)',
-  selectors: { '&:focus': { transform: 'translateY(0)' } },
-});
-
-export const siteHeader = style({
-  position: 'fixed',
-  zIndex: 20,
-  inset: '0 0 auto',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  minHeight: 72,
-  padding: '0 4vw',
-  color: '#fff',
-  background: 'rgb(9 9 9 / 72%)',
-  backdropFilter: 'blur(14px)',
-  '@media': { [mobile]: { minHeight: 64, paddingInline: 20 } },
-});
-
-export const wordmark = style({
-  display: 'inline-flex',
-  minHeight: 44,
-  alignItems: 'center',
-  fontWeight: 700,
-  letterSpacing: '0.12em',
-});
-
-export const nav = style({
-  display: 'flex',
-  gap: 'clamp(18px, 3vw, 48px)',
-});
-
-globalStyle(`${nav} a`, {
-  display: 'inline-flex',
-  minHeight: 44,
-  alignItems: 'center',
-  fontSize: 12,
-  fontWeight: 700,
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-});
-
 export const hero = style({
   position: 'relative',
   display: 'flex',
@@ -84,6 +29,10 @@ export const hero = style({
 });
 
 export const heroImage = style({
+  position: 'absolute',
+  inset: 0,
+  width: '100%',
+  height: '100%',
   objectFit: 'cover',
   '@supports': {
     '(animation-timeline: scroll())': {
@@ -105,9 +54,9 @@ export const heroContent = style({
   position: 'relative',
   zIndex: 1,
   display: 'flex',
+  width: '100%',
   flexDirection: 'column',
   gap: vars.$dimension.x4,
-  width: '100%',
 });
 
 export const sectionIndex = style({
@@ -267,6 +216,8 @@ export const coffeeImage = style({
 });
 
 globalStyle(`${coffeeImage} img`, {
+  width: '100%',
+  height: '100%',
   objectFit: 'cover',
   filter: 'grayscale(1) contrast(1.04)',
   transition: `transform ${vars.$duration.d4} ease, filter ${vars.$duration.d4} ease`,
@@ -288,120 +239,35 @@ export const coffeeCaption = style({
   letterSpacing: '0.15em',
 });
 
-export const visit = style({
-  minHeight: '110svh',
-  padding: '14vh 4vw 10vh',
+export const explore = style({
+  display: 'grid',
+  minHeight: '100svh',
+  alignContent: 'center',
+  gap: 'clamp(36px, 7vh, 72px)',
+  padding: '14vh 4vw',
   color: ink,
   background: light,
-  '@media': { [mobile]: { paddingInline: 20 } },
+  '@media': { [mobile]: { minHeight: '90svh', paddingInline: 20 } },
 });
 
-export const visitHeading = style({
-  display: 'grid',
-  gridTemplateColumns: 'minmax(180px, 1fr) 2fr',
-  alignItems: 'end',
-  paddingBottom: '6vh',
-  borderBottom: `1px solid ${ink}`,
-  '@media': { [mobile]: { display: 'block' } },
-});
-
-export const visitIndex = style({
-  '@media': { [mobile]: { marginBottom: 40 } },
-});
-
-export const visitTitle = style({
+export const exploreTitle = style({
+  maxWidth: '13ch',
   margin: 0,
-  fontSize: 'clamp(4rem, 10vw, 9rem)',
-  lineHeight: 0.8,
-  letterSpacing: '-0.07em',
-  '@media': { [mobile]: { fontSize: 'clamp(4rem, 19vw, 7rem)' } },
+  fontSize: 'clamp(3.2rem, 8vw, 7.5rem)',
+  lineHeight: 0.92,
+  letterSpacing: '-0.065em',
 });
 
-export const visitDetails = style({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gap: '8vw',
-  paddingTop: '8vh',
-  '@media': { [mobile]: { gridTemplateColumns: '1fr', gap: 64 } },
-});
-
-export const visitDetail = style({
-  margin: 0,
-  fontSize: 'clamp(1rem, 1.25vw, 1.2rem)',
-  fontStyle: 'normal',
-  lineHeight: 1.55,
-});
-
-export const detailLabel = style({ marginBottom: 28 });
-
-export const hoursList = style({ margin: 0, padding: 0, listStyle: 'none' });
-
-export const hoursItem = style({
+export const exploreLinks = style({
   display: 'flex',
-  justifyContent: 'space-between',
-  gap: 24,
+  flexWrap: 'wrap',
+  gap: '12px 40px',
 });
 
-export const visitLinks = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-});
-
-export const visitLink = style({
+globalStyle(`${exploreLinks} a`, {
+  display: 'inline-flex',
   minHeight: 44,
-  paddingTop: 8,
-  background:
-    'linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat',
-  transition: `background-size ${vars.$duration.d4} ease`,
-  selectors: {
-    '&:hover': { backgroundSize: '100% 1px' },
-    '&:focus-visible': { backgroundSize: '100% 1px' },
-  },
-});
-
-export const footer = style({
-  display: 'flex',
-  alignItems: 'flex-end',
-  justifyContent: 'space-between',
-  minHeight: '34svh',
-  padding: '8vh 4vw',
-  color: '#fff',
-  background: dark,
-  '@media': {
-    [mobile]: {
-      minHeight: '40svh',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'flex-end',
-      gap: 28,
-      padding: '64px 20px',
-    },
-  },
-});
-
-export const footerWordmark = style({
-  margin: 0,
-  fontSize: 'clamp(2.5rem, 6vw, 6rem)',
+  alignItems: 'center',
+  borderBottom: '1px solid currentColor',
   fontWeight: 700,
-  lineHeight: 0.8,
-  letterSpacing: '-0.06em',
-});
-
-export const footerSlogan = style({ margin: 0, letterSpacing: '0.06em' });
-
-globalStyle('html', {
-  '@media': { '(prefers-reduced-motion: reduce)': { scrollBehavior: 'auto' } },
-});
-
-globalStyle(`${page} *, ${page} *::before, ${page} *::after`, {
-  '@media': {
-    '(prefers-reduced-motion: reduce)': {
-      animation: 'none !important',
-      scrollBehavior: 'auto',
-      transition: 'none !important',
-      transform: 'none !important',
-      opacity: '1 !important',
-    },
-  },
 });

@@ -16,7 +16,12 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="ko" data-seed data-seed-color-mode="light-only">
+    <html
+      lang="ko"
+      data-seed
+      data-seed-color-mode="light-only"
+      data-scroll-behavior="smooth"
+    >
       <head>
         <meta name="color-scheme" content="light" />
       </head>
