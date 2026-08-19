@@ -33,6 +33,8 @@
   약 40% 남거나 handoff·작업 종료 시 `docs/exec-plans/`에 상태를 기록한다.
 - [`toss-frontend-fundamentals`](.agents/skills/toss-frontend-fundamentals/SKILL.md):
   프론트엔드 코드 작성, 리팩터링, 리뷰에 적용한다.
+- [`seed-design`](.agents/skills/seed-design/SKILL.md): SEED의 공식 문서와
+  React 설치·컴포넌트·토큰 계약을 확인할 때 사용한다.
 
 ## 공통 원칙
 

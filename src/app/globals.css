@@ -1,42 +1,26 @@
 :root {
-  color: #000;
-  background: #fff;
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--seed-color-fg-neutral);
+  background: var(--seed-color-bg-layer-default);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  font-synthesis: none;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-}
-
-main {
-  display: grid;
-  min-height: 100svh;
-  place-content: center;
-  gap: 16px;
-  padding: 24px;
-  text-align: center;
-}
-
-h1,
-p,
-address,
-ul {
-  margin: 0;
-}
-
-ul {
-  padding: 0;
-  list-style: none;
-}
-
-address {
-  font-style: normal;
+  overflow-x: hidden;
 }
 
 a {
   color: inherit;
+  text-decoration: none;
 }

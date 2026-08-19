@@ -10,7 +10,20 @@ src/
 └── app/
     ├── globals.css
     ├── layout.tsx
-    └── page.tsx
+    └── (site)/
+        ├── _data/get-site-data.ts
+        ├── layout.tsx
+        ├── site-shell.css.ts
+        ├── hero-actions.tsx
+        ├── page.css.ts
+        ├── page.tsx
+        ├── menu/
+        │   ├── _data/get-menu.ts
+        │   ├── page.css.ts
+        │   └── page.tsx
+        └── visit/
+            ├── page.css.ts
+            └── page.tsx
 ```
 
 폴더는 사용처가 생길 때 만든다. 빈 `components`, `hooks`, `utils` 폴더를
