@@ -1,0 +1,7 @@
+{
+  "rsc": true,
+  "tsx": true,
+  "framework": "react",
+  "path": "./src/seed-design",
+  "telemetry": false
+}

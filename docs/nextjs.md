@@ -22,6 +22,10 @@
 - `output: 'export'`는 사용하지 않는다. Supabase 변경을 재빌드 없이
   반영할 수 있는 Next.js server 배포를 기준으로 한다.
 - Next.js 이미지 런타임 변환은 `images.unoptimized: true`로 끈다.
+- page 전용 custom style은 `vanilla-extract`의 `.css.ts`에 두고
+  `@vanilla-extract/next-plugin`으로 compile한다.
+- 개발 서버는 기본 Turbopack을 사용하고 production `pnpm build`는 현재
+  vanilla-extract loader와의 안정성을 위해 Webpack으로 실행한다.
 - PWA 구현 시 web app manifest, service worker, 설치 가능 여부와 존재하지
   않는 URL의 HTTP status 보존을 함께 확인한다.
 

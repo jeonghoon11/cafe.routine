@@ -5,15 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "lint": "eslint --flag unstable_native_nodejs_ts_config .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "start": "next start"
   },
   "dependencies": {
+    "@seed-design/css": "2.5.0",
+    "@seed-design/react": "2.3.0",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.2",
+    "@vanilla-extract/css": "1.21.2",
     "next": "^16.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
@@ -23,6 +26,7 @@
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@vanilla-extract/next-plugin": "2.5.2",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-react": "^7.37.5",

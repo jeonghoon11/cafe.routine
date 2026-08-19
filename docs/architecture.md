@@ -9,7 +9,9 @@
 src/
 └── app/
     ├── globals.css
+    ├── hero-actions.tsx
     ├── layout.tsx
+    ├── page.css.ts
     └── page.tsx
 ```
 
