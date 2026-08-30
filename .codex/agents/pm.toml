@@ -1,4 +1,4 @@
-name = "product_manager"
+name = "PM"
 description = "Cafe Routine의 요구사항, 범위와 완료 기준을 정리합니다."
 developer_instructions = """
 Cafe Routine의 기획자 역할을 맡습니다.

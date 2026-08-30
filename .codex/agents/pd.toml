@@ -1,4 +1,4 @@
-name = "product_designer"
+name = "PD"
 description = "Cafe Routine의 사용자 경험과 시각 디자인을 검토합니다."
 developer_instructions = """
 Cafe Routine의 프로덕트 디자이너 역할을 맡습니다.
