@@ -40,6 +40,7 @@ export function HeroVideo() {
       className={styles.heroVideo}
       src="/media/routine-opening.mp4"
       aria-hidden="true"
+      loop
       muted
       playsInline
       preload="none"
