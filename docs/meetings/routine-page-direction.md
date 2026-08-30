@@ -40,6 +40,10 @@ Black & White 브랜드와 사진 중심 표현을 유지하고, 홈에서 메�
 - `pnpm lint`: 통과
 - `pnpm exec next typegen`: 통과
 - `pnpm typecheck`: 통과
+- Playwright 320px, 375px, 430px: hero 제목 잘림과 가로 overflow 없음
+- Playwright reduced-motion: `scroll-behavior: auto` 적용 확인
+- 로컬 `/`, `/menu`, `/visit`: HTTP 200 확인
+- 브라우저 console에서 `favicon.ico` 404를 발견했으며 페이지 동작에는 영향이 없습니다.
 
 ## 보류 결정
 
@@ -52,8 +56,8 @@ Black & White 브랜드와 사진 중심 표현을 유지하고, 홈에서 메�
 ## 담당자별 후속 작업과 완료 기준
 
 - FE
-  - 의존성이 준비된 환경에서 전체 `typecheck`와 `lint`를 통과시킵니다.
-  - 모바일에서 hero 제목이 잘리지 않고 메뉴·방문 CTA가 한 번의 탭으로 동작하는지 확인합니다.
+  - 공식 favicon 자산이 정해지면 metadata와 함께 추가합니다.
+  - 메뉴·영업시간 데이터가 0건일 때 안내할 empty state를 구현합니다.
 - BE
   - 품절 표시 정책이 정해지면 `is_available`이 공개 메뉴에 합의된 방식으로 반영되게 합니다.
   - 임시 영업 정책이 정해지면 예외 영업이 방문 페이지에 우선 노출되고 만료 후 제거되게 합니다.
