@@ -71,7 +71,7 @@ export const heroTitle = style({
   fontSize: 'clamp(4rem, 13vw, 10rem)',
   lineHeight: 0.8,
   letterSpacing: '-0.07em',
-  '@media': { [mobile]: { fontSize: 'clamp(4rem, 23vw, 7rem)' } },
+  '@media': { [mobile]: { fontSize: 'clamp(4rem, 20vw, 7rem)' } },
 });
 
 export const heroSlogan = style({

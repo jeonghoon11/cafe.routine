@@ -39,7 +39,8 @@ export const getHomeMedia = cache(async function getHomeMedia() {
     .select('bucket, object_path, alt_text, width, height, sort_order')
     .eq('usage', 'home')
     .eq('is_published', true)
-    .order('sort_order');
+    .order('sort_order')
+    .limit(4);
 
   if (error) {
     throw error;
