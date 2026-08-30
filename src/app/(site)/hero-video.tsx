@@ -19,7 +19,7 @@ export function HeroVideo() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.intersectionRatio >= 0.25) {
           void video.play();
           return;
         }
