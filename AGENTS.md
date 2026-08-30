@@ -35,6 +35,8 @@
   프론트엔드 코드 작성, 리팩터링, 리뷰에 적용한다.
 - [`seed-design`](.agents/skills/seed-design/SKILL.md): SEED의 공식 문서와
   React 설치·컴포넌트·토큰 계약을 확인할 때 사용한다.
+- [`cross-functional-team`](.agents/skills/cross-functional-team/SKILL.md):
+  프론트엔드, 백엔드, 기획, 디자인 관점의 병렬 검토가 필요할 때 사용한다.
 
 ## 공통 원칙
 
