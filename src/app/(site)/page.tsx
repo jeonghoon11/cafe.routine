@@ -71,7 +71,10 @@ export default async function HomePage() {
         <p className={styles.invitationNote}>{profile.address}</p>
       </section>
 
-      <section className={styles.coffee} aria-labelledby="coffee-title">
+      <section
+        className={`${styles.coffee} ${styles.revealSection}`}
+        aria-labelledby="coffee-title"
+      >
         <div className={styles.coffeeHeading}>
           <p className={styles.sectionIndex}>ROUTINE / 03 — COFFEE</p>
           <h2 className={styles.coffeeTitle} id="coffee-title">

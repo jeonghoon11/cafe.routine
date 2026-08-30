@@ -10,6 +10,10 @@ const revealUp = keyframes({
   from: { opacity: 0, transform: 'translateY(48px)' },
 });
 
+const sectionReveal = keyframes({
+  from: { opacity: 0, transform: 'translateY(96px)' },
+});
+
 const heroScale = keyframes({
   to: { transform: 'scale(1.08)' },
 });
@@ -116,15 +120,16 @@ export const scrollCue = style({
   '@media': { [mobile]: { display: 'none' } },
 });
 
-export const revealSection = style({});
-
-globalStyle(`${revealSection} > *`, {
+export const revealSection = style({
   '@supports': {
     '(animation-timeline: view())': {
-      animation: `${revealUp} linear both`,
+      animation: `${sectionReveal} cubic-bezier(0.22, 1, 0.36, 1) both`,
       animationTimeline: 'view()',
-      animationRange: 'entry 5% cover 32%',
+      animationRange: 'entry 10% cover 35%',
     },
+  },
+  '@media': {
+    '(prefers-reduced-motion: reduce)': { animation: 'none' },
   },
 });
 
