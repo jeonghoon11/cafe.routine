@@ -37,7 +37,9 @@ Black & White 브랜드와 사진 중심 표현을 유지하고, 홈에서 메�
 
 - `git diff --check`: 통과
 - 변경된 TypeScript 파일 대상 lint: 통과
-- task worktree에 `node_modules`가 없어 전체 `typecheck`와 `lint`는 실행하지 못했습니다.
+- `pnpm lint`: 통과
+- `pnpm exec next typegen`: 통과
+- `pnpm typecheck`: 통과
 
 ## 보류 결정
 
