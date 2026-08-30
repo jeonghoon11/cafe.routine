@@ -37,6 +37,8 @@
   React 설치·컴포넌트·토큰 계약을 확인할 때 사용한다.
 - [`cross-functional-team`](.agents/skills/cross-functional-team/SKILL.md):
   프론트엔드, 백엔드, 기획, 디자인 관점의 병렬 검토가 필요할 때 사용한다.
+- [`web-design-guidelines`](.agents/skills/web-design-guidelines/SKILL.md):
+  구현된 UI의 접근성, 인터랙션과 웹 인터페이스 품질을 검수할 때 사용한다.
 
 ## 공통 원칙
 
