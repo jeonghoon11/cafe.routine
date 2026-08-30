@@ -43,6 +43,18 @@ export const heroImage = style({
   },
 });
 
+export const heroVideo = style({
+  position: 'absolute',
+  inset: 0,
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  '@media': {
+    [mobile]: { display: 'none' },
+    '(prefers-reduced-motion: reduce)': { display: 'none' },
+  },
+});
+
 export const heroShade = style({
   position: 'absolute',
   inset: 0,

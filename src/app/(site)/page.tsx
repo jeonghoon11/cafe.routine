@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { getHomeMedia, getStoreProfile } from './_data/get-site-data';
 import { HeroActions } from './hero-actions';
+import { HeroVideo } from './hero-video';
 
 import * as styles from './page.css';
 
@@ -40,6 +41,7 @@ export default async function HomePage() {
           height={hero.height}
           fetchPriority="high"
         />
+        <HeroVideo />
         <div className={styles.heroShade} aria-hidden="true" />
 
         <div className={styles.heroContent}>
