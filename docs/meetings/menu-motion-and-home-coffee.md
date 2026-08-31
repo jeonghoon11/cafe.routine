@@ -26,15 +26,15 @@ FE, PD, PM
 ## 역할별 후속 작업
 
 - FE
-  - 데스크톱 sticky rail, 짝수 카드 offset과 모바일 해제를 구현합니다.
-  - 기존 `RevealOnView`로 카테고리 단위 one-shot reveal과 reduced-motion 즉시 표시를 구현합니다.
-  - Home Coffee 조회를 메뉴 item ID와 `media_assets` FK 기반으로 변경하고 세 메뉴의 표시 순서를 유지합니다.
+  - 데스크톱 sticky rail, 짝수 카드 offset과 모바일 해제를 구현했습니다.
+  - 기존 `RevealOnView`로 카테고리 단위 one-shot reveal과 reduced-motion 즉시 표시를 구현했습니다.
+  - Home Coffee 조회를 메뉴 item ID와 `media_assets` FK 기반으로 변경하고 세 메뉴의 표시 순서를 유지했습니다.
 - PD
-  - 데스크톱 rail의 위계, 짝수 카드 offset과 카테고리 전환 리듬을 검수합니다.
-  - 모바일에서 rail과 offset이 콘텐츠 가독성을 해치지 않는지, reduced-motion에서 정보가 누락되지 않는지 확인합니다.
+  - 데스크톱 rail의 위계, 짝수 카드 offset과 카테고리 전환 리듬을 검수했습니다.
+  - 모바일에서 rail과 offset이 콘텐츠 가독성을 해치지 않고 reduced-motion에서 정보가 누락되지 않는지 확인했습니다.
 - PM
-  - 왼쪽 rail이 카테고리 위치와 메뉴 수를 실제로 전달하는지 확인하고 장식성 문구를 추가하지 않습니다.
-  - Home Coffee의 세 메뉴가 공식 메뉴와 현재 이미지 연결 상태를 유지하는지 운영 변경 시 확인합니다.
+  - 왼쪽 rail이 카테고리 위치와 메뉴 수를 실제로 전달하고 장식성 문구를 추가하지 않았는지 확인했습니다.
+  - Home Coffee의 세 메뉴와 현재 이미지 연결 상태를 확인했습니다.
 
 ## 완료 기준
 
@@ -45,7 +45,20 @@ FE, PD, PM
 - reduced-motion에서는 카테고리가 전환 없이 즉시 표시되고 메뉴 탐색과 키보드 접근이 유지됩니다.
 - 홈 Coffee 영역은 `ROUTINE COFFEE`, `PISTACHIO LATTE`, `CAFE LATTE`의 FK로 연결된 이미지 3장을 순서대로 표시합니다.
 - Storage object path를 직접 작성하거나 별도 usage 조건을 복제하지 않습니다.
-- 이미지 관계가 없거나 조회가 실패해도 기존 Home fallback 동작이 유지되고 레이아웃이 깨지지 않습니다.
+- 이미지 관계가 없으면 기존 Home fallback 동작이 유지되고, 조회 오류는 숨기지 않고 전달합니다.
+
+## 구현·검증 결과
+
+- 데스크톱에서 rail이 카테고리 경계 안에서 `top: 164px` sticky로 동작하고 index, 제목, `N ITEMS`를 표시했습니다.
+- 데스크톱 짝수 카드에 `56px` offset이 적용됐습니다.
+- 모바일 `390px`, `768px`에서 rail은 static, 카드 offset은 `0`, 가로 overflow는 `0`이었습니다.
+- `799px`과 `800px`에서 모바일·데스크톱 breakpoint 전환을 확인했습니다.
+- 카테고리 one-shot reveal은 최초 등장 후 다시 스크롤해도 visible 상태를 유지했습니다.
+- reduced-motion에서 `opacity: 1`, `transform: none`, `transition-duration: 0s`를 확인했습니다.
+- 키보드 탐색과 category hash 이동이 유지됐습니다.
+- Home Coffee의 `ROUTINE COFFEE`, `PISTACHIO LATTE`, `CAFE LATTE` FK 이미지 3장이 올바른 public path에서 로딩됐습니다.
+- Home Coffee 이미지는 데스크톱 `3:4`, 모바일 `4:5`, `object-fit: cover`로 표시됐고 가로 overflow는 `0`이었습니다.
+- 관계 이미지가 누락되면 기존 Home 이미지 3장을 fallback으로 사용하며, Supabase query error는 숨기지 않고 throw합니다.
 
 ## 제외한 기능
 
@@ -54,4 +67,4 @@ FE, PD, PM
 - active category scrollspy와 진행률 표시
 - 추천, 인기순, 리뷰 등 근거 데이터와 운영 정책이 없는 기능
 
-이 문서는 구현과 브라우저 검증 결과가 나오면 같은 주제의 후속 회의에서 갱신합니다.
+구현과 브라우저 검증을 완료했으며, 운영 데이터 계약이나 디자인 기준이 변경될 때 이 문서를 갱신합니다.
