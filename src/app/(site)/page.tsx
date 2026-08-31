@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getHomeMedia, getStoreProfile } from './_data/get-site-data';
 import { HeroActions } from './hero-actions';
 import { HeroVideo } from './hero-video';
+import { RevealOnView } from './reveal-on-view';
 
 import * as styles from './page.css';
 
@@ -60,64 +61,66 @@ export default async function HomePage() {
       </section>
 
       <section
-        className={`${styles.invitation} ${styles.revealSection}`}
+        className={styles.invitation}
         id="invitation"
         aria-labelledby="invitation-title"
       >
-        <p className={styles.sectionIndex}>ROUTINE / 02 — INVITATION</p>
-        <h2 className={styles.invitationTitle} id="invitation-title">
-          {slogan}
-        </h2>
-        <p className={styles.invitationNote}>{profile.address}</p>
-      </section>
-
-      <section
-        className={`${styles.coffee} ${styles.revealSection}`}
-        aria-labelledby="coffee-title"
-      >
-        <div className={styles.coffeeHeading}>
-          <p className={styles.sectionIndex}>ROUTINE / 03 — COFFEE</p>
-          <h2 className={styles.coffeeTitle} id="coffee-title">
-            Coffee.
+        <RevealOnView
+          className={`${styles.revealContent} ${styles.invitationContent}`}
+        >
+          <p className={styles.sectionIndex}>ROUTINE / 02 — INVITATION</p>
+          <h2 className={styles.invitationTitle} id="invitation-title">
+            {slogan}
           </h2>
-        </div>
-
-        <div className={styles.coffeeGrid}>
-          {coffeeCards.map(({ asset, className }, index) => (
-            <figure
-              className={className}
-              key={asset.object_path}
-            >
-              <div className={styles.coffeeImage}>
-                <img
-                  src={asset.src}
-                  alt={asset.alt_text}
-                  width={asset.width}
-                  height={asset.height}
-                  loading="lazy"
-                />
-              </div>
-              <figcaption className={styles.coffeeCaption}>
-                COFFEE / {String(index + 1).padStart(2, '0')}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+          <p className={styles.invitationNote}>{profile.address}</p>
+        </RevealOnView>
       </section>
 
-      <section
-        className={`${styles.explore} ${styles.revealSection}`}
-        aria-labelledby="explore-title"
-      >
-        <p className={styles.sectionIndex}>ROUTINE / 04 — EXPLORE</p>
-        <h2 className={styles.exploreTitle} id="explore-title">
-          Your routine,
-          <br />one cup at a time.
-        </h2>
-        <div className={styles.exploreLinks}>
-          <Link href="/menu">메뉴 살펴보기 ↗</Link>
-          <Link href="/visit">방문 정보 확인하기 ↗</Link>
-        </div>
+      <section className={styles.coffee} aria-labelledby="coffee-title">
+        <RevealOnView className={styles.revealContent}>
+          <div className={styles.coffeeHeading}>
+            <p className={styles.sectionIndex}>ROUTINE / 03 — COFFEE</p>
+            <h2 className={styles.coffeeTitle} id="coffee-title">
+              Coffee.
+            </h2>
+          </div>
+
+          <div className={styles.coffeeGrid}>
+            {coffeeCards.map(({ asset, className }, index) => (
+              <figure className={className} key={asset.object_path}>
+                <div className={styles.coffeeImage}>
+                  <img
+                    src={asset.src}
+                    alt={asset.alt_text}
+                    width={asset.width}
+                    height={asset.height}
+                    loading="lazy"
+                  />
+                </div>
+                <figcaption className={styles.coffeeCaption}>
+                  COFFEE / {String(index + 1).padStart(2, '0')}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </RevealOnView>
+      </section>
+
+      <section className={styles.explore} aria-labelledby="explore-title">
+        <RevealOnView
+          className={`${styles.revealContent} ${styles.exploreContent}`}
+        >
+          <p className={styles.sectionIndex}>ROUTINE / 04 — EXPLORE</p>
+          <h2 className={styles.exploreTitle} id="explore-title">
+            Your routine,
+            <br />
+            one cup at a time.
+          </h2>
+          <div className={styles.exploreLinks}>
+            <Link href="/menu">메뉴 살펴보기 ↗</Link>
+            <Link href="/visit">방문 정보 확인하기 ↗</Link>
+          </div>
+        </RevealOnView>
       </section>
     </div>
   );

@@ -6,14 +6,6 @@ const ink = vars.$color.fg.neutral;
 const dark = '#090909';
 const mobile = 'screen and (max-width: 799px)';
 
-const revealUp = keyframes({
-  from: { opacity: 0, transform: 'translateY(48px)' },
-});
-
-const sectionReveal = keyframes({
-  from: { opacity: 0, transform: 'translateY(96px)' },
-});
-
 const heroScale = keyframes({
   to: { transform: 'scale(1.08)' },
 });
@@ -120,16 +112,19 @@ export const scrollCue = style({
   '@media': { [mobile]: { display: 'none' } },
 });
 
-export const revealSection = style({
-  '@supports': {
-    '(animation-timeline: view())': {
-      animation: `${sectionReveal} linear both`,
-      animationTimeline: 'view()',
-      animationRange: 'entry 100px cover 35%',
-    },
+export const revealContent = style({
+  opacity: 0,
+  transform: 'translateY(32px)',
+  transition: 'opacity 1000ms ease, transform 1000ms ease',
+  selectors: {
+    "&[data-reveal='visible']": { opacity: 1, transform: 'translateY(0)' },
   },
   '@media': {
-    '(prefers-reduced-motion: reduce)': { animation: 'none' },
+    '(prefers-reduced-motion: reduce)': {
+      opacity: 1,
+      transform: 'none',
+      transition: 'none',
+    },
   },
 });
 
@@ -137,11 +132,15 @@ export const invitation = style({
   display: 'grid',
   minHeight: '120svh',
   alignContent: 'center',
-  gap: 'clamp(40px, 7vh, 80px)',
   padding: '14vh 4vw',
   color: ink,
   background: light,
   '@media': { [mobile]: { minHeight: '100svh', paddingInline: 20 } },
+});
+
+export const invitationContent = style({
+  display: 'grid',
+  gap: 'clamp(40px, 7vh, 80px)',
 });
 
 export const invitationTitle = style({
@@ -205,13 +204,6 @@ export const coffeeGrid = style({
 
 export const coffeeCard = style({
   margin: 0,
-  '@supports': {
-    '(animation-timeline: view())': {
-      animation: `${revealUp} linear both`,
-      animationTimeline: 'view()',
-      animationRange: 'entry 5% cover 28%',
-    },
-  },
 });
 
 export const coffeeCardBrew = style({
@@ -260,11 +252,15 @@ export const explore = style({
   display: 'grid',
   minHeight: '100svh',
   alignContent: 'center',
-  gap: 'clamp(36px, 7vh, 72px)',
   padding: '14vh 4vw',
   color: ink,
   background: light,
   '@media': { [mobile]: { minHeight: '90svh', paddingInline: 20 } },
+});
+
+export const exploreContent = style({
+  display: 'grid',
+  gap: 'clamp(36px, 7vh, 72px)',
 });
 
 export const exploreTitle = style({
