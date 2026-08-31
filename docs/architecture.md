@@ -14,6 +14,7 @@ src/
         ├── _data/get-site-data.ts
         ├── layout.tsx
         ├── site-shell.css.ts
+        ├── theme.css.ts
         ├── hero-actions.tsx
         ├── page.css.ts
         ├── page.tsx
@@ -91,6 +92,8 @@ supabase/
 ### route group
 
 - `(site)`는 공개 header·footer layout을 공유한다.
+- `(site)/theme.css.ts`는 공개 페이지가 함께 바꾸는 Cafe Routine 브랜드
+  색상만 관리한다. 일반 UI 토큰은 SEED의 공개 `vars`를 직접 사용한다.
 - `(auth)`는 관리자 로그인처럼 인증 전에도 접근해야 하는 페이지를
   담당한다.
 - `(admin)`은 인증과 관리자 권한을 검사하는 `/admin/*` layout을

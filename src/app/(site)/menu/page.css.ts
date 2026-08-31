@@ -1,16 +1,15 @@
+import { vars } from '@seed-design/css/vars';
 import { globalStyle, style } from '@vanilla-extract/css';
 
+import { routineVars } from '../theme.css';
+
 const mobile = 'screen and (max-width: 799px)';
-const paper = '#F4F4F1';
-const ink = '#171819';
-const secondary = '#636460';
-const border = 'rgb(16 17 18 / 16%)';
 const fallback = '#E8E8E4';
 
 export const page = style({
   padding: 'clamp(130px, 18vh, 190px) 4vw 16vh',
-  color: ink,
-  background: paper,
+  color: routineVars.color.ink,
+  background: routineVars.color.paper,
   '@media': { [mobile]: { padding: '112px 20px 100px' } },
 });
 
@@ -20,14 +19,14 @@ export const intro = style({
   gap: 24,
   alignItems: 'end',
   paddingBottom: '8vh',
-  borderBottom: `1px solid ${border}`,
+  borderBottom: `1px solid ${routineVars.color.lightBorder}`,
   '@media': { [mobile]: { display: 'block' } },
 });
 
 export const eyebrow = style({
   margin: 0,
-  fontSize: 11,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.16em',
   '@media': { [mobile]: { marginBottom: 36 } },
 });
@@ -44,7 +43,7 @@ export const description = style({
   gridColumn: 2,
   maxWidth: 440,
   margin: '36px 0 0',
-  color: secondary,
+  color: routineVars.color.secondary,
   fontSize: 'clamp(1rem, 1.3vw, 1.2rem)',
   lineHeight: 1.6,
 });
@@ -71,17 +70,17 @@ globalStyle(`${categoryNav} a`, {
   padding: '0 18px',
   border: '1px solid currentColor',
   borderRadius: 999,
-  fontSize: 13,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t3,
+  fontWeight: vars.$fontWeight.bold,
 });
 
 globalStyle(`${categoryNav} a:hover`, {
-  color: paper,
-  background: ink,
+  color: routineVars.color.paper,
+  background: routineVars.color.ink,
 });
 
 globalStyle(`${categoryNav} a:focus-visible`, {
-  outline: `3px solid ${ink}`,
+  outline: `3px solid ${routineVars.color.ink}`,
   outlineOffset: 3,
 });
 
@@ -89,7 +88,7 @@ export const categories = style({});
 
 export const category = style({
   padding: '12vh 0',
-  borderBottom: `1px solid ${border}`,
+  borderBottom: `1px solid ${routineVars.color.lightBorder}`,
   scrollMarginTop: 145,
   '@media': { [mobile]: { scrollMarginTop: 130 } },
 });
@@ -134,9 +133,9 @@ export const categoryRail = style({
 export const categoryIndex = style({
   gridArea: 'index',
   margin: 0,
-  color: secondary,
-  fontSize: 12,
-  fontWeight: 700,
+  color: routineVars.color.secondary,
+  fontSize: vars.$fontSize.t2,
+  fontWeight: vars.$fontWeight.bold,
 });
 
 export const categoryTitle = style({
@@ -152,9 +151,9 @@ export const categoryTitle = style({
 export const categoryCount = style({
   gridArea: 'count',
   margin: 0,
-  color: secondary,
-  fontSize: 11,
-  fontWeight: 700,
+  color: routineVars.color.secondary,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.14em',
   '@media': { [mobile]: { justifySelf: 'end' } },
 });
@@ -175,7 +174,7 @@ export const menuList = style({
 export const menuItem = style({
   minWidth: 0,
   selectors: {
-    '&[data-available="false"]': { color: secondary },
+    '&[data-available="false"]': { color: routineVars.color.secondary },
   },
   '@media': {
     [mobile]: {
@@ -183,7 +182,7 @@ export const menuItem = style({
       gridTemplateColumns: '112px minmax(0, 1fr)',
       gap: 16,
       padding: '20px 0',
-      borderTop: `1px solid ${border}`,
+      borderTop: `1px solid ${routineVars.color.lightBorder}`,
     },
   },
 });
@@ -199,7 +198,7 @@ export const imageFrame = style({
   aspectRatio: '4 / 3',
   placeItems: 'center',
   overflow: 'hidden',
-  color: secondary,
+  color: routineVars.color.secondary,
   background: fallback,
   selectors: {
     [`${menuItem}[data-available="false"] &`]: { opacity: 0.55 },
@@ -216,8 +215,8 @@ export const itemImage = style({
 });
 
 export const imageFallback = style({
-  fontSize: 11,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.16em',
 });
 
@@ -256,20 +255,20 @@ export const soldOut = style({
   padding: '3px 7px',
   border: '1px solid currentColor',
   borderRadius: 999,
-  fontSize: 11,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
 });
 
 export const itemDescription = style({
   margin: '7px 0 0',
-  color: secondary,
-  fontSize: 14,
+  color: routineVars.color.secondary,
+  fontSize: vars.$fontSize.t4,
   lineHeight: 1.5,
 });
 
 export const price = style({
   margin: '16px 0 0',
-  fontSize: 16,
+  fontSize: vars.$fontSize.t5,
   fontVariantNumeric: 'tabular-nums',
   '@media': { [mobile]: { marginTop: 'auto', paddingTop: 8 } },
 });
@@ -277,13 +276,13 @@ export const price = style({
 export const emptyState = style({
   margin: 0,
   padding: '15vh 0',
-  color: secondary,
+  color: routineVars.color.secondary,
   textAlign: 'center',
 });
 
 export const notice = style({
   margin: '64px 0 0',
-  color: secondary,
-  fontSize: 13,
+  color: routineVars.color.secondary,
+  fontSize: vars.$fontSize.t3,
   lineHeight: 1.6,
 });

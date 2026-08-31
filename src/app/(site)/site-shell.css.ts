@@ -1,9 +1,9 @@
+import { vars } from '@seed-design/css/vars';
 import { globalStyle, style } from '@vanilla-extract/css';
 
+import { routineVars } from './theme.css';
+
 const mobile = 'screen and (max-width: 799px)';
-const dark = '#101112';
-const paper = '#F4F4F1';
-const ink = '#171819';
 
 export const shell = style({
   minHeight: '100svh',
@@ -21,8 +21,8 @@ export const skipLink = style({
   top: 12,
   left: 12,
   padding: '12px 16px',
-  color: ink,
-  background: paper,
+  color: routineVars.color.ink,
+  background: routineVars.color.paper,
   transform: 'translateY(-180%)',
   selectors: { '&:focus': { transform: 'translateY(0)' } },
 });
@@ -36,7 +36,7 @@ export const header = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '0 4vw',
-  color: paper,
+  color: routineVars.color.paper,
   background: 'rgb(16 17 18 / 88%)',
   backdropFilter: 'blur(14px)',
   '@media': { [mobile]: { minHeight: 64, paddingInline: 20 } },
@@ -46,7 +46,7 @@ export const wordmark = style({
   display: 'inline-flex',
   minHeight: 44,
   alignItems: 'center',
-  fontWeight: 700,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.12em',
 });
 
@@ -59,8 +59,8 @@ globalStyle(`${nav} a`, {
   display: 'inline-flex',
   minHeight: 44,
   alignItems: 'center',
-  fontSize: 12,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t2,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.12em',
   textTransform: 'uppercase',
 });
@@ -73,8 +73,8 @@ export const footer = style({
   alignItems: 'flex-end',
   justifyContent: 'space-between',
   padding: '8vh 4vw',
-  color: paper,
-  background: dark,
+  color: routineVars.color.paper,
+  background: routineVars.color.dark,
   '@media': {
     [mobile]: {
       minHeight: '40svh',
@@ -90,7 +90,7 @@ export const footer = style({
 export const footerWordmark = style({
   margin: 0,
   fontSize: 'clamp(2.5rem, 6vw, 6rem)',
-  fontWeight: 700,
+  fontWeight: vars.$fontWeight.bold,
   lineHeight: 0.8,
   letterSpacing: '-0.06em',
 });

@@ -1,10 +1,8 @@
 import { vars } from '@seed-design/css/vars';
 import { globalStyle, keyframes, style } from '@vanilla-extract/css';
 
-const light = '#F4F4F1';
-const ink = '#171819';
-const dark = '#101112';
-const darkSecondary = 'rgb(244 244 241 / 68%)';
+import { routineVars } from './theme.css';
+
 const mobile = 'screen and (max-width: 799px)';
 
 const heroScale = keyframes({
@@ -70,8 +68,8 @@ export const heroContent = style({
 
 export const sectionIndex = style({
   margin: 0,
-  fontSize: 11,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.16em',
 });
 
@@ -106,8 +104,8 @@ export const scrollCue = style({
   minHeight: 44,
   alignItems: 'center',
   gap: 14,
-  fontSize: 11,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.14em',
   textTransform: 'uppercase',
   '@media': { [mobile]: { display: 'none' } },
@@ -134,8 +132,8 @@ export const invitation = style({
   minHeight: '120svh',
   alignContent: 'center',
   padding: '14vh 4vw',
-  color: ink,
-  background: light,
+  color: routineVars.color.ink,
+  background: routineVars.color.paper,
   '@media': { [mobile]: { minHeight: '100svh', paddingInline: 20 } },
 });
 
@@ -164,8 +162,8 @@ export const invitationNote = style({
 export const space = style({
   position: 'relative',
   padding: '14vh 4vw 18vh',
-  color: light,
-  background: dark,
+  color: routineVars.color.paper,
+  background: routineVars.color.dark,
   '@media': {
     [mobile]: { padding: '104px 20px 120px' },
   },
@@ -189,7 +187,7 @@ export const spaceTitle = style({
 export const spaceDescription = style({
   maxWidth: '34ch',
   margin: 0,
-  color: darkSecondary,
+  color: routineVars.color.darkSecondary,
   fontSize: 'clamp(1rem, 1.3vw, 1.2rem)',
   lineHeight: 1.6,
 });
@@ -244,7 +242,7 @@ globalStyle(`${spaceImage} img`, {
 export const spaceCaption = style({
   marginTop: 14,
   fontSize: 10,
-  fontWeight: 700,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.15em',
 });
 
@@ -253,8 +251,8 @@ export const explore = style({
   minHeight: '100svh',
   alignContent: 'center',
   padding: '14vh 4vw',
-  color: ink,
-  background: light,
+  color: routineVars.color.ink,
+  background: routineVars.color.paper,
   '@media': { [mobile]: { minHeight: '90svh', paddingInline: 20 } },
 });
 
@@ -282,5 +280,5 @@ globalStyle(`${exploreLinks} a`, {
   minHeight: 44,
   alignItems: 'center',
   borderBottom: '1px solid currentColor',
-  fontWeight: 700,
+  fontWeight: vars.$fontWeight.bold,
 });

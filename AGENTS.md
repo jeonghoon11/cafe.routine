@@ -12,8 +12,8 @@
   알려진 한계. 하네스 자체를 변경할 때 읽는다.
 - [docs/product.md](docs/product.md): 매장 정보, 공식 URL, 원본 디자인
   자료. 콘텐츠나 자산을 다룰 때 읽는다.
-- [docs/design.md](docs/design.md): Black & White 브랜드 방향, SEED,
-  반응형 UI와 접근성. UI 작업 전에 읽는다.
+- [docs/design.md](docs/design.md): Black & White 브랜드 방향, SEED 토큰,
+  브랜드 색상, 반응형 UI와 접근성. UI 작업 전에 읽는다.
 - [docs/architecture.md](docs/architecture.md): 파일 배치, route group,
   공용화 기준. 구조를 변경하기 전에 읽고 변경 시 함께 갱신한다.
 - [docs/nextjs.md](docs/nextjs.md): Next.js App Router, Supabase,

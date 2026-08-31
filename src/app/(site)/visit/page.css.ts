@@ -1,18 +1,15 @@
 import { vars } from '@seed-design/css/vars';
 import { style } from '@vanilla-extract/css';
 
+import { routineVars } from '../theme.css';
+
 const mobile = 'screen and (max-width: 799px)';
 const reducedMotion = '(prefers-reduced-motion: reduce)';
-const dark = '#101112';
-const paper = '#F4F4F1';
-const ink = '#171819';
-const darkSecondary = 'rgb(244 244 241 / 68%)';
-const darkBorder = 'rgb(244 244 241 / 22%)';
 
 export const page = style({
   minHeight: '100svh',
-  color: paper,
-  background: dark,
+  color: routineVars.color.paper,
+  background: routineVars.color.dark,
 });
 
 export const intro = style({
@@ -35,8 +32,8 @@ export const eyebrow = style({
   gridRow: 1,
   alignSelf: 'end',
   margin: 0,
-  fontSize: 11,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.16em',
   '@media': { [mobile]: { marginBottom: 36 } },
 });
@@ -55,7 +52,7 @@ export const description = style({
   gridColumn: 2,
   maxWidth: 440,
   margin: '36px 0 0',
-  color: darkSecondary,
+  color: routineVars.color.darkSecondary,
   fontSize: 'clamp(1rem, 1.3vw, 1.2rem)',
   lineHeight: 1.6,
 });
@@ -79,8 +76,8 @@ export const revealContent = style({
 export const addressSection = style({
   minHeight: '58svh',
   padding: '12vh 4vw',
-  color: ink,
-  background: paper,
+  color: routineVars.color.ink,
+  background: routineVars.color.paper,
   '@media': {
     [mobile]: { minHeight: 'auto', padding: '88px 20px' },
   },
@@ -95,8 +92,8 @@ export const addressInner = style({
 
 export const addressEyebrow = style({
   margin: 0,
-  fontSize: 11,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.16em',
 });
 
@@ -130,17 +127,17 @@ export const mapLink = style({
   justifyContent: 'center',
   marginTop: 40,
   paddingInline: 20,
-  color: paper,
-  background: dark,
-  fontWeight: 700,
+  color: routineVars.color.paper,
+  background: routineVars.color.dark,
+  fontWeight: vars.$fontWeight.bold,
   textAlign: 'center',
   touchAction: 'manipulation',
   transition: `color ${vars.$duration.d4} ease, background-color ${vars.$duration.d4} ease`,
   selectors: {
     '&:hover': { background: '#292A2B' },
     '&:focus-visible': {
-      color: ink,
-      background: paper,
+      color: routineVars.color.ink,
+      background: routineVars.color.paper,
       outline: '3px solid currentColor',
       outlineOffset: 4,
     },
@@ -166,9 +163,9 @@ export const detail = style({ minWidth: 0 });
 
 export const detailEyebrow = style({
   margin: '0 0 28px',
-  color: darkSecondary,
-  fontSize: 11,
-  fontWeight: 700,
+  color: routineVars.color.darkSecondary,
+  fontSize: vars.$fontSize.t1,
+  fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.16em',
 });
 
@@ -188,7 +185,7 @@ export const hoursRow = style({
   gridTemplateColumns: '1fr auto',
   gap: 24,
   alignItems: 'center',
-  borderTop: `1px solid ${darkBorder}`,
+  borderTop: `1px solid ${routineVars.color.darkBorder}`,
   fontSize: 'clamp(1rem, 1.25vw, 1.2rem)',
   lineHeight: 1.5,
   fontVariantNumeric: 'tabular-nums',
@@ -226,8 +223,8 @@ export const phoneNumber = style({
 
 export const phoneAction = style({
   marginTop: 14,
-  fontSize: 14,
-  fontWeight: 700,
+  fontSize: vars.$fontSize.t4,
+  fontWeight: vars.$fontWeight.bold,
 });
 
 export const socialLink = style({
@@ -239,9 +236,9 @@ export const socialLink = style({
   touchAction: 'manipulation',
   transition: `border-color ${vars.$duration.d4} ease`,
   selectors: {
-    '&:hover': { borderColor: paper },
+    '&:hover': { borderColor: routineVars.color.paper },
     '&:focus-visible': {
-      borderColor: paper,
+      borderColor: routineVars.color.paper,
       outline: '3px solid currentColor',
       outlineOffset: 4,
     },

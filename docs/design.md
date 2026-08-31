@@ -18,8 +18,17 @@
   다른 UI library를 추가하지 않는다.
 - 설치나 version update 전에는 공식 최신 version과 변경 사항을 확인하고
   lockfile을 함께 갱신한다.
-- 색상은 SEED semantic token을 흑백 palette에 맞춰 적용한다. spacing,
-  typography, radius는 브랜드와 충돌하지 않으면 token을 우선한다.
+- 일반 UI의 색상·타이포그래피·간격·radius는
+  `@seed-design/css/vars`의 공개 semantic token을 우선한다. 내부 package
+  경로나 component 전용 vars를 직접 import하지 않는다.
+- Cafe Routine의 Paper·Ink·Dark와 보조 색상은 SEED 기본 palette를
+  덮어쓰지 않고 `(site)/theme.css.ts`의 `routineVars.color`로 관리한다.
+  이 값은 매장 브랜드 표면에만 사용하고 SEED component의 상태·대비
+  조합은 유지한다.
+- 본문·라벨·버튼의 표준 크기와 두께는 `vars.$fontSize`,
+  `vars.$fontWeight`, `vars.$lineHeight`를 사용한다. SEED 스케일을 넘는
+  반응형 display title과 타이트한 line-height는 브랜드 typography로
+  가까운 page style에 둔다.
 - `vanilla-extract`는 page layout과 SEED로 충족할 수 없는 custom style에만
   사용한다. SEED의 접근성 동작과 focus 처리를 제거하지 않는다.
 

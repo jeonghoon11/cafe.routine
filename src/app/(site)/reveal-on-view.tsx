@@ -10,7 +10,7 @@ type RevealOnViewProps = {
 export function RevealOnView({ children, className }: RevealOnViewProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useEffect(function revealContentWhenVisible() {
     const content = contentRef.current;
 
     if (!content) {

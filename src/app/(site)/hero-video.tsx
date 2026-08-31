@@ -7,7 +7,7 @@ import * as styles from './page.css';
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
+  useEffect(function synchronizeHeroVideoPlayback() {
     const video = videoRef.current;
     const shouldShowVideo = !window.matchMedia(
       '(prefers-reduced-motion: reduce)',
