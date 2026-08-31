@@ -54,7 +54,7 @@ export const heroVideo = style({
   height: '100%',
   objectFit: 'cover',
   '@media': {
-    [mobile]: { display: 'none' },
+    [mobile]: { objectPosition: '32% center' },
     '(prefers-reduced-motion: reduce)': { display: 'none' },
   },
 });

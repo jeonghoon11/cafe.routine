@@ -10,7 +10,7 @@ export function HeroVideo() {
   useEffect(() => {
     const video = videoRef.current;
     const shouldShowVideo = !window.matchMedia(
-      '(max-width: 799px), (prefers-reduced-motion: reduce)',
+      '(prefers-reduced-motion: reduce)',
     ).matches;
 
     if (!video || !shouldShowVideo) {
