@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { getBusinessHours, getStoreProfile } from '../_data/get-site-data';
+import { RevealOnView } from '../reveal-on-view';
 
 import * as styles from './page.css';
 
@@ -10,12 +11,34 @@ export const metadata: Metadata = {
 };
 
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
+const TIME_FORMATTER = new Intl.DateTimeFormat('ko-KR', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+  timeZone: 'Asia/Seoul',
+});
+
+function formatTime(time: string) {
+  return TIME_FORMATTER.format(new Date(`2000-01-01T${time}+09:00`));
+}
 
 export default async function VisitPage() {
   const [profile, businessHours] = await Promise.all([
     getStoreProfile(),
     getBusinessHours(),
   ]);
+  const hoursRows = businessHours.map((hours) => ({
+    day: `${DAY_NAMES[hours.day_of_week]}요일`,
+    label: hours.is_closed
+      ? '휴무'
+      : `${formatTime(hours.opens_at)}–${formatTime(hours.closes_at)}`,
+  }));
+  const hasUniformHours =
+    businessHours.length === 7 &&
+    new Set(hoursRows.map(({ label }) => label)).size === 1;
+  const displayedHours = hasUniformHours
+    ? [{ day: '매일', label: hoursRows[0].label }]
+    : hoursRows;
 
   return (
     <div className={styles.page}>
@@ -23,51 +46,68 @@ export default async function VisitPage() {
         <p className={styles.eyebrow}>ROUTINE / VISIT</p>
         <h1 className={styles.title}>Visit.</h1>
         <p className={styles.description}>
-          일상에 잠시 머물 수 있는 한 잔을 준비하고 있습니다.
+          루틴의 위치와 영업시간을 확인하세요.
         </p>
       </header>
 
-      <section className={styles.details} aria-label="매장 정보">
-        <div className={styles.detail}>
-          <p className={styles.label}>Address</p>
-          <address>{profile.address}</address>
-          {profile.naver_place_url && (
-            <a className={styles.actionLink} href={profile.naver_place_url}>
-              네이버 지도에서 보기 ↗
-            </a>
-          )}
-        </div>
+      <section className={styles.addressSection} aria-labelledby="address-title">
+        <RevealOnView
+          className={`${styles.revealContent} ${styles.addressInner}`}
+        >
+          <p className={styles.addressEyebrow}>01 — ADDRESS</p>
+          <div className={styles.addressContent}>
+            <h2 className={styles.addressTitle} id="address-title">
+              Find ROUTINE.
+            </h2>
+            <address className={styles.address}>{profile.address}</address>
+            {profile.naver_place_url && (
+              <a className={styles.mapLink} href={profile.naver_place_url}>
+                네이버 지도에서 위치 확인하기 ↗
+              </a>
+            )}
+          </div>
+        </RevealOnView>
+      </section>
 
-        <div className={styles.detail}>
-          <p className={styles.label}>Hours</p>
-          <ul className={styles.hoursList} aria-label="영업시간">
-            {businessHours.map((hours) => (
-              <li className={styles.hoursItem} key={hours.day_of_week}>
-                <span>{DAY_NAMES[hours.day_of_week]}요일</span>
-                <span>
-                  {hours.is_closed
-                    ? '휴무'
-                    : `${hours.opens_at.slice(0, 5)}–${hours.closes_at.slice(0, 5)}`}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <section className={styles.details} aria-label="방문 세부 정보">
+        <RevealOnView className={styles.revealContent}>
+          <section className={styles.detail} aria-labelledby="hours-title">
+            <p className={styles.detailEyebrow}>02 — HOURS</p>
+            <h2 className={styles.detailTitle} id="hours-title">
+              Hours.
+            </h2>
+            <dl className={styles.hoursList} aria-label="영업시간">
+              {displayedHours.map(({ day, label }) => (
+                <div className={styles.hoursRow} key={day}>
+                  <dt>{day}</dt>
+                  <dd className={styles.hoursValue}>{label}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        </RevealOnView>
 
-        <div className={styles.detail}>
-          <p className={styles.label}>Contact</p>
-          <a
-            className={styles.contactLink}
-            href={`tel:${profile.telephone.replaceAll('-', '')}`}
-          >
-            {profile.telephone}
-          </a>
-          {profile.instagram_url && (
-            <a className={styles.actionLink} href={profile.instagram_url}>
-              Instagram ↗
+        <RevealOnView className={styles.revealContent}>
+          <section className={styles.detail} aria-labelledby="contact-title">
+            <p className={styles.detailEyebrow}>03 — CONTACT</p>
+            <h2 className={styles.detailTitle} id="contact-title">
+              Contact.
+            </h2>
+            <a
+              className={styles.phoneLink}
+              href={`tel:${profile.telephone.replaceAll('-', '')}`}
+            >
+              <span className={styles.phoneNumber}>{profile.telephone}</span>
+              <span className={styles.phoneAction}>전화하기 ↗</span>
             </a>
-          )}
-        </div>
+            {profile.instagram_url && (
+              <a className={styles.socialLink} href={profile.instagram_url}>
+                <span translate="no">Instagram</span>에서{' '}
+                <span translate="no">ROUTINE</span> 보기 ↗
+              </a>
+            )}
+          </section>
+        </RevealOnView>
       </section>
     </div>
   );
