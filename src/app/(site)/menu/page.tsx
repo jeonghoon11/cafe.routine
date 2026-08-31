@@ -13,6 +13,9 @@ const priceFormatter = new Intl.NumberFormat('ko-KR');
 
 export default async function MenuPage() {
   const categories = await getMenu();
+  const visibleCategories = categories.filter(
+    (category) => category.menu_items.length > 0,
+  );
 
   return (
     <div className={styles.page}>
@@ -24,16 +27,18 @@ export default async function MenuPage() {
         </p>
       </header>
 
-      <nav className={styles.categoryNav} aria-label="메뉴 카테고리">
-        {categories.map((category) => (
-          <a href={`#${category.slug}`} key={category.id}>
-            {category.name}
-          </a>
-        ))}
-      </nav>
+      {visibleCategories.length > 0 && (
+        <nav className={styles.categoryNav} aria-label="메뉴 카테고리">
+          {visibleCategories.map((category) => (
+            <a href={`#${category.slug}`} key={category.id}>
+              {category.name}
+            </a>
+          ))}
+        </nav>
+      )}
 
       <div className={styles.categories}>
-        {categories.map((category, categoryIndex) => (
+        {visibleCategories.map((category, categoryIndex) => (
           <section
             className={styles.category}
             id={category.slug}
@@ -48,23 +53,53 @@ export default async function MenuPage() {
             </h2>
             <ul className={styles.menuList}>
               {category.menu_items.map((item) => (
-                <li className={styles.menuItem} key={item.id}>
-                  <div>
-                    <h3 className={styles.itemName}>{item.name}</h3>
+                <li
+                  className={styles.menuItem}
+                  data-available={item.is_available}
+                  key={item.id}
+                >
+                  <div className={styles.imageFrame}>
+                    {item.media_assets ? (
+                      <img
+                        className={styles.itemImage}
+                        src={item.media_assets.src}
+                        alt={item.media_assets.alt_text}
+                        width={item.media_assets.width}
+                        height={item.media_assets.height}
+                        loading="lazy"
+                        decoding="async"
+                        sizes="(max-width: 799px) 112px, 32vw"
+                      />
+                    ) : (
+                      <span className={styles.imageFallback} aria-hidden="true">
+                        ROUTINE
+                      </span>
+                    )}
+                  </div>
+                  <div className={styles.itemContent}>
+                    <div className={styles.itemHeading}>
+                      <h3 className={styles.itemName}>{item.name}</h3>
+                      {!item.is_available && (
+                        <span className={styles.soldOut}>품절</span>
+                      )}
+                    </div>
                     {item.description && (
                       <p className={styles.itemDescription}>
                         {item.description}
                       </p>
                     )}
+                    <p className={styles.price}>
+                      {priceFormatter.format(item.price_krw)}원
+                    </p>
                   </div>
-                  <p className={styles.price}>
-                    {priceFormatter.format(item.price_krw)}원
-                  </p>
                 </li>
               ))}
             </ul>
           </section>
         ))}
+        {visibleCategories.length === 0 && (
+          <p className={styles.emptyState}>현재 준비된 메뉴가 없습니다.</p>
+        )}
       </div>
 
       <p className={styles.notice}>
