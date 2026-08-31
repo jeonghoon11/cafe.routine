@@ -1,6 +1,10 @@
 import Link from 'next/link';
 
-import { getHomeMedia, getStoreProfile } from './_data/get-site-data';
+import {
+  getFeaturedCoffeeMedia,
+  getHomeMedia,
+  getStoreProfile,
+} from './_data/get-site-data';
 import { HeroActions } from './hero-actions';
 import { HeroVideo } from './hero-video';
 import { RevealOnView } from './reveal-on-view';
@@ -8,24 +12,29 @@ import { RevealOnView } from './reveal-on-view';
 import * as styles from './page.css';
 
 export default async function HomePage() {
-  const [profile, homeMedia] = await Promise.all([
+  const [profile, homeMedia, featuredCoffeeMedia] = await Promise.all([
     getStoreProfile(),
     getHomeMedia(),
+    getFeaturedCoffeeMedia(),
   ]);
 
   if (homeMedia.length !== 4) {
     throw new Error('홈 화면에는 공개 이미지 4장이 필요합니다.');
   }
 
-  const [hero, beans, brew, pause] = homeMedia;
+  const [hero, ...fallbackCoffeeMedia] = homeMedia;
+  const [routineCoffee, pistachioLatte, cafeLatte] =
+    featuredCoffeeMedia.length === 3
+      ? featuredCoffeeMedia
+      : fallbackCoffeeMedia;
   const coffeeCards = [
-    { asset: beans, className: styles.coffeeCard },
+    { asset: routineCoffee, className: styles.coffeeCard },
     {
-      asset: brew,
+      asset: pistachioLatte,
       className: `${styles.coffeeCard} ${styles.coffeeCardBrew}`,
     },
     {
-      asset: pause,
+      asset: cafeLatte,
       className: `${styles.coffeeCard} ${styles.coffeeCardPause}`,
     },
   ];

@@ -84,16 +84,51 @@ globalStyle(`${categoryNav} a:focus-visible`, {
 export const categories = style({});
 
 export const category = style({
-  display: 'grid',
-  gridTemplateColumns: 'minmax(160px, 1fr) 2fr',
-  gap: 24,
   padding: '12vh 0',
   borderBottom: `1px solid ${vars.$color.stroke.neutralSubtle}`,
   scrollMarginTop: 145,
-  '@media': { [mobile]: { display: 'block', scrollMarginTop: 130 } },
+  '@media': { [mobile]: { scrollMarginTop: 130 } },
+});
+
+export const categoryContent = style({
+  display: 'grid',
+  gridTemplateColumns: 'minmax(160px, 1fr) 2fr',
+  gap: 24,
+  opacity: 0,
+  transform: 'translateY(32px)',
+  transition:
+    'opacity 900ms cubic-bezier(0.22, 1, 0.36, 1), transform 900ms cubic-bezier(0.22, 1, 0.36, 1)',
+  selectors: {
+    "&[data-reveal='visible']": { opacity: 1, transform: 'translateY(0)' },
+  },
+  '@media': {
+    [mobile]: { display: 'block' },
+    '(prefers-reduced-motion: reduce)': {
+      opacity: 1,
+      transform: 'none',
+      transition: 'none',
+    },
+  },
+});
+
+export const categoryRail = style({
+  position: 'sticky',
+  top: 164,
+  display: 'grid',
+  gridTemplateAreas: '"index" "title" "count"',
+  gap: 20,
+  alignSelf: 'start',
+  '@media': {
+    [mobile]: {
+      position: 'static',
+      gridTemplateAreas: '"index count" "title title"',
+      gridTemplateColumns: '1fr auto',
+    },
+  },
 });
 
 export const categoryIndex = style({
+  gridArea: 'index',
   margin: 0,
   color: vars.$color.fg.neutralSubtle,
   fontSize: 12,
@@ -101,12 +136,23 @@ export const categoryIndex = style({
 });
 
 export const categoryTitle = style({
-  gridColumn: 2,
+  gridArea: 'title',
+  maxWidth: '7ch',
   margin: 0,
-  fontSize: 'clamp(2.5rem, 5vw, 5rem)',
+  fontSize: 'clamp(2.75rem, 4vw, 4.75rem)',
   lineHeight: 0.92,
   letterSpacing: '-0.055em',
-  '@media': { [mobile]: { marginTop: 20 } },
+  textWrap: 'balance',
+});
+
+export const categoryCount = style({
+  gridArea: 'count',
+  margin: 0,
+  color: vars.$color.fg.neutralSubtle,
+  fontSize: 11,
+  fontWeight: 700,
+  letterSpacing: '0.14em',
+  '@media': { [mobile]: { justifySelf: 'end' } },
 });
 
 export const menuList = style({
@@ -114,10 +160,12 @@ export const menuList = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   gap: '48px 24px',
-  margin: '48px 0 0',
-  padding: 0,
+  margin: 0,
+  padding: '0 0 56px',
   listStyle: 'none',
-  '@media': { [mobile]: { display: 'block', marginTop: 36 } },
+  '@media': {
+    [mobile]: { display: 'block', marginTop: 36, paddingBottom: 0 },
+  },
 });
 
 export const menuItem = style({
@@ -134,6 +182,11 @@ export const menuItem = style({
       borderTop: `1px solid ${vars.$color.stroke.neutralSubtle}`,
     },
   },
+});
+
+globalStyle(`${menuItem}:nth-child(even)`, {
+  marginTop: 56,
+  '@media': { [mobile]: { marginTop: 0 } },
 });
 
 export const imageFrame = style({

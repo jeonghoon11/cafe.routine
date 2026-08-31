@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { RevealOnView } from '../reveal-on-view';
 import { getMenu } from './_data/get-menu';
 
 import * as styles from './page.css';
@@ -45,56 +46,69 @@ export default async function MenuPage() {
             key={category.id}
             aria-labelledby={`${category.slug}-title`}
           >
-            <p className={styles.categoryIndex}>
-              {String(categoryIndex + 1).padStart(2, '0')}
-            </p>
-            <h2 className={styles.categoryTitle} id={`${category.slug}-title`}>
-              {category.name}
-            </h2>
-            <ul className={styles.menuList}>
-              {category.menu_items.map((item) => (
-                <li
-                  className={styles.menuItem}
-                  data-available={item.is_available}
-                  key={item.id}
+            <RevealOnView className={styles.categoryContent}>
+              <div className={styles.categoryRail}>
+                <p className={styles.categoryIndex}>
+                  {String(categoryIndex + 1).padStart(2, '0')}
+                </p>
+                <h2
+                  className={styles.categoryTitle}
+                  id={`${category.slug}-title`}
                 >
-                  <div className={styles.imageFrame}>
-                    {item.media_assets ? (
-                      <img
-                        className={styles.itemImage}
-                        src={item.media_assets.src}
-                        alt={item.media_assets.alt_text}
-                        width={item.media_assets.width}
-                        height={item.media_assets.height}
-                        loading="lazy"
-                        decoding="async"
-                        sizes="(max-width: 799px) 112px, 32vw"
-                      />
-                    ) : (
-                      <span className={styles.imageFallback} aria-hidden="true">
-                        ROUTINE
-                      </span>
-                    )}
-                  </div>
-                  <div className={styles.itemContent}>
-                    <div className={styles.itemHeading}>
-                      <h3 className={styles.itemName}>{item.name}</h3>
-                      {!item.is_available && (
-                        <span className={styles.soldOut}>품절</span>
+                  {category.name}
+                </h2>
+                <p className={styles.categoryCount}>
+                  {String(category.menu_items.length).padStart(2, '0')} ITEMS
+                </p>
+              </div>
+              <ul className={styles.menuList}>
+                {category.menu_items.map((item) => (
+                  <li
+                    className={styles.menuItem}
+                    data-available={item.is_available}
+                    key={item.id}
+                  >
+                    <div className={styles.imageFrame}>
+                      {item.media_assets ? (
+                        <img
+                          className={styles.itemImage}
+                          src={item.media_assets.src}
+                          alt={item.media_assets.alt_text}
+                          width={item.media_assets.width}
+                          height={item.media_assets.height}
+                          loading="lazy"
+                          decoding="async"
+                          sizes="(max-width: 799px) 112px, 32vw"
+                        />
+                      ) : (
+                        <span
+                          className={styles.imageFallback}
+                          aria-hidden="true"
+                        >
+                          ROUTINE
+                        </span>
                       )}
                     </div>
-                    {item.description && (
-                      <p className={styles.itemDescription}>
-                        {item.description}
+                    <div className={styles.itemContent}>
+                      <div className={styles.itemHeading}>
+                        <h3 className={styles.itemName}>{item.name}</h3>
+                        {!item.is_available && (
+                          <span className={styles.soldOut}>품절</span>
+                        )}
+                      </div>
+                      {item.description && (
+                        <p className={styles.itemDescription}>
+                          {item.description}
+                        </p>
+                      )}
+                      <p className={styles.price}>
+                        {priceFormatter.format(item.price_krw)}원
                       </p>
-                    )}
-                    <p className={styles.price}>
-                      {priceFormatter.format(item.price_krw)}원
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </RevealOnView>
           </section>
         ))}
         {visibleCategories.length === 0 && (
