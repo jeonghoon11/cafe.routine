@@ -1,12 +1,16 @@
-import { vars } from '@seed-design/css/vars';
 import { globalStyle, style } from '@vanilla-extract/css';
 
 const mobile = 'screen and (max-width: 799px)';
+const paper = '#F4F4F1';
+const ink = '#171819';
+const secondary = '#636460';
+const border = 'rgb(16 17 18 / 16%)';
+const fallback = '#E8E8E4';
 
 export const page = style({
   padding: 'clamp(130px, 18vh, 190px) 4vw 16vh',
-  color: vars.$color.fg.neutral,
-  background: vars.$color.bg.layerDefault,
+  color: ink,
+  background: paper,
   '@media': { [mobile]: { padding: '112px 20px 100px' } },
 });
 
@@ -16,7 +20,7 @@ export const intro = style({
   gap: 24,
   alignItems: 'end',
   paddingBottom: '8vh',
-  borderBottom: '1px solid currentColor',
+  borderBottom: `1px solid ${border}`,
   '@media': { [mobile]: { display: 'block' } },
 });
 
@@ -40,7 +44,7 @@ export const description = style({
   gridColumn: 2,
   maxWidth: 440,
   margin: '36px 0 0',
-  color: vars.$color.fg.neutralSubtle,
+  color: secondary,
   fontSize: 'clamp(1rem, 1.3vw, 1.2rem)',
   lineHeight: 1.6,
 });
@@ -53,7 +57,7 @@ export const categoryNav = style({
   gap: 8,
   padding: '14px 0',
   overflowX: 'auto',
-  background: 'rgb(255 255 255 / 92%)',
+  background: 'rgb(244 244 241 / 92%)',
   backdropFilter: 'blur(12px)',
   scrollbarWidth: 'none',
   '@media': { [mobile]: { top: 64 } },
@@ -72,12 +76,12 @@ globalStyle(`${categoryNav} a`, {
 });
 
 globalStyle(`${categoryNav} a:hover`, {
-  color: vars.$color.bg.layerDefault,
-  background: vars.$color.fg.neutral,
+  color: paper,
+  background: ink,
 });
 
 globalStyle(`${categoryNav} a:focus-visible`, {
-  outline: `3px solid ${vars.$color.fg.neutral}`,
+  outline: `3px solid ${ink}`,
   outlineOffset: 3,
 });
 
@@ -85,7 +89,7 @@ export const categories = style({});
 
 export const category = style({
   padding: '12vh 0',
-  borderBottom: `1px solid ${vars.$color.stroke.neutralSubtle}`,
+  borderBottom: `1px solid ${border}`,
   scrollMarginTop: 145,
   '@media': { [mobile]: { scrollMarginTop: 130 } },
 });
@@ -130,7 +134,7 @@ export const categoryRail = style({
 export const categoryIndex = style({
   gridArea: 'index',
   margin: 0,
-  color: vars.$color.fg.neutralSubtle,
+  color: secondary,
   fontSize: 12,
   fontWeight: 700,
 });
@@ -148,7 +152,7 @@ export const categoryTitle = style({
 export const categoryCount = style({
   gridArea: 'count',
   margin: 0,
-  color: vars.$color.fg.neutralSubtle,
+  color: secondary,
   fontSize: 11,
   fontWeight: 700,
   letterSpacing: '0.14em',
@@ -171,7 +175,7 @@ export const menuList = style({
 export const menuItem = style({
   minWidth: 0,
   selectors: {
-    '&[data-available="false"]': { color: vars.$color.fg.neutralSubtle },
+    '&[data-available="false"]': { color: secondary },
   },
   '@media': {
     [mobile]: {
@@ -179,7 +183,7 @@ export const menuItem = style({
       gridTemplateColumns: '112px minmax(0, 1fr)',
       gap: 16,
       padding: '20px 0',
-      borderTop: `1px solid ${vars.$color.stroke.neutralSubtle}`,
+      borderTop: `1px solid ${border}`,
     },
   },
 });
@@ -195,8 +199,8 @@ export const imageFrame = style({
   aspectRatio: '4 / 3',
   placeItems: 'center',
   overflow: 'hidden',
-  color: vars.$color.fg.neutralSubtle,
-  background: vars.$color.bg.neutralWeak,
+  color: secondary,
+  background: fallback,
   selectors: {
     [`${menuItem}[data-available="false"] &`]: { opacity: 0.55 },
   },
@@ -258,7 +262,7 @@ export const soldOut = style({
 
 export const itemDescription = style({
   margin: '7px 0 0',
-  color: vars.$color.fg.neutralSubtle,
+  color: secondary,
   fontSize: 14,
   lineHeight: 1.5,
 });
@@ -273,13 +277,13 @@ export const price = style({
 export const emptyState = style({
   margin: 0,
   padding: '15vh 0',
-  color: vars.$color.fg.neutralSubtle,
+  color: secondary,
   textAlign: 'center',
 });
 
 export const notice = style({
   margin: '64px 0 0',
-  color: vars.$color.fg.neutralSubtle,
+  color: secondary,
   fontSize: 13,
   lineHeight: 1.6,
 });

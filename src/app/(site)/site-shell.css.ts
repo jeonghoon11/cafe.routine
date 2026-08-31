@@ -1,7 +1,9 @@
-import { vars } from '@seed-design/css/vars';
 import { globalStyle, style } from '@vanilla-extract/css';
 
 const mobile = 'screen and (max-width: 799px)';
+const dark = '#101112';
+const paper = '#F4F4F1';
+const ink = '#171819';
 
 export const shell = style({
   minHeight: '100svh',
@@ -19,8 +21,8 @@ export const skipLink = style({
   top: 12,
   left: 12,
   padding: '12px 16px',
-  color: vars.$color.fg.neutral,
-  background: vars.$color.bg.layerDefault,
+  color: ink,
+  background: paper,
   transform: 'translateY(-180%)',
   selectors: { '&:focus': { transform: 'translateY(0)' } },
 });
@@ -34,8 +36,8 @@ export const header = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '0 4vw',
-  color: '#fff',
-  background: 'rgb(9 9 9 / 82%)',
+  color: paper,
+  background: 'rgb(16 17 18 / 88%)',
   backdropFilter: 'blur(14px)',
   '@media': { [mobile]: { minHeight: 64, paddingInline: 20 } },
 });
@@ -71,8 +73,8 @@ export const footer = style({
   alignItems: 'flex-end',
   justifyContent: 'space-between',
   padding: '8vh 4vw',
-  color: '#fff',
-  background: '#090909',
+  color: paper,
+  background: dark,
   '@media': {
     [mobile]: {
       minHeight: '40svh',

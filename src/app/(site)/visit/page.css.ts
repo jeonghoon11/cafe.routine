@@ -3,11 +3,15 @@ import { style } from '@vanilla-extract/css';
 
 const mobile = 'screen and (max-width: 799px)';
 const reducedMotion = '(prefers-reduced-motion: reduce)';
-const dark = '#090909';
+const dark = '#101112';
+const paper = '#F4F4F1';
+const ink = '#171819';
+const darkSecondary = 'rgb(244 244 241 / 68%)';
+const darkBorder = 'rgb(244 244 241 / 22%)';
 
 export const page = style({
   minHeight: '100svh',
-  color: '#fff',
+  color: paper,
   background: dark,
 });
 
@@ -51,7 +55,7 @@ export const description = style({
   gridColumn: 2,
   maxWidth: 440,
   margin: '36px 0 0',
-  color: 'rgb(255 255 255 / 64%)',
+  color: darkSecondary,
   fontSize: 'clamp(1rem, 1.3vw, 1.2rem)',
   lineHeight: 1.6,
 });
@@ -75,8 +79,8 @@ export const revealContent = style({
 export const addressSection = style({
   minHeight: '58svh',
   padding: '12vh 4vw',
-  color: dark,
-  background: '#fff',
+  color: ink,
+  background: paper,
   '@media': {
     [mobile]: { minHeight: 'auto', padding: '88px 20px' },
   },
@@ -126,17 +130,17 @@ export const mapLink = style({
   justifyContent: 'center',
   marginTop: 40,
   paddingInline: 20,
-  color: '#fff',
+  color: paper,
   background: dark,
   fontWeight: 700,
   textAlign: 'center',
   touchAction: 'manipulation',
   transition: `color ${vars.$duration.d4} ease, background-color ${vars.$duration.d4} ease`,
   selectors: {
-    '&:hover': { background: '#242424' },
+    '&:hover': { background: '#292A2B' },
     '&:focus-visible': {
-      color: dark,
-      background: '#fff',
+      color: ink,
+      background: paper,
       outline: '3px solid currentColor',
       outlineOffset: 4,
     },
@@ -162,7 +166,7 @@ export const detail = style({ minWidth: 0 });
 
 export const detailEyebrow = style({
   margin: '0 0 28px',
-  color: 'rgb(255 255 255 / 56%)',
+  color: darkSecondary,
   fontSize: 11,
   fontWeight: 700,
   letterSpacing: '0.16em',
@@ -184,7 +188,7 @@ export const hoursRow = style({
   gridTemplateColumns: '1fr auto',
   gap: 24,
   alignItems: 'center',
-  borderTop: '1px solid rgb(255 255 255 / 20%)',
+  borderTop: `1px solid ${darkBorder}`,
   fontSize: 'clamp(1rem, 1.25vw, 1.2rem)',
   lineHeight: 1.5,
   fontVariantNumeric: 'tabular-nums',
@@ -231,13 +235,13 @@ export const socialLink = style({
   minHeight: 44,
   alignItems: 'center',
   marginTop: 36,
-  borderBottom: '1px solid rgb(255 255 255 / 56%)',
+  borderBottom: '1px solid rgb(244 244 241 / 48%)',
   touchAction: 'manipulation',
   transition: `border-color ${vars.$duration.d4} ease`,
   selectors: {
-    '&:hover': { borderColor: '#fff' },
+    '&:hover': { borderColor: paper },
     '&:focus-visible': {
-      borderColor: '#fff',
+      borderColor: paper,
       outline: '3px solid currentColor',
       outlineOffset: 4,
     },

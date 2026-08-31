@@ -1,9 +1,10 @@
 import { vars } from '@seed-design/css/vars';
 import { globalStyle, keyframes, style } from '@vanilla-extract/css';
 
-const light = vars.$color.bg.layerDefault;
-const ink = vars.$color.fg.neutral;
-const dark = '#090909';
+const light = '#F4F4F1';
+const ink = '#171819';
+const dark = '#101112';
+const darkSecondary = 'rgb(244 244 241 / 68%)';
 const mobile = 'screen and (max-width: 799px)';
 
 const heroScale = keyframes({
@@ -163,7 +164,7 @@ export const invitationNote = style({
 export const space = style({
   position: 'relative',
   padding: '14vh 4vw 18vh',
-  color: '#fff',
+  color: light,
   background: dark,
   '@media': {
     [mobile]: { padding: '104px 20px 120px' },
@@ -188,7 +189,7 @@ export const spaceTitle = style({
 export const spaceDescription = style({
   maxWidth: '34ch',
   margin: 0,
-  color: 'rgb(255 255 255 / 64%)',
+  color: darkSecondary,
   fontSize: 'clamp(1rem, 1.3vw, 1.2rem)',
   lineHeight: 1.6,
 });
@@ -231,7 +232,7 @@ export const spaceFigure = style({ margin: 0 });
 
 export const spaceImage = style({
   overflow: 'hidden',
-  background: '#222',
+  background: '#242526',
 });
 
 globalStyle(`${spaceImage} img`, {
