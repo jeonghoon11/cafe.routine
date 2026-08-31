@@ -160,28 +160,30 @@ export const invitationNote = style({
   '@media': { [mobile]: { justifySelf: 'start', marginRight: 0 } },
 });
 
-export const coffee = style({
+export const space = style({
   position: 'relative',
-  minHeight: '150svh',
-  padding: '12vh 4vw 16vh',
+  minHeight: '180svh',
+  padding: '14vh 4vw 18vh',
   color: '#fff',
   background: dark,
-  '@media': { [mobile]: { minHeight: 'auto', padding: '13vh 20px 16vh' } },
+  '@media': {
+    [mobile]: { minHeight: 'auto', padding: '104px 20px 120px' },
+  },
 });
 
-export const coffeeHeading = style({
+export const spaceHeading = style({
   position: 'sticky',
   zIndex: 1,
   top: '12vh',
   display: 'flex',
   flexDirection: 'column',
   gap: vars.$dimension.x4,
-  marginBottom: '14vh',
   pointerEvents: 'none',
-  '@media': { [mobile]: { position: 'static', marginBottom: '9vh' } },
+  '@media': { [mobile]: { position: 'static' } },
 });
 
-export const coffeeTitle = style({
+export const spaceTitle = style({
+  maxWidth: '10ch',
   margin: 0,
   fontSize: 'clamp(3.5rem, 8vw, 7.5rem)',
   lineHeight: 0.86,
@@ -189,59 +191,53 @@ export const coffeeTitle = style({
   '@media': { [mobile]: { fontSize: 'clamp(3.4rem, 16vw, 6rem)' } },
 });
 
-export const coffeeGrid = style({
+export const spaceDescription = style({
+  maxWidth: '34ch',
+  margin: 0,
+  color: 'rgb(255 255 255 / 64%)',
+  fontSize: 'clamp(1rem, 1.3vw, 1.2rem)',
+  lineHeight: 1.6,
+});
+
+export const spaceGallery = style({
   position: 'relative',
   zIndex: 2,
   display: 'grid',
-  gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-  gap: 'clamp(14px, 2vw, 32px)',
+  gridTemplateColumns: '5fr 7fr',
+  gap: 'clamp(24px, 3vw, 48px)',
   alignItems: 'start',
-  marginTop: '20vh',
+  marginTop: '18vh',
   '@media': {
-    [mobile]: { gridTemplateColumns: '1fr', gap: '12vh', marginTop: 0 },
+    [mobile]: { gridTemplateColumns: '1fr', gap: 72, marginTop: 64 },
   },
 });
 
-export const coffeeCard = style({
-  margin: 0,
-});
+export const spaceCard = style({});
 
-export const coffeeCardBrew = style({
-  marginTop: '28vh',
+export const spaceCardActive = style({
+  marginTop: '16vh',
   '@media': { [mobile]: { marginTop: 0 } },
 });
 
-export const coffeeCardPause = style({
-  marginTop: '8vh',
+export const spaceCardClosing = style({
+  marginTop: '12vh',
   '@media': { [mobile]: { marginTop: 0 } },
 });
 
-export const coffeeImage = style({
-  position: 'relative',
-  aspectRatio: '3 / 4',
+export const spaceFigure = style({ margin: 0 });
+
+export const spaceImage = style({
   overflow: 'hidden',
   background: '#222',
-  '@media': { [mobile]: { aspectRatio: '4 / 5' } },
 });
 
-globalStyle(`${coffeeImage} img`, {
+globalStyle(`${spaceImage} img`, {
+  display: 'block',
   width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  filter: 'grayscale(1) contrast(1.04)',
-  transition: `transform ${vars.$duration.d4} ease, filter ${vars.$duration.d4} ease`,
+  height: 'auto',
 });
 
-globalStyle(`${coffeeCard}:hover ${coffeeImage} img`, {
-  '@media': {
-    '(hover: hover) and (pointer: fine)': {
-      transform: 'scale(1.025)',
-      filter: 'grayscale(1) contrast(1.14)',
-    },
-  },
-});
-
-export const coffeeCaption = style({
+export const spaceCaption = style({
   marginTop: 14,
   fontSize: 10,
   fontWeight: 700,
