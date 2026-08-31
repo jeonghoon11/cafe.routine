@@ -61,13 +61,13 @@ export const getSpaceMedia = cache(async function getSpaceMedia() {
     .eq('usage', 'space')
     .eq('is_published', true)
     .order('sort_order')
-    .limit(4);
+    .limit(8);
 
   if (error) {
     throw error;
   }
 
-  if (data.length !== 4) {
+  if (data.length !== 8) {
     return [];
   }
 

@@ -13,9 +13,13 @@ import * as styles from './page.css';
 
 const spaceCaptions = [
   'SPACE / 01 — COURTYARD',
-  'SPACE / 02 — INTERIOR',
-  'SPACE / 03 — NIGHT GARDEN',
-  'SPACE / 04 — INTERIOR',
+  'SPACE / 02 — LONG TABLE',
+  'SPACE / 03 — PASSAGE',
+  'SPACE / 04 — CUPS',
+  'SPACE / 05 — NIGHT GARDEN',
+  'SPACE / 06 — CUP WALL',
+  'SPACE / 07 — TABLE DETAIL',
+  'SPACE / 08 — INTERIOR',
 ];
 
 export default async function HomePage() {
@@ -31,6 +35,10 @@ export default async function HomePage() {
 
   const [hero] = homeMedia;
   const spaceCardClasses = [
+    styles.spaceCard,
+    `${styles.spaceCard} ${styles.spaceCardActive}`,
+    styles.spaceCard,
+    `${styles.spaceCard} ${styles.spaceCardActive}`,
     styles.spaceCard,
     `${styles.spaceCard} ${styles.spaceCardActive}`,
     styles.spaceCard,
@@ -83,7 +91,7 @@ export default async function HomePage() {
         </RevealOnView>
       </section>
 
-      {spaceMedia.length === 4 && (
+      {spaceMedia.length === 8 && (
         <section className={styles.space} aria-labelledby="space-title">
           <RevealOnView
             className={`${styles.revealContent} ${styles.spaceHeading}`}

@@ -162,24 +162,18 @@ export const invitationNote = style({
 
 export const space = style({
   position: 'relative',
-  minHeight: '180svh',
   padding: '14vh 4vw 18vh',
   color: '#fff',
   background: dark,
   '@media': {
-    [mobile]: { minHeight: 'auto', padding: '104px 20px 120px' },
+    [mobile]: { padding: '104px 20px 120px' },
   },
 });
 
 export const spaceHeading = style({
-  position: 'sticky',
-  zIndex: 1,
-  top: '12vh',
   display: 'flex',
   flexDirection: 'column',
   gap: vars.$dimension.x4,
-  pointerEvents: 'none',
-  '@media': { [mobile]: { position: 'static' } },
 });
 
 export const spaceTitle = style({
@@ -206,22 +200,31 @@ export const spaceGallery = style({
   gridTemplateColumns: '5fr 7fr',
   gap: 'clamp(24px, 3vw, 48px)',
   alignItems: 'start',
-  marginTop: '18vh',
+  marginTop: 'clamp(96px, 12vh, 144px)',
   '@media': {
-    [mobile]: { gridTemplateColumns: '1fr', gap: 72, marginTop: 64 },
+    [mobile]: { gridTemplateColumns: '1fr', gap: 64, marginTop: 64 },
   },
 });
 
 export const spaceCard = style({});
 
 export const spaceCardActive = style({
-  marginTop: '16vh',
+  marginTop: '10vh',
   '@media': { [mobile]: { marginTop: 0 } },
 });
 
 export const spaceCardClosing = style({
-  marginTop: '12vh',
-  '@media': { [mobile]: { marginTop: 0 } },
+  width: '72%',
+  gridColumn: '1 / -1',
+  justifySelf: 'end',
+  marginTop: '8vh',
+  '@media': {
+    [mobile]: {
+      width: '100%',
+      gridColumn: 'auto',
+      marginTop: 0,
+    },
+  },
 });
 
 export const spaceFigure = style({ margin: 0 });
