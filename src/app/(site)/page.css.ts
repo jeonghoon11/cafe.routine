@@ -123,9 +123,9 @@ export const scrollCue = style({
 export const revealSection = style({
   '@supports': {
     '(animation-timeline: view())': {
-      animation: `${sectionReveal} cubic-bezier(0.22, 1, 0.36, 1) both`,
+      animation: `${sectionReveal} linear both`,
       animationTimeline: 'view()',
-      animationRange: 'entry 10% cover 35%',
+      animationRange: 'entry 100px cover 35%',
     },
   },
   '@media': {
