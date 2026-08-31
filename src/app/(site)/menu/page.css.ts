@@ -147,7 +147,7 @@ export const imageFrame = style({
   selectors: {
     [`${menuItem}[data-available="false"] &`]: { opacity: 0.55 },
   },
-  '@media': { [mobile]: { width: 112, aspectRatio: '1' } },
+  '@media': { [mobile]: { width: 112, height: 112, aspectRatio: '1' } },
 });
 
 export const itemImage = style({
