@@ -12,8 +12,8 @@
   알려진 한계. 하네스 자체를 변경할 때 읽는다.
 - [docs/product.md](docs/product.md): 매장 정보, 공식 URL, 원본 디자인
   자료. 콘텐츠나 자산을 다룰 때 읽는다.
-- [docs/design.md](docs/design.md): Black & White 브랜드 방향, SEED,
-  반응형 UI와 접근성. UI 작업 전에 읽는다.
+- [docs/design.md](docs/design.md): Black & White 브랜드 방향, SEED 토큰,
+  브랜드 색상, 반응형 UI와 접근성. UI 작업 전에 읽는다.
 - [docs/architecture.md](docs/architecture.md): 파일 배치, route group,
   공용화 기준. 구조를 변경하기 전에 읽고 변경 시 함께 갱신한다.
 - [docs/nextjs.md](docs/nextjs.md): Next.js App Router, Supabase,
@@ -37,6 +37,8 @@
   React 설치·컴포넌트·토큰 계약을 확인할 때 사용한다.
 - [`cross-functional-team`](.agents/skills/cross-functional-team/SKILL.md):
   프론트엔드, 백엔드, 기획, 디자인 관점의 병렬 검토가 필요할 때 사용한다.
+- [`web-design-guidelines`](.agents/skills/web-design-guidelines/SKILL.md):
+  구현된 UI의 접근성, 인터랙션과 웹 인터페이스 품질을 검수할 때 사용한다.
 
 ## 공통 원칙
 

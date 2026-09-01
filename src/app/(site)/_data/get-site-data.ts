@@ -39,7 +39,8 @@ export const getHomeMedia = cache(async function getHomeMedia() {
     .select('bucket, object_path, alt_text, width, height, sort_order')
     .eq('usage', 'home')
     .eq('is_published', true)
-    .order('sort_order');
+    .order('sort_order')
+    .limit(1);
 
   if (error) {
     throw error;
@@ -49,5 +50,30 @@ export const getHomeMedia = cache(async function getHomeMedia() {
     ...asset,
     src: supabase.storage.from(asset.bucket).getPublicUrl(asset.object_path).data
       .publicUrl,
+  }));
+});
+
+export const getSpaceMedia = cache(async function getSpaceMedia() {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from('media_assets')
+    .select('bucket, object_path, alt_text, width, height, sort_order')
+    .eq('usage', 'space')
+    .eq('is_published', true)
+    .order('sort_order')
+    .limit(8);
+
+  if (error) {
+    throw error;
+  }
+
+  if (data.length !== 8) {
+    return [];
+  }
+
+  return data.map((asset) => ({
+    ...asset,
+    src: supabase.storage.from(asset.bucket).getPublicUrl(asset.object_path)
+      .data.publicUrl,
   }));
 });

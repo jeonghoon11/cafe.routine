@@ -1,31 +1,48 @@
 import Link from 'next/link';
 
-import { getHomeMedia, getStoreProfile } from './_data/get-site-data';
+import {
+  getHomeMedia,
+  getSpaceMedia,
+  getStoreProfile,
+} from './_data/get-site-data';
 import { HeroActions } from './hero-actions';
+import { HeroVideo } from './hero-video';
+import { RevealOnView } from './reveal-on-view';
 
 import * as styles from './page.css';
 
+const spaceCaptions = [
+  'SPACE / 01 — COURTYARD',
+  'SPACE / 02 — LONG TABLE',
+  'SPACE / 03 — PASSAGE',
+  'SPACE / 04 — CUPS',
+  'SPACE / 05 — NIGHT GARDEN',
+  'SPACE / 06 — CUP WALL',
+  'SPACE / 07 — TABLE DETAIL',
+  'SPACE / 08 — INTERIOR',
+];
+
 export default async function HomePage() {
-  const [profile, homeMedia] = await Promise.all([
+  const [profile, homeMedia, spaceMedia] = await Promise.all([
     getStoreProfile(),
     getHomeMedia(),
+    getSpaceMedia(),
   ]);
 
-  if (homeMedia.length !== 4) {
-    throw new Error('홈 화면에는 공개 이미지 4장이 필요합니다.');
+  if (homeMedia.length !== 1) {
+    throw new Error('홈 Hero에는 공개 이미지 1장이 필요합니다.');
   }
 
-  const [hero, beans, brew, pause] = homeMedia;
-  const coffeeCards = [
-    { asset: beans, className: styles.coffeeCard },
-    {
-      asset: brew,
-      className: `${styles.coffeeCard} ${styles.coffeeCardBrew}`,
-    },
-    {
-      asset: pause,
-      className: `${styles.coffeeCard} ${styles.coffeeCardPause}`,
-    },
+  const [hero] = homeMedia;
+  const spaceCardClasses = [
+    styles.spaceCard,
+    `${styles.spaceCard} ${styles.spaceCardActive}`,
+    styles.spaceCard,
+    `${styles.spaceCard} ${styles.spaceCardActive}`,
+    styles.spaceCard,
+    `${styles.spaceCard} ${styles.spaceCardActive}`,
+    styles.spaceCard,
+    `${styles.spaceCard} ${styles.spaceCardClosing}`,
   ];
   const slogan = profile.slogan ?? profile.name;
 
@@ -40,6 +57,7 @@ export default async function HomePage() {
           height={hero.height}
           fetchPriority="high"
         />
+        <HeroVideo />
         <div className={styles.heroShade} aria-hidden="true" />
 
         <div className={styles.heroContent}>
@@ -58,61 +76,77 @@ export default async function HomePage() {
       </section>
 
       <section
-        className={`${styles.invitation} ${styles.revealSection}`}
+        className={styles.invitation}
         id="invitation"
         aria-labelledby="invitation-title"
       >
-        <p className={styles.sectionIndex}>ROUTINE / 02 — INVITATION</p>
-        <h2 className={styles.invitationTitle} id="invitation-title">
-          {slogan}
-        </h2>
-        <p className={styles.invitationNote}>{profile.address}</p>
-      </section>
-
-      <section className={styles.coffee} aria-labelledby="coffee-title">
-        <div className={styles.coffeeHeading}>
-          <p className={styles.sectionIndex}>ROUTINE / 03 — COFFEE</p>
-          <h2 className={styles.coffeeTitle} id="coffee-title">
-            Coffee.
+        <RevealOnView
+          className={`${styles.revealContent} ${styles.invitationContent}`}
+        >
+          <p className={styles.sectionIndex}>ROUTINE / 02 — INVITATION</p>
+          <h2 className={styles.invitationTitle} id="invitation-title">
+            {slogan}
           </h2>
-        </div>
-
-        <div className={styles.coffeeGrid}>
-          {coffeeCards.map(({ asset, className }, index) => (
-            <figure
-              className={className}
-              key={asset.object_path}
-            >
-              <div className={styles.coffeeImage}>
-                <img
-                  src={asset.src}
-                  alt={asset.alt_text}
-                  width={asset.width}
-                  height={asset.height}
-                  loading="lazy"
-                />
-              </div>
-              <figcaption className={styles.coffeeCaption}>
-                COFFEE / {String(index + 1).padStart(2, '0')}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+          <p className={styles.invitationNote}>{profile.address}</p>
+        </RevealOnView>
       </section>
 
-      <section
-        className={`${styles.explore} ${styles.revealSection}`}
-        aria-labelledby="explore-title"
-      >
-        <p className={styles.sectionIndex}>ROUTINE / 04 — EXPLORE</p>
-        <h2 className={styles.exploreTitle} id="explore-title">
-          Your routine,
-          <br />one cup at a time.
-        </h2>
-        <div className={styles.exploreLinks}>
-          <Link href="/menu">메뉴 살펴보기 ↗</Link>
-          <Link href="/visit">방문 정보 확인하기 ↗</Link>
-        </div>
+      {spaceMedia.length === 8 && (
+        <section className={styles.space} aria-labelledby="space-title">
+          <RevealOnView
+            className={`${styles.revealContent} ${styles.spaceHeading}`}
+          >
+            <p className={styles.sectionIndex}>ROUTINE / 03 — SPACE</p>
+            <h2 className={styles.spaceTitle} id="space-title">
+              Inside ROUTINE.
+            </h2>
+            <p className={styles.spaceDescription}>
+              창가의 빛과 긴 테이블, 밤의 정원까지. 루틴의 공간을 둘러보세요.
+            </p>
+          </RevealOnView>
+
+          <div className={styles.spaceGallery}>
+            {spaceMedia.map((asset, index) => (
+              <RevealOnView
+                className={`${styles.revealContent} ${spaceCardClasses[index]}`}
+                key={asset.object_path}
+              >
+                <figure className={styles.spaceFigure}>
+                  <div className={styles.spaceImage}>
+                    <img
+                      src={asset.src}
+                      alt={asset.alt_text}
+                      width={asset.width}
+                      height={asset.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <figcaption className={styles.spaceCaption}>
+                    {spaceCaptions[index]}
+                  </figcaption>
+                </figure>
+              </RevealOnView>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className={styles.explore} aria-labelledby="explore-title">
+        <RevealOnView
+          className={`${styles.revealContent} ${styles.exploreContent}`}
+        >
+          <p className={styles.sectionIndex}>ROUTINE / 04 — EXPLORE</p>
+          <h2 className={styles.exploreTitle} id="explore-title">
+            Your routine,
+            <br />
+            one cup at a time.
+          </h2>
+          <div className={styles.exploreLinks}>
+            <Link href="/menu">메뉴 살펴보기 ↗</Link>
+            <Link href="/visit">방문 정보 확인하기 ↗</Link>
+          </div>
+        </RevealOnView>
       </section>
     </div>
   );
