@@ -21,7 +21,13 @@ export default async function SiteLayout({ children }: SiteLayoutProps) {
 
       <header className={styles.header}>
         <Link className={styles.wordmark} href="/" aria-label="ROUTINE 홈">
-          {profile.name}
+          <img
+            className={styles.wordmarkImage}
+            src="/images/logo.svg"
+            alt={profile.name}
+            width={130}
+            height={20}
+          />
         </Link>
         <nav className={styles.nav} aria-label="주요 메뉴">
           <Link href="/">Home</Link>
