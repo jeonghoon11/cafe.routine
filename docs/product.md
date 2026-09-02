@@ -15,13 +15,9 @@
 확인한다. 공식 Instagram, 네이버 플레이스, 제공된 원본 자료를 우선하고
 확인되지 않은 정보는 만들지 않는다.
 
-## 공식 디자인 원본
+## 공식 디자인 및 자산
 
-- `assets/source/routine_logo.ai`
-- `assets/source/ROUTINE LOGO.ai`
-- `assets/source/Preview루틴외부용-가격_new_260522.ai`
-- `assets/source/260724 루틴_메뉴.ai`
-
-- 원본 `.ai` 파일을 직접 수정하거나 덮어쓰지 않는다.
-- 웹에서 사용할 자산은 원본과 분리해 내보낸다. 로고는 SVG, 사진은 WebP를 우선한다.
-- 로고, 메뉴명, 가격은 원본을 확인하고 임의로 재구성하지 않는다.
+- 기본 로고: `public/images/logo.svg` (헤더 및 사이트 공용 워드마크)
+- 탭 아이콘: `src/app/icon.svg` (브라우저 파비콘용 R 심볼)
+- 웹에서 사용할 자산은 최적화된 WebP/PNG/SVG 포맷을 우선한다.
+- 로고, 메뉴명, 가격은 공식 자료를 확인하고 임의로 재구성하지 않는다.
