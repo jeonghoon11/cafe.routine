@@ -46,8 +46,17 @@ export const wordmark = style({
   display: 'inline-flex',
   minHeight: 44,
   alignItems: 'center',
-  fontWeight: vars.$fontWeight.bold,
-  letterSpacing: '0.12em',
+});
+
+export const wordmarkImage = style({
+  display: 'block',
+  height: 20,
+  width: 'auto',
+  '@media': {
+    [mobile]: {
+      height: 18,
+    },
+  },
 });
 
 export const nav = style({
