@@ -29,19 +29,16 @@ PD, FE, PM
 - 현재 위치 링크는 확인된 네이버 플레이스 `/home`으로 연결되므로 `네이버 지도에서 위치 확인하기`보다 `네이버에서 ROUTINE 보기`가 실제 목적지와 일치합니다. 길찾기 또는 리뷰 직접 URL이 확인되기 전에는 해당 행동을 카피에 약속하지 않습니다.
 - Address, Hours와 Contact는 기존 Supabase 조회 결과를 그대로 사용합니다. 미확인 영업 정보, 교통, 주차, 좌표 또는 실시간 상태를 추가하지 않습니다.
 
-## 담당자별 후속 작업
+## 담당자별 검수 결과
 
 - FE
-  - Visit의 기존 세 section을 하나의 Paper information sheet 안에 배치하고 desktop 2단 구조와 mobile 1열 순서를 구현합니다.
-  - 기존 `getStoreProfile`, `getBusinessHours`, 영업시간 축약 로직과 `RevealOnView` 동작을 보존합니다.
-  - Home, `getSpaceMedia`, 공용 데이터 계층과 의존성을 변경하지 않습니다.
-  - 지정 viewport, keyboard와 reduced-motion 환경에서 overflow, 정보 순서와 상호작용을 검증합니다.
+  - Visit의 기존 세 section을 하나의 Paper information sheet 안에 배치하고 desktop 2단 구조와 mobile 1열 순서를 구현했습니다.
+  - 기존 데이터 조회, 영업시간 축약과 `RevealOnView` 동작을 보존하고 Home과 `getSpaceMedia`를 변경하지 않았습니다.
+  - typecheck, lint, build와 반응형·접근성 검증을 통과했습니다.
 - PD
-  - compact intro와 Paper sheet 사이의 대비, Address 상단 2열과 Hours/Contact 1:1 균형을 desktop과 mobile에서 검수합니다.
-  - Paper sheet의 정보 밀도, section 간 간격과 Contact 링크 위계가 사진 없이도 의도적으로 보이는지 확인합니다.
+  - production `1440px`, `390px` 캡처에서 compact intro, Paper sheet, 정보 밀도와 CTA 위계를 최종 승인했으며 blocking 이슈가 없습니다.
 - PM
-  - 주소, 영업시간, 전화, Instagram과 네이버 링크가 확인된 공식 정보와 일치하는지 확인합니다.
-  - 위치 CTA가 실제 네이버 플레이스 목적지를 정확히 설명하고 방문 정보보다 장식 요소가 우선하지 않는지 검수합니다.
+  - 합의한 정보 구조와 카피, 제외 범위가 구현에 반영되고 방문 정보보다 장식 요소가 우선하지 않음을 확인했습니다.
 
 ## 완료 기준
 
@@ -53,9 +50,19 @@ PD, FE, PM
 - 네이버, 전화와 Instagram 링크의 문구와 실제 목적지가 일치하고 최소 `44px` hit area와 명확한 `focus-visible`을 제공합니다.
 - heading 계층, `address`와 영업시간 `dl` 의미 구조, keyboard 사용성과 reduced-motion이 유지됩니다.
 - 실제 Supabase 데이터로 주소, 균일·요일별 영업시간, 전화, Instagram의 표시를 확인합니다.
-- `pnpm typecheck`, `pnpm lint`, `git diff --check`를 통과하고 production 화면에서 console error가 없습니다.
+- `pnpm typecheck`, `pnpm lint`, `pnpm build`, `git diff --check`를 통과하고 production 화면에서 console warning과 error가 없습니다.
 - Home 사진, Home 데이터 요청 수와 `getSpaceMedia` 동작에 변경이 없습니다.
+
+### 최종 검증 결과
+
+- UI 구현은 commit `76b2e14`로 task/PR branch에 통합됐습니다.
+- `pnpm typecheck`, `pnpm lint`, `pnpm build`, `git diff --check`를 통과했습니다.
+- Playwright `320`, `799`, `800`, `1280`, `1920px`에서 horizontal overflow `0`이며 모든 Reveal이 visible 상태로 전환됐습니다.
+- CTA hit area는 네이버 `52px`, 전화 `63px` 이상, Instagram `44px`로 기준을 충족했습니다.
+- reduced-motion `390px`에서 세 Reveal 모두 `opacity: 1`, `transform: none`을 확인했습니다.
+- production console warning과 error는 `0`이며 Home과 `getSpaceMedia` 변경은 없습니다.
+- PD production 캡처 `1440px`, `390px` 검수를 최종 통과했고 blocking 이슈가 없습니다.
 
 ## 미결 질문
 
-- 없음. 세부 spacing과 typography 값은 위 구조와 완료 기준을 바꾸지 않는 범위에서 PD의 실제 viewport 검수로 확정합니다.
+- 없음.
