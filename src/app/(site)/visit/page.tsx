@@ -102,8 +102,11 @@ export default async function VisitPage() {
             </a>
             {profile.instagram_url && (
               <a className={styles.socialLink} href={profile.instagram_url}>
-                <span translate="no">Instagram</span>에서{' '}
-                <span translate="no">ROUTINE</span> 보기 ↗
+                <span>
+                  <span translate="no">Instagram</span>에서{' '}
+                  <span translate="no">ROUTINE</span> 소식 보기{' '}
+                  <span aria-hidden="true">↗</span>
+                </span>
               </a>
             )}
           </section>

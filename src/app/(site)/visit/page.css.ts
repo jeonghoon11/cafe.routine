@@ -147,19 +147,24 @@ export const mapLink = style({
 
 export const details = style({
   display: 'grid',
-  gridTemplateColumns: '7fr 5fr',
+  gridTemplateColumns: 'minmax(0, 7fr) minmax(0, 5fr)',
   gap: '10vw',
   padding: '14vh 4vw 18vh',
   '@media': {
     [mobile]: {
-      gridTemplateColumns: '1fr',
+      gridTemplateColumns: 'minmax(0, 1fr)',
       gap: 88,
       padding: '88px 20px 112px',
     },
   },
 });
 
-export const detail = style({ minWidth: 0 });
+export const detail = style({
+  display: 'flex',
+  minWidth: 0,
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+});
 
 export const detailEyebrow = style({
   margin: '0 0 28px',
@@ -230,9 +235,12 @@ export const phoneAction = style({
 export const socialLink = style({
   display: 'inline-flex',
   minHeight: 44,
+  maxWidth: '100%',
+  flexWrap: 'wrap',
   alignItems: 'center',
   marginTop: 36,
   borderBottom: '1px solid rgb(244 244 241 / 48%)',
+  overflowWrap: 'anywhere',
   touchAction: 'manipulation',
   transition: `border-color ${vars.$duration.d4} ease`,
   selectors: {
