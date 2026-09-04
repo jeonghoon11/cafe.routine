@@ -50,67 +50,75 @@ export default async function VisitPage() {
         </p>
       </header>
 
-      <section className={styles.addressSection} aria-labelledby="address-title">
-        <RevealOnView
-          className={`${styles.revealContent} ${styles.addressInner}`}
-        >
-          <p className={styles.addressEyebrow}>01 — ADDRESS</p>
-          <div className={styles.addressContent}>
-            <h2 className={styles.addressTitle} id="address-title">
-              Find ROUTINE.
-            </h2>
-            <address className={styles.address}>{profile.address}</address>
-            {profile.naver_place_url && (
-              <a className={styles.mapLink} href={profile.naver_place_url}>
-                네이버 지도에서 위치 확인하기 ↗
-              </a>
-            )}
-          </div>
-        </RevealOnView>
-      </section>
+      <section className={styles.information} aria-label="방문 정보">
+        <section aria-labelledby="address-title">
+          <RevealOnView
+            className={`${styles.revealContent} ${styles.addressInner}`}
+          >
+            <p className={styles.addressEyebrow}>01 — ADDRESS</p>
+            <div className={styles.addressContent}>
+              <h2 className={styles.addressTitle} id="address-title">
+                Find ROUTINE.
+              </h2>
+              <address className={styles.address}>{profile.address}</address>
+              {profile.naver_place_url && (
+                <a className={styles.mapLink} href={profile.naver_place_url}>
+                  네이버에서 ROUTINE 보기 ↗
+                </a>
+              )}
+            </div>
+          </RevealOnView>
+        </section>
 
-      <section className={styles.details} aria-label="방문 세부 정보">
-        <RevealOnView className={styles.revealContent}>
-          <section className={styles.detail} aria-labelledby="hours-title">
-            <p className={styles.detailEyebrow}>02 — HOURS</p>
-            <h2 className={styles.detailTitle} id="hours-title">
-              Hours.
-            </h2>
-            <dl className={styles.hoursList} aria-label="영업시간">
-              {displayedHours.map(({ day, label }) => (
-                <div className={styles.hoursRow} key={day}>
-                  <dt>{day}</dt>
-                  <dd className={styles.hoursValue}>{label}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-        </RevealOnView>
-
-        <RevealOnView className={styles.revealContent}>
-          <section className={styles.detail} aria-labelledby="contact-title">
-            <p className={styles.detailEyebrow}>03 — CONTACT</p>
-            <h2 className={styles.detailTitle} id="contact-title">
-              Contact.
-            </h2>
-            <a
-              className={styles.phoneLink}
-              href={`tel:${profile.telephone.replaceAll('-', '')}`}
+        <section className={styles.details} aria-label="방문 세부 정보">
+          <RevealOnView className={styles.revealContent}>
+            <section
+              className={`${styles.detail} ${styles.hoursDetail}`}
+              aria-labelledby="hours-title"
             >
-              <span className={styles.phoneNumber}>{profile.telephone}</span>
-              <span className={styles.phoneAction}>전화하기 ↗</span>
-            </a>
-            {profile.instagram_url && (
-              <a className={styles.socialLink} href={profile.instagram_url}>
-                <span>
-                  <span translate="no">Instagram</span>에서{' '}
-                  <span translate="no">ROUTINE</span> 소식 보기{' '}
-                  <span aria-hidden="true">↗</span>
-                </span>
+              <p className={styles.detailEyebrow}>02 — HOURS</p>
+              <h2 className={styles.detailTitle} id="hours-title">
+                Hours.
+              </h2>
+              <dl className={styles.hoursList} aria-label="영업시간">
+                {displayedHours.map(({ day, label }) => (
+                  <div className={styles.hoursRow} key={day}>
+                    <dt>{day}</dt>
+                    <dd className={styles.hoursValue}>{label}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          </RevealOnView>
+
+          <RevealOnView className={styles.revealContent}>
+            <section
+              className={`${styles.detail} ${styles.contactDetail}`}
+              aria-labelledby="contact-title"
+            >
+              <p className={styles.detailEyebrow}>03 — CONTACT</p>
+              <h2 className={styles.detailTitle} id="contact-title">
+                Contact.
+              </h2>
+              <a
+                className={styles.phoneLink}
+                href={`tel:${profile.telephone.replaceAll('-', '')}`}
+              >
+                <span className={styles.phoneNumber}>{profile.telephone}</span>
+                <span className={styles.phoneAction}>전화하기 ↗</span>
               </a>
-            )}
-          </section>
-        </RevealOnView>
+              {profile.instagram_url && (
+                <a className={styles.socialLink} href={profile.instagram_url}>
+                  <span>
+                    <span translate="no">Instagram</span>에서{' '}
+                    <span translate="no">ROUTINE</span> 소식 보기{' '}
+                    <span aria-hidden="true">↗</span>
+                  </span>
+                </a>
+              )}
+            </section>
+          </RevealOnView>
+        </section>
       </section>
     </div>
   );

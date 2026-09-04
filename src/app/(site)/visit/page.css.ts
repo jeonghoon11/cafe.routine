@@ -14,16 +14,16 @@ export const page = style({
 
 export const intro = style({
   display: 'grid',
-  minHeight: '56svh',
+  minHeight: '46svh',
   gridTemplateColumns: 'minmax(160px, 1fr) 2fr',
   columnGap: 24,
   alignContent: 'end',
-  padding: 'clamp(140px, 17vh, 190px) 4vw 10vh',
+  padding: 'clamp(120px, 14vh, 160px) 4vw clamp(64px, 8vh, 96px)',
   '@media': {
     [mobile]: {
       display: 'block',
       minHeight: 'auto',
-      padding: '112px 20px 72px',
+      padding: '104px 20px 56px',
     },
   },
 });
@@ -73,13 +73,12 @@ export const revealContent = style({
   },
 });
 
-export const addressSection = style({
-  minHeight: '58svh',
-  padding: '12vh 4vw',
+export const information = style({
+  padding: 'clamp(72px, 9vh, 112px) 4vw clamp(80px, 11vh, 128px)',
   color: routineVars.color.ink,
   background: routineVars.color.paper,
   '@media': {
-    [mobile]: { minHeight: 'auto', padding: '88px 20px' },
+    [mobile]: { padding: '64px 20px 80px' },
   },
 });
 
@@ -147,14 +146,15 @@ export const mapLink = style({
 
 export const details = style({
   display: 'grid',
-  gridTemplateColumns: 'minmax(0, 7fr) minmax(0, 5fr)',
-  gap: '10vw',
-  padding: '14vh 4vw 18vh',
+  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  marginTop: 'clamp(64px, 8vh, 96px)',
+  paddingTop: 'clamp(64px, 8vh, 96px)',
+  borderTop: `1px solid ${routineVars.color.lightBorder}`,
   '@media': {
     [mobile]: {
       gridTemplateColumns: 'minmax(0, 1fr)',
-      gap: 88,
-      padding: '88px 20px 112px',
+      marginTop: 56,
+      paddingTop: 56,
     },
   },
 });
@@ -166,9 +166,28 @@ export const detail = style({
   alignItems: 'flex-start',
 });
 
+export const hoursDetail = style({
+  paddingRight: 'clamp(32px, 5vw, 72px)',
+  '@media': { [mobile]: { paddingRight: 0 } },
+});
+
+export const contactDetail = style({
+  paddingLeft: 'clamp(32px, 5vw, 72px)',
+  borderLeft: `1px solid ${routineVars.color.lightBorder}`,
+  '@media': {
+    [mobile]: {
+      marginTop: 48,
+      paddingTop: 48,
+      paddingLeft: 0,
+      borderTop: `1px solid ${routineVars.color.lightBorder}`,
+      borderLeft: 0,
+    },
+  },
+});
+
 export const detailEyebrow = style({
   margin: '0 0 28px',
-  color: routineVars.color.darkSecondary,
+  color: routineVars.color.secondary,
   fontSize: vars.$fontSize.t1,
   fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.16em',
@@ -190,7 +209,7 @@ export const hoursRow = style({
   gridTemplateColumns: '1fr auto',
   gap: 24,
   alignItems: 'center',
-  borderTop: `1px solid ${routineVars.color.darkBorder}`,
+  borderTop: `1px solid ${routineVars.color.lightBorder}`,
   fontSize: 'clamp(1rem, 1.25vw, 1.2rem)',
   lineHeight: 1.5,
   fontVariantNumeric: 'tabular-nums',
@@ -239,14 +258,14 @@ export const socialLink = style({
   flexWrap: 'wrap',
   alignItems: 'center',
   marginTop: 36,
-  borderBottom: '1px solid rgb(244 244 241 / 48%)',
+  borderBottom: `1px solid ${routineVars.color.lightBorder}`,
   overflowWrap: 'anywhere',
   touchAction: 'manipulation',
   transition: `border-color ${vars.$duration.d4} ease`,
   selectors: {
-    '&:hover': { borderColor: routineVars.color.paper },
+    '&:hover': { borderColor: routineVars.color.ink },
     '&:focus-visible': {
-      borderColor: routineVars.color.paper,
+      borderColor: routineVars.color.ink,
       outline: '3px solid currentColor',
       outlineOffset: 4,
     },
