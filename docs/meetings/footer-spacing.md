@@ -30,6 +30,29 @@ PD, FE, PM
 - Home, Menu, Visit의 기존 콘텐츠 및 링크 상호작용에 부작용이 없습니다.
 - `pnpm typecheck`, `pnpm lint`, `pnpm build`를 통과합니다.
 
+## 재검토 승인 상태와 검증 근거
+
+- **승인**: FE와 PD 재검토에서 Footer 변경 범위의 신규 코드·반응형·접근성·브랜드 회귀가 발견되지 않아 기존 결정과 완료 기준을 충족한 것으로 승인합니다.
+- FE: Home `320/800/1920px`, Menu·Visit `320px`, Visit `799/800px`에서 horizontal overflow `0`과 패딩·breakpoint 적용을 확인했고, `pnpm typecheck`, `pnpm lint`, `pnpm build`를 통과했습니다.
+- PD: Home·Menu·Visit을 Chromium `320/375/799/800/1440/1920px`에서 검수해 신규 overflow, 잘림, 충돌, 브랜드·접근성 회귀가 없음을 확인했습니다.
+
+## 확대 대응 수정 승인
+
+- **승인**: 320px + 텍스트 200% 확대 시 Header/Footer 워드마크 잘림 문제를 CSS 보정으로 해결했습니다.
+- FE: Header에 359px 이하 `flexWrap: 'wrap'`, wordmark에 `flexShrink: 0`, Footer에 359px 이하 `paddingInline: 8` 적용.
+- PD: 로고 식별성 유지, 터치 타겟 44px 보장, breakpoint 수치 합리성, wrap 시 시각적 위계 모두 적합 판정.
+- 검증: `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과.
+
+## 권장 개선 사항 (후속 검토용)
+
+- Header wrap 시 `paddingBlock: 8~10px` 추가로 상하 호흡 개선.
+- Footer `paddingInline`을 12~16px로 조정해 Header·본문과 좌측 기준선 통일.
+- `'screen and (max-width: 359px)'`를 `mobile`처럼 상수화.
+
+## 남은 리스크
+
+- 실제 Supabase의 더 긴 slogan 데이터와 Safari/iOS 폰트 렌더링은 이번 재검토에서 확인하지 않았습니다.
+
 ## 미결 질문
 
-- 없음.
+- 이번 Footer 변경 범위 내 미결 질문은 없습니다.
