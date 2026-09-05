@@ -1,4 +1,0 @@
-interface:
-  display_name: "작업 변경 커밋"
-  short_description: "완료된 변경을 작업 단위로 나눠 안전하게 커밋합니다"
-  default_prompt: "$commit-task-changes를 사용해 완료된 task 변경을 검토하고 commit해줘."

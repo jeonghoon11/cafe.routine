@@ -39,11 +39,15 @@ export const header = style({
   color: routineVars.color.paper,
   background: 'rgb(16 17 18 / 88%)',
   backdropFilter: 'blur(14px)',
-  '@media': { [mobile]: { minHeight: 64, paddingInline: 20 } },
+  '@media': {
+    [mobile]: { minHeight: 64, paddingInline: 20 },
+    'screen and (max-width: 359px)': { flexWrap: 'wrap', gap: 8 },
+  },
 });
 
 export const wordmark = style({
   display: 'inline-flex',
+  flexShrink: 0,
   minHeight: 44,
   alignItems: 'center',
 });
@@ -78,21 +82,19 @@ export const main = style({ minHeight: '70svh' });
 
 export const footer = style({
   display: 'flex',
-  minHeight: '34svh',
   alignItems: 'flex-end',
   justifyContent: 'space-between',
-  padding: '8vh 4vw',
+  padding: '64px 4vw',
   color: routineVars.color.paper,
   background: routineVars.color.dark,
   '@media': {
     [mobile]: {
-      minHeight: '40svh',
       flexDirection: 'column',
       alignItems: 'flex-start',
-      justifyContent: 'flex-end',
       gap: 28,
-      padding: '64px 20px',
+      padding: '48px 20px',
     },
+    'screen and (max-width: 359px)': { paddingInline: 8 },
   },
 });
 
