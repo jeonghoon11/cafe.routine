@@ -5,6 +5,8 @@ import { getStoreProfile } from './_data/get-site-data';
 
 import * as styles from './site-shell.css';
 
+export const revalidate = 300;
+
 interface SiteLayoutProps {
   children: ReactNode;
 }

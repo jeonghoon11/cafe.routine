@@ -1,6 +1,6 @@
 import { cache } from 'react';
 
-import { createSupabaseServerClient } from '@/shared/supabase/server';
+import { createPublicSupabaseClient } from '@/shared/supabase/server';
 
 type MenuCategory = {
   id: string;
@@ -25,7 +25,7 @@ type MenuCategory = {
 };
 
 export const getMenu = cache(async function getMenu() {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createPublicSupabaseClient();
   const { data, error } = await supabase
     .from('menu_categories')
     .select(
