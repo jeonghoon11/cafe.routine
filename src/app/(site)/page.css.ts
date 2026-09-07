@@ -1,13 +1,9 @@
 import { vars } from '@seed-design/css/vars';
-import { globalStyle, keyframes, style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 import { routineVars } from './theme.css';
 
 const mobile = 'screen and (max-width: 799px)';
-
-const heroScale = keyframes({
-  to: { transform: 'scale(1.08)' },
-});
 
 export const page = style({ overflow: 'clip' });
 
@@ -21,21 +17,6 @@ export const hero = style({
   color: '#fff',
   background: '#050505',
   '@media': { [mobile]: { padding: '100px 20px 52px' } },
-});
-
-export const heroImage = style({
-  position: 'absolute',
-  inset: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  '@supports': {
-    '(animation-timeline: scroll())': {
-      animation: `${heroScale} linear both`,
-      animationTimeline: 'scroll()',
-      animationRange: '0 100svh',
-    },
-  },
 });
 
 export const heroVideo = style({

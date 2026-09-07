@@ -32,27 +32,6 @@ export const getBusinessHours = cache(async function getBusinessHours() {
   return data;
 });
 
-export const getHomeMedia = cache(async function getHomeMedia() {
-  const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from('media_assets')
-    .select('bucket, object_path, alt_text, width, height, sort_order')
-    .eq('usage', 'home')
-    .eq('is_published', true)
-    .order('sort_order')
-    .limit(1);
-
-  if (error) {
-    throw error;
-  }
-
-  return data.map((asset) => ({
-    ...asset,
-    src: supabase.storage.from(asset.bucket).getPublicUrl(asset.object_path).data
-      .publicUrl,
-  }));
-});
-
 export const getSpaceMedia = cache(async function getSpaceMedia() {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
