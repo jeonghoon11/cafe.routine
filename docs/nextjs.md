@@ -16,9 +16,9 @@
   데이터 원본으로 사용한다.
 - 공개 페이지는 Server Component가 Supabase를 읽어 본문과 SEO 정보를
   초기 HTML에 포함한다.
-- 현재는 콘텐츠 변경을 즉시 반영하기 위해 request-time rendering을
-  기본으로 한다. cache는 지연 시간이나 호출량 문제가 확인되면
-  갱신 정책과 무효화 방법을 함께 정의하고 도입한다.
+- 공개 콘텐츠는 5분 ISR로 cache한다. 매장 정보와 메뉴 변경은 최대 5분 뒤
+  자동 반영하며, 관리 화면 mutation이 생기면 `revalidatePath`로 즉시
+  무효화한다.
 - `output: 'export'`는 사용하지 않는다. Supabase 변경을 재빌드 없이
   반영할 수 있는 Next.js server 배포를 기준으로 한다.
 - Next.js 이미지 런타임 변환은 `images.unoptimized: true`로 끈다.
@@ -85,7 +85,7 @@ useEffect(function synchronizeDocumentTitle() {
 
 ```tsx
 import { getMenu } from '@/app/menu/_data/get-menu';
-import { createSupabaseServerClient } from '@/shared/supabase/server';
+import { createPublicSupabaseClient } from '@/shared/supabase/server';
 ```
 
 - 라우트 내의 가까운 파일은 상대 경로를 허용한다.
@@ -102,8 +102,9 @@ import { createSupabaseServerClient } from '@/shared/supabase/server';
   않는다.
 - `service_role` key는 RLS를 우회하므로 브라우저 코드와
   `NEXT_PUBLIC_*`에 절대 넣지 않는다.
-- 공개 페이지 조회는 `src/shared/supabase/server.ts`의 server client를
-  사용한다.
+- 공개 페이지 조회는 `src/shared/supabase/server.ts`의 cookie 없는 public
+  client를 사용한다. 인증이 필요한 화면만 `@supabase/ssr` client로 session
+  cookie를 전달한다.
 - browser client는 realtime, Auth, client mutation 사용처가 생겼을 때만
   추가한다.
 - 관리자 페이지는 `@supabase/ssr`의 server/browser client와 Next.js
