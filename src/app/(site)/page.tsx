@@ -1,10 +1,6 @@
 import Link from 'next/link';
 
-import {
-  getHomeMedia,
-  getSpaceMedia,
-  getStoreProfile,
-} from './_data/get-site-data';
+import { getSpaceMedia, getStoreProfile } from './_data/get-site-data';
 import { HeroActions } from './hero-actions';
 import { HeroVideo } from './hero-video';
 import { RevealOnView } from './reveal-on-view';
@@ -23,17 +19,11 @@ const spaceCaptions = [
 ];
 
 export default async function HomePage() {
-  const [profile, homeMedia, spaceMedia] = await Promise.all([
+  const [profile, spaceMedia] = await Promise.all([
     getStoreProfile(),
-    getHomeMedia(),
     getSpaceMedia(),
   ]);
 
-  if (homeMedia.length !== 1) {
-    throw new Error('홈 Hero에는 공개 이미지 1장이 필요합니다.');
-  }
-
-  const [hero] = homeMedia;
   const spaceCardClasses = [
     styles.spaceCard,
     `${styles.spaceCard} ${styles.spaceCardActive}`,
@@ -49,14 +39,6 @@ export default async function HomePage() {
   return (
     <div className={styles.page}>
       <section className={styles.hero} aria-labelledby="hero-title">
-        <img
-          className={styles.heroImage}
-          src={hero.src}
-          alt={hero.alt_text}
-          width={hero.width}
-          height={hero.height}
-          fetchPriority="high"
-        />
         <HeroVideo />
         <div className={styles.heroShade} aria-hidden="true" />
 
