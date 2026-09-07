@@ -1,9 +1,9 @@
 import { cache } from 'react';
 
-import { createSupabaseServerClient } from '@/shared/supabase/server';
+import { createPublicSupabaseClient } from '@/shared/supabase/server';
 
 export const getStoreProfile = cache(async function getStoreProfile() {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createPublicSupabaseClient();
   const { data, error } = await supabase
     .from('store_profile')
     .select(
@@ -19,7 +19,7 @@ export const getStoreProfile = cache(async function getStoreProfile() {
 });
 
 export const getBusinessHours = cache(async function getBusinessHours() {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createPublicSupabaseClient();
   const { data, error } = await supabase
     .from('business_hours')
     .select('day_of_week, opens_at, closes_at, is_closed')
@@ -33,7 +33,7 @@ export const getBusinessHours = cache(async function getBusinessHours() {
 });
 
 export const getSpaceMedia = cache(async function getSpaceMedia() {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createPublicSupabaseClient();
   const { data, error } = await supabase
     .from('media_assets')
     .select('bucket, object_path, alt_text, width, height, sort_order')
