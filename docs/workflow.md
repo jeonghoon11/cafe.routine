@@ -40,6 +40,14 @@
 - `develop`에서 `main`으로 병합할 때는 merge commit을 사용한다.
 - 상위 branch를 `develop`에 merge하는 작업은 사용자가 명시적으로 지시한
   경우에만 수행한다.
+- `develop`에서 `main`으로 병합하는 PR(release PR) 본문은 중복 상세 서술을 지양하고, 포함된 작업들을 PR 단위로 묶어 GitHub PR 번호 참조(`- #{pr-number}`)와 하위 커밋 번호(short hash) 및 작업 요약 목록으로 구조화하여 작성한다:
+  ```markdown
+  ## 📋 포함된 작업 (PR 단위)
+
+  - #{pr-number}
+    - `{commit-hash}` : {작업 요약}
+    - `{commit-hash}` : {작업 요약}
+  ```
 
 ## Context 연속성
 
