@@ -60,6 +60,11 @@ export default async function MenuPage() {
                 <p className={styles.categoryCount}>
                   {String(category.menu_items.length).padStart(2, '0')} ITEMS
                 </p>
+                {category.slug === 'good-morning' && (
+                  <p className={styles.categoryNotice}>
+                    디카페인 변경 +1,000원
+                  </p>
+                )}
               </div>
               <ul className={styles.menuList}>
                 {category.menu_items.map((item) => (
@@ -117,8 +122,7 @@ export default async function MenuPage() {
       </div>
 
       <p className={styles.notice}>
-        디카페인 변경 +1,000원 · 메뉴와 가격은 매장 상황에 따라 달라질 수
-        있습니다.
+        메뉴와 가격은 매장 상황에 따라 달라질 수 있습니다.
       </p>
     </div>
   );
