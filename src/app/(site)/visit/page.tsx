@@ -37,7 +37,7 @@ export default async function VisitPage() {
     businessHours.length === 7 &&
     new Set(hoursRows.map(({ label }) => label)).size === 1;
   const displayedHours = hasUniformHours
-    ? [{ day: '매일', label: hoursRows[0].label }]
+    ? [{ day: 'EVERY DAY', label: hoursRows[0].label }]
     : hoursRows;
 
   return (

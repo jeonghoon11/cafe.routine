@@ -118,13 +118,13 @@ export const categoryRail = style({
   position: 'sticky',
   top: 164,
   display: 'grid',
-  gridTemplateAreas: '"index" "title" "count"',
+  gridTemplateAreas: '"index" "title" "count" "notice"',
   gap: 20,
   alignSelf: 'start',
   '@media': {
     [mobile]: {
       position: 'static',
-      gridTemplateAreas: '"index count" "title title"',
+      gridTemplateAreas: '"index count" "title title" "notice notice"',
       gridTemplateColumns: '1fr auto',
     },
   },
@@ -156,6 +156,14 @@ export const categoryCount = style({
   fontWeight: vars.$fontWeight.bold,
   letterSpacing: '0.14em',
   '@media': { [mobile]: { justifySelf: 'end' } },
+});
+
+export const categoryNotice = style({
+  gridArea: 'notice',
+  margin: 0,
+  color: routineVars.color.secondary,
+  fontSize: vars.$fontSize.t3,
+  lineHeight: 1.5,
 });
 
 export const menuList = style({
