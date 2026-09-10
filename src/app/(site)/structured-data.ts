@@ -1,3 +1,4 @@
+import { SITE_URL } from '../../shared/site.ts';
 import type { getBusinessHours, getStoreProfile } from './_data/get-site-data';
 
 const schemaDayNames = [
@@ -20,12 +21,12 @@ export function createCafeStructuredData(
   return {
     '@context': 'https://schema.org',
     '@type': 'CafeOrCoffeeShop',
-    '@id': 'https://cafe-routine.co.kr/#cafe',
+    '@id': `${SITE_URL}/#cafe`,
     name: '카페 루틴',
     alternateName: profile.name,
     description:
       '서울 성북구 성신여대입구역 인근 카페 루틴의 공식 홈페이지입니다.',
-    url: 'https://cafe-routine.co.kr/',
+    url: `${SITE_URL}/`,
     telephone: profile.telephone,
     address: {
       '@type': 'PostalAddress',
@@ -40,7 +41,7 @@ export function createCafeStructuredData(
         opens: hours.opens_at.slice(0, 5),
         closes: hours.closes_at.slice(0, 5),
       })),
-    hasMenu: 'https://cafe-routine.co.kr/menu',
+    hasMenu: `${SITE_URL}/menu`,
     sameAs: [profile.instagram_url, profile.naver_place_url].filter(Boolean),
   };
 }

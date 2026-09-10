@@ -1,9 +1,11 @@
 import type { MetadataRoute } from 'next';
 
+import { SITE_URL } from '@/shared/site';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: 'https://cafe-routine.co.kr/' },
-    { url: 'https://cafe-routine.co.kr/menu' },
-    { url: 'https://cafe-routine.co.kr/visit' },
+    { url: `${SITE_URL}/` },
+    { url: `${SITE_URL}/menu` },
+    { url: `${SITE_URL}/visit` },
   ];
 }

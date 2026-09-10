@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+import { SITE_URL } from '@/shared/site';
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
@@ -7,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/admin/',
     },
-    sitemap: 'https://cafe-routine.co.kr/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

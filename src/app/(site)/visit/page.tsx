@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { SITE_URL } from '@/shared/site';
+
 import { getBusinessHours, getStoreProfile } from '../_data/get-site-data';
 import { RevealOnView } from '../reveal-on-view';
 
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
   title: '방문 안내 | ROUTINE',
   description: '카페 루틴의 주소, 영업시간과 연락처를 확인하세요.',
   alternates: {
-    canonical: 'https://cafe-routine.co.kr/visit',
+    canonical: `${SITE_URL}/visit`,
   },
 };
 
