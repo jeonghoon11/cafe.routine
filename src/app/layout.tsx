@@ -8,12 +8,17 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://cafe-routine.co.kr'),
   title: 'ROUTINE',
-  description: '서울 성북구 카페 루틴의 공식 홈페이지입니다.',
+  description:
+    '서울 성북구 성신여대입구역 인근 카페 루틴의 공식 홈페이지입니다. 메뉴, 영업시간과 방문 정보를 확인하세요.',
+  alternates: {
+    canonical: 'https://cafe-routine.co.kr/',
+  },
   openGraph: {
-    title: 'cafe.routine',
-    description: '오늘도 루틴에서 편안한 시간 보내시길 바랍니다 ☕️',
-    url: 'https://cafe-routine.co.kr',
-    siteName: 'cafe.routine',
+    title: '카페 루틴',
+    description:
+      '서울 성북구 성신여대입구역 인근 카페 루틴의 공식 홈페이지입니다.',
+    url: 'https://cafe-routine.co.kr/',
+    siteName: '카페 루틴',
     locale: 'ko_KR',
     type: 'website',
   },

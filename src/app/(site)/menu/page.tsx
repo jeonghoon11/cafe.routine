@@ -8,6 +8,9 @@ import * as styles from './page.css';
 export const metadata: Metadata = {
   title: '메뉴 | ROUTINE',
   description: '카페 루틴의 커피, 티, 디저트 메뉴와 가격을 확인하세요.',
+  alternates: {
+    canonical: 'https://cafe-routine.co.kr/menu',
+  },
 };
 
 const priceFormatter = new Intl.NumberFormat('ko-KR');
