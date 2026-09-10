@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 
 import { SITE_URL } from '@/shared/site';
@@ -24,6 +24,14 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     type: 'website',
   },
+  icons: {
+    apple: '/icons/icon-192.png',
+  },
+};
+
+export const viewport: Viewport = {
+  colorScheme: 'light',
+  themeColor: '#F4F4F1',
 };
 
 interface RootLayoutProps {
@@ -39,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       data-scroll-behavior="smooth"
     >
       <head>
-        <meta name="color-scheme" content="light" />
+        <script src="/register-service-worker.js" defer />
       </head>
       <body>{children}</body>
     </html>

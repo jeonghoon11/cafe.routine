@@ -276,7 +276,12 @@ React Query를 거치지 않는다. 도입 시 `QueryClientProvider`는 필요�
 
 ## PWA와 404
 
+- manifest는 `src/app/manifest.ts`, 설치 아이콘은 `public/icons`, 서비스
+  워커는 `public/sw.js`에 둔다.
+- root layout은 `public/register-service-worker.js`를 불러와 서비스 워커를
+  progressive enhancement로 등록한다.
 - 서비스 워커는 실제 존재하는 정적 자산만 precache한다.
+- page navigation과 runtime response는 cache하지 않는다.
 - navigation 실패를 무조건 `/`로 바꾸지 않는다.
 - 존재하지 않는 URL은 실제 404 상태를 유지해 soft 404를 막는다.
 
