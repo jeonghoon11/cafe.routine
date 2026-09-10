@@ -1,4 +1,5 @@
-import { SITE_URL } from '../../shared/site.ts';
+import { SITE_URL } from '@/shared/site';
+
 import type { getBusinessHours, getStoreProfile } from './_data/get-site-data';
 
 const schemaDayNames = [
