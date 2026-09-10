@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { SITE_URL } from '@/shared/site';
+
 import { RevealOnView } from '../reveal-on-view';
 import { getMenu } from './_data/get-menu';
 
@@ -8,6 +10,9 @@ import * as styles from './page.css';
 export const metadata: Metadata = {
   title: '메뉴 | ROUTINE',
   description: '카페 루틴의 커피, 티, 디저트 메뉴와 가격을 확인하세요.',
+  alternates: {
+    canonical: `${SITE_URL}/menu`,
+  },
 };
 
 const priceFormatter = new Intl.NumberFormat('ko-KR');

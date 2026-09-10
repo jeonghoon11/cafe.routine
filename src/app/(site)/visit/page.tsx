@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { SITE_URL } from '@/shared/site';
+
 import { getBusinessHours, getStoreProfile } from '../_data/get-site-data';
 import { RevealOnView } from '../reveal-on-view';
 
@@ -8,6 +10,9 @@ import * as styles from './page.css';
 export const metadata: Metadata = {
   title: '방문 안내 | ROUTINE',
   description: '카페 루틴의 주소, 영업시간과 연락처를 확인하세요.',
+  alternates: {
+    canonical: `${SITE_URL}/visit`,
+  },
 };
 
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
@@ -46,7 +51,7 @@ export default async function VisitPage() {
         <p className={styles.eyebrow}>ROUTINE / VISIT</p>
         <h1 className={styles.title}>Visit.</h1>
         <p className={styles.description}>
-          루틴의 위치와 영업시간을 확인하세요.
+          서울 성북구 카페 루틴의 위치와 영업시간을 확인하세요.
         </p>
       </header>
 

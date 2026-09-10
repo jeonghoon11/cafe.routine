@@ -1,9 +1,14 @@
 import Link from 'next/link';
 
-import { getSpaceMedia, getStoreProfile } from './_data/get-site-data';
+import {
+  getBusinessHours,
+  getSpaceMedia,
+  getStoreProfile,
+} from './_data/get-site-data';
 import { HeroActions } from './hero-actions';
 import { HeroVideo } from './hero-video';
 import { RevealOnView } from './reveal-on-view';
+import { createCafeStructuredData } from './structured-data';
 
 import * as styles from './page.css';
 
@@ -19,8 +24,9 @@ const spaceCaptions = [
 ];
 
 export default async function HomePage() {
-  const [profile, spaceMedia] = await Promise.all([
+  const [profile, businessHours, spaceMedia] = await Promise.all([
     getStoreProfile(),
+    getBusinessHours(),
     getSpaceMedia(),
   ]);
 
@@ -35,9 +41,16 @@ export default async function HomePage() {
     `${styles.spaceCard} ${styles.spaceCardClosing}`,
   ];
   const slogan = profile.slogan ?? profile.name;
+  const structuredData = createCafeStructuredData(profile, businessHours);
 
   return (
     <div className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
+        }}
+      />
       <section className={styles.hero} aria-labelledby="hero-title">
         <HeroVideo />
         <div className={styles.heroShade} aria-hidden="true" />
