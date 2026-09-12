@@ -92,6 +92,16 @@ export const scrollCue = style({
   '@media': { [mobile]: { display: 'none' } },
 });
 
+export const scrollToTop = style({
+  position: 'fixed',
+  zIndex: 10,
+  right: 'max(calc(20px + env(safe-area-inset-right)), 4vw)',
+  bottom: 'calc(20px + env(safe-area-inset-bottom))',
+  '@media': {
+    [mobile]: { right: 'calc(20px + env(safe-area-inset-right))' },
+  },
+});
+
 export const revealContent = style({
   opacity: 0,
   transform: 'translateY(32px)',
