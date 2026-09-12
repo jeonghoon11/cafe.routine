@@ -28,7 +28,7 @@ export function HomeScrollToTop() {
     return () => observer.disconnect();
   }, []);
 
-  function scrollToTop() {
+  const scrollToTop = () => {
     const heroTitle = document.getElementById('hero-title');
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -39,7 +39,7 @@ export function HomeScrollToTop() {
       behavior: prefersReducedMotion ? 'auto' : 'smooth',
     });
     heroTitle?.focus({ preventScroll: true });
-  }
+  };
 
   if (!isVisible) {
     return null;
