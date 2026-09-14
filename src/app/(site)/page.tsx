@@ -7,6 +7,7 @@ import {
 } from './_data/get-site-data';
 import { HeroActions } from './hero-actions';
 import { HeroVideo } from './hero-video';
+import { HomeScrollToTop } from './home-scroll-to-top';
 import { RevealOnView } from './reveal-on-view';
 import { createCafeStructuredData } from './structured-data';
 
@@ -51,13 +52,17 @@ export default async function HomePage() {
           __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
         }}
       />
-      <section className={styles.hero} aria-labelledby="hero-title">
+      <section
+        className={styles.hero}
+        id="home-hero"
+        aria-labelledby="hero-title"
+      >
         <HeroVideo />
         <div className={styles.heroShade} aria-hidden="true" />
 
         <div className={styles.heroContent}>
           <p className={styles.sectionIndex}>ROUTINE / 01 — HOME</p>
-          <h1 className={styles.heroTitle} id="hero-title">
+          <h1 className={styles.heroTitle} id="hero-title" tabIndex={-1}>
             {profile.name}
           </h1>
           <p className={styles.heroSlogan}>{slogan}</p>
@@ -143,6 +148,8 @@ export default async function HomePage() {
           </div>
         </RevealOnView>
       </section>
+
+      <HomeScrollToTop />
     </div>
   );
 }
