@@ -14,7 +14,20 @@
 - **Space Gallery**: 안뜰(Courtyard), 긴 테이블(Long Table), 밤의 정원(Night Garden) 등 루틴의 공간을 담은 8장의 갤러리
 - **Interactive UI**: 뷰포트 진입 시 부드러운 Reveal 모션과 우측 하단 상단 이동(Scroll to Top) 버튼 제공
 
-![Home Preview](docs/assets/home-preview.gif)
+<table>
+  <thead>
+    <tr>
+      <th width="65%" align="center">Desktop</th>
+      <th width="35%" align="center">Mobile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="top"><img src="docs/assets/home-preview.gif" alt="Home Desktop Preview" /></td>
+      <td valign="top"><img src="docs/assets/home-mobile-preview.gif" alt="Home Mobile Preview" /></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -23,7 +36,20 @@
 - **Category Navigation**: 카테고리(Good Morning 등) 앵커 탭을 통한 빠른 섹션 이동
 - **Item Details**: 메뉴 사진, 상세 설명, 가격, 디카페인 옵션 안내 및 품절 상태 실시간 반영
 
-![Menu Preview](docs/assets/menu-preview.gif)
+<table>
+  <thead>
+    <tr>
+      <th width="65%" align="center">Desktop</th>
+      <th width="35%" align="center">Mobile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="top"><img src="docs/assets/menu-preview.gif" alt="Menu Desktop Preview" /></td>
+      <td valign="top"><img src="docs/assets/menu-mobile-preview.gif" alt="Menu Mobile Preview" /></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -33,7 +59,20 @@
 - **Hours**: 매일(11:00–22:00) 정기 영업시간 테이블
 - **Contact**: 원터치 매장 전화 걸기 및 공식 Instagram 바로가기
 
-![Visit Preview](docs/assets/visit-preview.gif)
+<table>
+  <thead>
+    <tr>
+      <th width="65%" align="center">Desktop</th>
+      <th width="35%" align="center">Mobile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="top"><img src="docs/assets/visit-preview.gif" alt="Visit Desktop Preview" /></td>
+      <td valign="top"><img src="docs/assets/visit-mobile-preview.gif" alt="Visit Mobile Preview" /></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
