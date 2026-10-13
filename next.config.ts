@@ -7,6 +7,7 @@ const withVanillaExtract = createVanillaExtractPlugin({
 
 const nextConfig: NextConfig = {
   agentRules: false,
+  experimental: { serverActions: { bodySizeLimit: '2mb' } },
   images: {
     unoptimized: true,
   },

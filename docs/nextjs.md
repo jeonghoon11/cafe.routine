@@ -1,6 +1,6 @@
 # Next.js App Router
 
-최종 확인일: 2026-08-11
+최종 확인일: 2026-10-13
 
 대상 버전: Next.js 16.3.0, React 19.2
 
@@ -107,8 +107,8 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
   cookie를 전달한다.
 - browser client는 realtime, Auth, client mutation 사용처가 생겼을 때만
   추가한다.
-- 관리자 페이지는 `@supabase/ssr`의 server/browser client와 Next.js
-  Proxy로 Auth cookie를 유지한다.
+- 관리자 페이지는 `@supabase/ssr`의 server client와 Next.js Proxy로 Auth
+  cookie를 유지한다. Browser client는 현재 필요하지 않다.
 - Proxy는 token refresh만 담당한다. `/admin` layout은 `getClaims()`로
   서명된 Auth token을 검증하고 관리자 권한을 추가로 확인한다.
 
@@ -144,8 +144,9 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
 ### `menu_items`
 
 - category ID, 메뉴명, 설명, `price_krw`, media ID, `sort_order`
-- `is_available`로 일시 품절, `is_published`로 공개 여부,
-  `deleted_at`으로 soft delete를 따로 관리한다.
+- 관리자 상태는 판매 중·비공개 두 가지다. 판매 중을 저장하면
+  `is_available`, `is_published`를 함께 true로, 비공개는 함께 false로 저장한다.
+  기존 두 값이 다른 행은 하나라도 false면 숨긴다. `deleted_at`은 soft delete다.
 - `price_krw`는 KRW 원 단위 정수이며 `0 이상` constraint를 둔다.
 - 가격 미정, 시가 메뉴가 실제로 필요하면 nullable 가격과 별도 표시
   규칙을 명시적으로 추가한다.
@@ -166,6 +167,12 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
 - 최초 관리자는 Supabase Dashboard에서 Auth user를 만든 뒤
   `private.admin_users`에 등록한다. 일반 회원 가입으로 관리자가 될 수
   없다.
+- 로그인 아이디는 서버 전용 환경 변수 `ADMIN_LOGIN_ACCOUNTS`의 JSON
+  object로 기존 Auth 이메일과 연결한다. 아이디는 대소문자를 구분하고
+  앞뒤 공백만 제거한다. 실제 아이디·이메일·비밀번호는 저장소에 기록하지 않는다.
+  예: `ADMIN_LOGIN_ACCOUNTS='{"manager":"existing-account@example.com"}'`.
+  배포 환경과 로컬 환경에 각각 설정하고, 설정 변경 후 서버를 다시 시작한다.
+  비밀번호는 기존 Supabase Auth 계정의 것을 사용한다.
 
 ## 메뉴·가격 관리
 
@@ -204,10 +211,23 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
   검사 layout에 둔다.
 - 메뉴 목록은 Server Component가 비공개·품절·삭제 상태를 포함해
   읽는다.
-- 메뉴 추가, 수정, 삭제는 라우트 가까이의 `actions.ts` Server
+- 메뉴 추가, 수정, 삭제와 복구는 라우트 가까이의 `actions.ts` Server
   Action으로 구현한다.
-- 모든 Server Action은 `FormData` 입력 검증 → Auth 검증 → 관리자
+- 메뉴 mutation Server Action은 `FormData` 입력 검증 → Auth 검증 → 관리자
   권한 검증 → Supabase mutation → 결과 처리 순서를 지킨다.
+- 로그인 화면은 아이디·비밀번호를 입력받는다. Server Action이
+  `ADMIN_LOGIN_ACCOUNTS`에서 아이디에 연결된 Auth 이메일을 조회하고
+  `signInWithPassword()`로 비밀번호를 검증한다. 매핑을 브라우저 번들이나
+  화면에 전달하지 않는다. 가입 경로는 제공하지 않으며, 로그인 성공 뒤에도
+  `getClaims()`와 `is_admin()` RPC를 확인한다.
+- 등록되지 않은 아이디와 잘못된 비밀번호는 같은 오류로 안내한다.
+  매핑이 없거나 JSON 설정이 잘못되면 인증을 시도하지 않고 일시 이용 불가로
+  안내한다. 아이디 매핑은 관리자 권한을 부여하지 않는다.
+- 관리자 layout과 각 mutation action은 자체적으로 `getClaims()`와
+  `is_admin()`을 확인한다. Proxy 검사는 token refresh를 담당하며 권한
+  경계가 아니다.
+- 관리자 조회와 mutation은 사용자 session cookie와 publishable key를
+  사용한다. `service_role`은 사용하지 않고, RLS를 DB 최종 권한 경계로 둔다.
 - UI에서 삭제를 누르면 확인 절차 후 `deleted_at`을 설정한다.
   공개 query는 `deleted_at is null`인 행만 읽는다.
 - 복구는 `deleted_at` 초기화로 처리한다. Storage 파일과 DB 행의 영구
@@ -220,7 +240,7 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
 ## RLS와 권한
 
 - exposed `public` schema의 모든 table에 RLS를 켠다.
-- `anon`에는 `is_published = true and deleted_at is null`인 행의 SELECT만
+- 공개 메뉴 `anon`에는 `is_published = true and is_available = true and deleted_at is null`인 행의 SELECT만
   허용한다.
 - `anon`에 INSERT, UPDATE, DELETE policy를 만들지 않는다.
 - Storage public bucket이어도 upload·delete policy는 별도로 제한한다.
@@ -272,7 +292,9 @@ React Query를 거치지 않는다. 도입 시 `QueryClientProvider`는 필요�
   호출하지 않는다.
 - Server Action은 실제 form mutation이 생겼을 때만 사용하고 입력 검증,
   Auth, RLS, 오류 처리를 모두 확인한다.
-- 관리자 화면이 배포되기 전까지만 Supabase Dashboard를 사용한다.
+- 최초 활성 관리자는 Supabase Dashboard에서 Auth 계정을 만든 뒤
+  `private.admin_users`에 등록한다. 관리자 화면이 배포되기 전까지만 메뉴
+  데이터 편집에 Supabase Dashboard를 사용한다.
 
 ## PWA와 404
 
@@ -328,3 +350,28 @@ Supabase·SEO·라우팅 변경은 추가로 확인한다.
 - [Supabase Storage buckets](https://supabase.com/docs/guides/storage/buckets/fundamentals)
 - [Supabase Storage access control](https://supabase.com/docs/guides/storage/security/access-control)
 - [Serving Storage assets](https://supabase.com/docs/guides/storage/serving/downloads)
+
+## 관리자 이미지·순서 편집 (2026-10-13)
+
+- 관리자 목록과 폼에 메뉴 이미지를 표시한다. 추가·변경·제거는 메뉴 저장 시 반영한다.
+- 업로드는 JPG·PNG·WebP, 최대 1MiB(화면 표기 1MB)다. SVG·GIF·AVIF는 받지 않는다.
+  클라이언트 decode 후 width/height를 전달하고 서버는 MIME·signature·파일 크기와
+  치수 범위(1..16384, 최대 4천만 픽셀)를 확인한다. 치수는 표시 메타데이터이며
+  서버가 이미지 전체를 decode하지 않는다.
+- multipart 여유를 위해 Server Action 본문 한도는 2MB로 두되 파일 자체는 1MiB다.
+- Storage 새 UUID 경로 업로드 → media_assets insert → 메뉴 연결 순서다.
+  DB 실패 시 이번 요청의 새 asset/object만 정리를 시도한다. 정리 실패는 서버 로그에 남긴다.
+  기존 이미지를 제거·교체할 때는 연결만 해제하고 공용 asset/object는 유지한다.
+- 카테고리 안 비삭제 메뉴(비공개 포함)의 순서는 목록의 ‘순서 편집’에서 변경한다.
+  Pointer Events 손잡이와 위·아래 버튼을 제공하며 ‘순서 저장’이 원자 RPC를 호출한다.
+  취소·저장 실패는 운영 순서를 변경하지 않는다. 순서 편집 중 추가·수정·복구는 막는다.
+- reorder_menu_items RPC는 관리자 권한, 모든 항목 ID 집합, sort_order/updated_at snapshot을
+  확인한다. 삽입·카테고리 이동·복구는 trigger가 카테고리 마지막에 붙인다.
+  같은 카테고리를 잠그지만 일반 UPDATE와 RPC의 잠금 순서가 달라 동시 작업은
+  deadlock으로 하나가 실패할 수 있다. 실패를 안내하고 다시 시도하며 부분 저장은 없다.
+- 공개 메뉴 조회와 RLS가 모두 공개·판매 중·비삭제 조건을 적용한다. migration 적용 전후의
+  공개 상태가 달라질 수 있으므로 운영 적용은 명시 승인을 받아 진행한다.
+
+- 미저장 순서는 링크 이동·로그아웃 submit을 capture 단계에서 확인하고 문서 이탈은
+  beforeunload로 확인한다. 같은 문서의 브라우저 뒤로가기는 native 취소 API가 없어
+  별도 history 조작 없이 차단하지 않는다. 이동 전에 저장·취소해야 한다.

@@ -7,71 +7,57 @@
 
 ```text
 src/
-└── app/
-    ├── globals.css
-    ├── layout.tsx
-    └── (site)/
-        ├── _data/get-site-data.ts
-        ├── layout.tsx
-        ├── site-shell.css.ts
-        ├── theme.css.ts
-        ├── hero-actions.tsx
-        ├── page.css.ts
-        ├── page.tsx
-        ├── menu/
-        │   ├── _data/get-menu.ts
-        │   ├── page.css.ts
-        │   └── page.tsx
-        └── visit/
-            ├── page.css.ts
-            └── page.tsx
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── robots.ts
+│   ├── (site)/
+│   │   ├── _data/get-site-data.ts
+│   │   ├── layout.tsx
+│   │   ├── site-shell.css.ts
+│   │   ├── theme.css.ts
+│   │   ├── hero-actions.tsx
+│   │   ├── hero-video.tsx
+│   │   ├── home-scroll-to-top.tsx
+│   │   ├── page.css.ts
+│   │   ├── page.tsx
+│   │   ├── reveal-on-view.tsx
+│   │   ├── structured-data.ts
+│   │   ├── menu/_data/get-menu.ts
+│   │   ├── menu/page.css.ts
+│   │   ├── menu/page.tsx
+│   │   ├── visit/page.css.ts
+│   │   └── visit/page.tsx
+│   ├── (auth)/admin/login/
+│   │   ├── actions.ts
+│   │   ├── page.css.ts
+│   │   └── page.tsx
+│   └── (admin)/admin/
+│       ├── _data/auth.ts
+│       ├── actions.ts
+│       ├── layout.css.ts
+│       ├── layout.tsx
+│       ├── page.tsx
+│       └── menu/
+│           ├── [id]/page.tsx
+│           ├── _data/get-menu.ts
+│           ├── actions.ts
+│           ├── form.css.ts
+│           ├── menu-list.tsx
+│           ├── menu-form.tsx
+│           ├── page.css.ts
+│           ├── new/page.tsx
+│           └── page.tsx
+├── proxy.ts
+├── shared/site.ts
+└── shared/supabase/
+    ├── browser.ts
+    ├── proxy.ts
+    └── server.ts
 ```
 
 폴더는 사용처가 생길 때 만든다. 빈 `components`, `hooks`, `utils` 폴더를
 미리 만들지 않는다.
-
-## 확장 예시
-
-공개 페이지와 관리자 메뉴 관리가 구현되면 다음 형태로 확장한다.
-아래 트리는 배치 기준이며 파일을 미리 생성하라는 뜻은 아니다.
-
-```text
-src/
-├── app/
-│   ├── layout.tsx
-│   ├── globals.css
-│   ├── (site)/
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   ├── menu/
-│   │   │   ├── page.tsx
-│   │   │   ├── _components/
-│   │   │   └── _data/
-│   │   └── visit/
-│   │       └── page.tsx
-│   ├── (auth)/
-│   │   └── admin/login/page.tsx
-│   └── (admin)/
-│       └── admin/
-│           ├── layout.tsx
-│           └── menu/
-│               ├── page.tsx
-│               ├── actions.ts
-│               ├── _components/
-│               └── _data/
-├── shared/
-│   ├── lib/
-│   ├── supabase/
-│   │   ├── browser.ts
-│   │   ├── database.types.ts
-│   │   ├── proxy.ts
-│   │   └── server.ts
-│   └── ui/
-└── proxy.ts
-
-supabase/
-└── migrations/
-```
 
 ## 배치 규칙
 
@@ -116,6 +102,8 @@ supabase/
 ## 관리자 메뉴 관리
 
 - `/admin/menu` 페이지는 Server Component에서 전체 메뉴를 조회한다.
+- 이미지 썸네일·순서 편집은 `menu-list.tsx` Client Component가 담당하며,
+  카테고리 안에서 편집 후 명시적으로 저장한다.
 - 추가·수정·삭제는 같은 라우트의 `actions.ts` Server Action으로
   처리한다.
 - `actions.ts`는 입력 검증, Supabase Auth, 관리자 권한, DB 오류,
@@ -123,8 +111,9 @@ supabase/
 - 삭제 버튼은 기본적으로 `deleted_at`을 설정하는 soft delete를
   수행한다. 영구 삭제는 복구 기간과 이미지 참조 정책이 정해진 뒤
   별도로 추가한다.
-- 이미지 업로드가 포함된 form만 Client Component로 분리하고,
-  나머지는 `<form action={serverAction}>`을 우선한다.
+- 메뉴 편집 폼은 입력 검증 결과와 제출 중 상태를 표시하기 위해
+  `useActionState`를 쓰는 Client Component로 둔다. 상호작용 상태가 필요 없는
+  form은 `<form action={serverAction}>`을 우선한다.
 
 ## Supabase 배치 규칙
 

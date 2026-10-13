@@ -73,11 +73,7 @@ export default async function MenuPage() {
               </div>
               <ul className={styles.menuList}>
                 {category.menu_items.map((item) => (
-                  <li
-                    className={styles.menuItem}
-                    data-available={item.is_available}
-                    key={item.id}
-                  >
+                  <li className={styles.menuItem} key={item.id}>
                     <div className={styles.imageFrame}>
                       {item.media_assets ? (
                         <img
@@ -102,9 +98,6 @@ export default async function MenuPage() {
                     <div className={styles.itemContent}>
                       <div className={styles.itemHeading}>
                         <h3 className={styles.itemName}>{item.name}</h3>
-                        {!item.is_available && (
-                          <span className={styles.soldOut}>품절</span>
-                        )}
                       </div>
                       {item.description && (
                         <p className={styles.itemDescription}>
