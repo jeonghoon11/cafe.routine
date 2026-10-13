@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ActionButton } from '@seed-design/react';
@@ -9,6 +9,8 @@ import type { AdminMenuCategory, AdminMenuItem } from './_data/get-menu';
 import { reorderMenu, restoreMenu } from './actions';
 
 import * as styles from './page.css';
+
+const ORDER_MOTION_DURATION = 180;
 
 const priceFormatter = new Intl.NumberFormat('ko-KR');
 
@@ -35,7 +37,19 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const original = useRef<AdminMenuItem[]>([]);
-  const drag = useRef<{ id: string; original: AdminMenuItem[] } | null>(null);
+  const editList = useRef<HTMLUListElement>(null);
+  const previousTops = useRef(new Map<string, number>());
+  const rowAnimations = useRef(new Map<string, Animation>());
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const drag = useRef<{
+    id: string;
+    original: AdminMenuItem[];
+    startY: number;
+    currentY: number;
+    startTop: number;
+    height: number;
+    row: HTMLLIElement;
+  } | null>(null);
   const dirty = draft.some(
     (item, index) => item.id !== original.current[index]?.id,
   );
@@ -74,11 +88,119 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
     [dirty],
   );
 
+  function rememberRowPositions() {
+    previousTops.current.clear();
+    editList.current
+      ?.querySelectorAll<HTMLLIElement>('[data-menu-id]')
+      .forEach((row) => {
+        previousTops.current.set(
+          row.dataset.menuId!,
+          row.getBoundingClientRect().top,
+        );
+      });
+  }
+
+  function followPointer() {
+    const current = drag.current;
+    const list = editList.current;
+    if (!current || !list) {
+      return;
+    }
+    const slotTop = list.getBoundingClientRect().top + current.row.offsetTop;
+    const offset =
+      current.startTop + current.currentY - current.startY - slotTop;
+    current.row.style.transform = `translate3d(0, ${offset}px, 0)`;
+  }
+
+  useLayoutEffect(
+    function animateReorderedRows() {
+      const list = editList.current;
+      if (!list) {
+        return;
+      }
+      const reduceMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+      list.querySelectorAll<HTMLLIElement>('[data-menu-id]').forEach((row) => {
+        const id = row.dataset.menuId!;
+        rowAnimations.current.get(id)?.cancel();
+        rowAnimations.current.delete(id);
+        if (id === drag.current?.id) {
+          return;
+        }
+        const previousTop = previousTops.current.get(id);
+        const offset =
+          previousTop === undefined
+            ? 0
+            : previousTop - row.getBoundingClientRect().top;
+        if (!reduceMotion && Math.abs(offset) > 1) {
+          rowAnimations.current.set(
+            id,
+            row.animate(
+              [
+                { transform: `translateY(${offset}px)` },
+                { transform: 'translateY(0)' },
+              ],
+              { duration: ORDER_MOTION_DURATION, easing: 'ease-out' },
+            ),
+          );
+        }
+      });
+      previousTops.current.clear();
+      followPointer();
+    },
+    [draft],
+  );
+
+  useEffect(function cleanUpOrderAnimations() {
+    const animations = rowAnimations.current;
+    return () => {
+      animations.forEach((animation) => animation.cancel());
+    };
+  }, []);
+
+  function finishDrag(cancelled = false) {
+    const current = drag.current;
+    if (!current) {
+      return;
+    }
+    rememberRowPositions();
+    const offset =
+      current.row.getBoundingClientRect().top -
+      ((editList.current?.getBoundingClientRect().top ?? 0) +
+        current.row.offsetTop);
+    drag.current = null;
+    current.row.style.transform = '';
+    setDraggingId(null);
+    if (cancelled) {
+      setDraft(current.original);
+      setMessage('드래그 이동을 취소했습니다.');
+    } else {
+      previousTops.current.clear();
+      if (
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        Math.abs(offset) > 1
+      ) {
+        rowAnimations.current.set(
+          current.id,
+          current.row.animate(
+            [
+              { transform: `translateY(${offset}px)` },
+              { transform: 'translateY(0)' },
+            ],
+            { duration: ORDER_MOTION_DURATION, easing: 'ease-out' },
+          ),
+        );
+      }
+    }
+  }
+
   function move(id: string, to: number) {
     const from = draft.findIndex((item) => item.id === id);
     if (from < 0 || from === to || to < 0 || to >= draft.length) {
       return;
     }
+    rememberRowPositions();
     const next = [...draft];
     const [item] = next.splice(from, 1);
     next.splice(to, 0, item);
@@ -161,7 +283,7 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
                   <ActionButton
                     type="button"
                     variant="neutralSolid"
-                    disabled={pending || !dirty}
+                    disabled={pending || draggingId !== null || !dirty}
                     onClick={saveOrder}
                   >
                     {pending ? '저장 중…' : '순서 저장'}
@@ -169,7 +291,7 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
                   <ActionButton
                     type="button"
                     variant="neutralWeak"
-                    disabled={pending}
+                    disabled={pending || draggingId !== null}
                     onClick={() => {
                       setEditing(null);
                       setDraft([]);
@@ -208,35 +330,46 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
             )}
             <ul
               className={styles.items}
+              ref={isEditing ? editList : undefined}
               onPointerMove={(event) => {
-                if (!drag.current) {
+                const current = drag.current;
+                if (!current) {
                   return;
                 }
-                const row = document
-                  .elementFromPoint(event.clientX, event.clientY)
-                  ?.closest('[data-menu-id]');
-                if (row?.getAttribute('data-category-id') !== category.id) {
-                  return;
-                }
-                const to = draft.findIndex(
-                  (entry) => entry.id === row.getAttribute('data-menu-id'),
+                current.currentY = event.clientY;
+                followPointer();
+                const list = event.currentTarget;
+                const center =
+                  current.startTop +
+                  event.clientY -
+                  current.startY +
+                  current.height / 2;
+                const listTop = list.getBoundingClientRect().top;
+                const rows = Array.from(
+                  list.querySelectorAll<HTMLLIElement>('[data-menu-id]'),
                 );
-                move(drag.current.id, to);
+                let to = 0;
+                let closestDistance = Infinity;
+                rows.forEach((row, index) => {
+                  const distance = Math.abs(
+                    center - (listTop + row.offsetTop + row.offsetHeight / 2),
+                  );
+                  if (distance < closestDistance) {
+                    closestDistance = distance;
+                    to = index;
+                  }
+                });
+                move(current.id, to);
               }}
-              onPointerUp={() => {
-                drag.current = null;
-              }}
-              onPointerCancel={() => {
-                if (drag.current) {
-                  setDraft(drag.current.original);
-                }
-                drag.current = null;
-              }}
+              onPointerUp={() => finishDrag()}
+              onPointerCancel={() => finishDrag(true)}
+              onLostPointerCapture={() => finishDrag(true)}
             >
               {items.map((item, index) => (
                 <li
                   className={styles.item}
                   key={item.id}
+                  data-dragging={draggingId === item.id || undefined}
                   data-menu-id={item.id}
                   data-category-id={category.id}
                 >
@@ -264,7 +397,26 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
                           if (event.button !== 0) {
                             return;
                           }
-                          drag.current = { id: item.id, original: draft };
+                          const row =
+                            event.currentTarget.closest<HTMLLIElement>('li');
+                          if (!row) {
+                            return;
+                          }
+                          rowAnimations.current.forEach((animation) =>
+                            animation.cancel(),
+                          );
+                          rowAnimations.current.clear();
+                          const bounds = row.getBoundingClientRect();
+                          drag.current = {
+                            id: item.id,
+                            original: draft,
+                            row,
+                            startY: event.clientY,
+                            currentY: event.clientY,
+                            startTop: bounds.top,
+                            height: bounds.height,
+                          };
+                          setDraggingId(item.id);
                           // Capture on the stable list because dragging moves the handle's DOM node.
                           event.currentTarget
                             .closest('ul')
@@ -277,7 +429,7 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
                         type="button"
                         variant="neutralWeak"
                         aria-label={item.name + ' 위로 이동'}
-                        disabled={pending || index === 0}
+                        disabled={pending || draggingId !== null || index === 0}
                         onClick={() => move(item.id, index - 1)}
                       >
                         위로
@@ -286,7 +438,11 @@ export function MenuList({ categories }: { categories: AdminMenuCategory[] }) {
                         type="button"
                         variant="neutralWeak"
                         aria-label={item.name + ' 아래로 이동'}
-                        disabled={pending || index === items.length - 1}
+                        disabled={
+                          pending ||
+                          draggingId !== null ||
+                          index === items.length - 1
+                        }
                         onClick={() => move(item.id, index + 1)}
                       >
                         아래로

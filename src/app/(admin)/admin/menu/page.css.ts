@@ -64,6 +64,7 @@ export const status = style({
 });
 
 export const items = style({
+  position: 'relative',
   display: 'grid',
   gap: 8,
   margin: 0,
@@ -72,6 +73,17 @@ export const items = style({
 });
 
 export const item = style({
+  position: 'relative',
+  background: vars.$color.bg.layerDefault,
+  selectors: {
+    '&[data-dragging=true]': {
+      zIndex: 1,
+      pointerEvents: 'none',
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.14)',
+      borderColor: vars.$color.stroke.neutralMuted,
+      cursor: 'grabbing',
+    },
+  },
   display: 'grid',
   gridTemplateColumns: '72px minmax(0, 1fr) auto auto',
   alignItems: 'center',
