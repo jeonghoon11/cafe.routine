@@ -4,22 +4,66 @@ import { redirect } from 'next/navigation';
 
 import { createSupabaseServerClient } from '@/shared/supabase/server';
 
+function getAdminLoginAccounts(): Record<string, string> | null {
+  const configuredAccounts = process.env.ADMIN_LOGIN_ACCOUNTS;
+
+  if (!configuredAccounts) {
+    return null;
+  }
+
+  try {
+    const accounts: unknown = JSON.parse(configuredAccounts);
+
+    if (
+      typeof accounts !== 'object' ||
+      accounts === null ||
+      Array.isArray(accounts) ||
+      Object.keys(accounts).length === 0 ||
+      !Object.values(accounts).every(
+        (email) => typeof email === 'string' && email.trim().length > 0,
+      )
+    ) {
+      return null;
+    }
+
+    return accounts as Record<string, string>;
+  } catch {
+    return null;
+  }
+}
+
 export async function signInAsAdmin(formData: FormData) {
-  const email = formData.get('email');
+  const loginId = formData.get('loginId');
   const password = formData.get('password');
 
   if (
-    typeof email !== 'string' ||
+    typeof loginId !== 'string' ||
     typeof password !== 'string' ||
-    !email.trim() ||
+    !loginId.trim() ||
+    loginId.trim().length > 64 ||
     !password
   ) {
     redirect('/admin/login?error=invalid');
   }
 
+  const accounts = getAdminLoginAccounts();
+
+  if (!accounts) {
+    redirect('/admin/login?error=unavailable');
+  }
+
+  const normalizedId = loginId.trim();
+  const email = Object.hasOwn(accounts, normalizedId)
+    ? accounts[normalizedId].trim()
+    : null;
+
+  if (!email) {
+    redirect('/admin/login?error=invalid');
+  }
+
   const supabase = await createSupabaseServerClient();
   const { error: signInError } = await supabase.auth.signInWithPassword({
-    email: email.trim(),
+    email,
     password,
   });
 

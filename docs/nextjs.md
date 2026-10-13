@@ -1,6 +1,6 @@
 # Next.js App Router
 
-최종 확인일: 2026-08-11
+최종 확인일: 2026-10-13
 
 대상 버전: Next.js 16.3.0, React 19.2
 
@@ -166,6 +166,12 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
 - 최초 관리자는 Supabase Dashboard에서 Auth user를 만든 뒤
   `private.admin_users`에 등록한다. 일반 회원 가입으로 관리자가 될 수
   없다.
+- 로그인 아이디는 서버 전용 환경 변수 `ADMIN_LOGIN_ACCOUNTS`의 JSON
+  object로 기존 Auth 이메일과 연결한다. 아이디는 대소문자를 구분하고
+  앞뒤 공백만 제거한다. 실제 아이디·이메일·비밀번호는 저장소에 기록하지 않는다.
+  예: `ADMIN_LOGIN_ACCOUNTS='{"manager":"existing-account@example.com"}'`.
+  배포 환경과 로컬 환경에 각각 설정하고, 설정 변경 후 서버를 다시 시작한다.
+  비밀번호는 기존 Supabase Auth 계정의 것을 사용한다.
 
 ## 메뉴·가격 관리
 
@@ -208,9 +214,14 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
   Action으로 구현한다.
 - 메뉴 mutation Server Action은 `FormData` 입력 검증 → Auth 검증 → 관리자
   권한 검증 → Supabase mutation → 결과 처리 순서를 지킨다.
-- 로그인은 사전 등록된 Supabase Auth 계정의 이메일·비밀번호를 사용하고,
-  가입 경로는 제공하지 않는다. 로그인 성공 뒤에도 `getClaims()`와
-  `is_admin()` RPC를 확인한다.
+- 로그인 화면은 아이디·비밀번호를 입력받는다. Server Action이
+  `ADMIN_LOGIN_ACCOUNTS`에서 아이디에 연결된 Auth 이메일을 조회하고
+  `signInWithPassword()`로 비밀번호를 검증한다. 매핑을 브라우저 번들이나
+  화면에 전달하지 않는다. 가입 경로는 제공하지 않으며, 로그인 성공 뒤에도
+  `getClaims()`와 `is_admin()` RPC를 확인한다.
+- 등록되지 않은 아이디와 잘못된 비밀번호는 같은 오류로 안내한다.
+  매핑이 없거나 JSON 설정이 잘못되면 인증을 시도하지 않고 일시 이용 불가로
+  안내한다. 아이디 매핑은 관리자 권한을 부여하지 않는다.
 - 관리자 layout과 각 mutation action은 자체적으로 `getClaims()`와
   `is_admin()`을 확인한다. Proxy 검사는 token refresh를 담당하며 권한
   경계가 아니다.

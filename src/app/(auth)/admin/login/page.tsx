@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const loginErrors: Record<string, string> = {
-  invalid: '이메일 또는 비밀번호를 확인해 주세요.',
+  invalid: '아이디 또는 비밀번호를 확인해 주세요.',
   unauthorized: '이 계정은 관리자 권한이 없습니다.',
   unavailable: '로그인 상태를 확인하지 못했습니다. 잠시 뒤 다시 시도해 주세요.',
 };
@@ -44,12 +44,14 @@ export default async function AdminLoginPage({
 
         <form className={styles.form} action={signInAsAdmin}>
           <label className={styles.field}>
-            이메일
+            아이디
             <input
               autoComplete="username"
-              name="email"
-              type="email"
+              name="loginId"
+              type="text"
               autoCapitalize="none"
+              spellCheck={false}
+              maxLength={64}
               required
             />
           </label>
