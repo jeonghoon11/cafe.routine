@@ -33,6 +33,7 @@ export const getMenu = cache(async function getMenu() {
     )
     .eq('is_published', true)
     .eq('menu_items.is_published', true)
+    .eq('menu_items.is_available', true)
     .is('menu_items.deleted_at', null)
     .order('sort_order')
     .order('sort_order', { referencedTable: 'menu_items' })

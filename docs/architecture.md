@@ -43,6 +43,7 @@ src/
 │           ├── _data/get-menu.ts
 │           ├── actions.ts
 │           ├── form.css.ts
+│           ├── menu-list.tsx
 │           ├── menu-form.tsx
 │           ├── page.css.ts
 │           ├── new/page.tsx
@@ -101,6 +102,8 @@ src/
 ## 관리자 메뉴 관리
 
 - `/admin/menu` 페이지는 Server Component에서 전체 메뉴를 조회한다.
+- 이미지 썸네일·순서 편집은 `menu-list.tsx` Client Component가 담당하며,
+  카테고리 안에서 편집 후 명시적으로 저장한다.
 - 추가·수정·삭제는 같은 라우트의 `actions.ts` Server Action으로
   처리한다.
 - `actions.ts`는 입력 검증, Supabase Auth, 관리자 권한, DB 오류,

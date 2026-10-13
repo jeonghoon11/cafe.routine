@@ -16,7 +16,7 @@ export const field = style({
 
 globalStyle(
   form +
-    ' input:not([type=checkbox]), ' +
+    ' input:not([type=checkbox]):not([type=radio]), ' +
     form +
     ' select, ' +
     form +
@@ -36,7 +36,7 @@ globalStyle(
 
 globalStyle(
   form +
-    ' input:not([type=checkbox]):focus-visible, ' +
+    ' input:not([type=checkbox]):not([type=radio]):focus-visible, ' +
     form +
     ' select:focus-visible, ' +
     form +
@@ -102,7 +102,10 @@ globalStyle(states + ' label, .' + confirm, {
 });
 
 globalStyle(
-  states + ' input[type=checkbox], .' + confirm + ' input[type=checkbox]',
+  states +
+    ' input:is([type=checkbox], [type=radio]), .' +
+    confirm +
+    ' input:is([type=checkbox], [type=radio])',
   {
     width: 20,
     height: 20,
@@ -151,4 +154,12 @@ export const deleteButton = style({
   font: 'inherit',
   fontWeight: vars.$fontWeight.bold,
   cursor: 'pointer',
+});
+
+export const imagePreview = style({
+  width: '100%',
+  maxWidth: 320,
+  maxHeight: 320,
+  objectFit: 'contain',
+  borderRadius: vars.$radius.r1,
 });

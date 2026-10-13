@@ -144,8 +144,9 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
 ### `menu_items`
 
 - category ID, 메뉴명, 설명, `price_krw`, media ID, `sort_order`
-- `is_available`로 일시 품절, `is_published`로 공개 여부,
-  `deleted_at`으로 soft delete를 따로 관리한다.
+- 관리자 상태는 판매 중·비공개 두 가지다. 판매 중을 저장하면
+  `is_available`, `is_published`를 함께 true로, 비공개는 함께 false로 저장한다.
+  기존 두 값이 다른 행은 하나라도 false면 숨긴다. `deleted_at`은 soft delete다.
 - `price_krw`는 KRW 원 단위 정수이며 `0 이상` constraint를 둔다.
 - 가격 미정, 시가 메뉴가 실제로 필요하면 nullable 가격과 별도 표시
   규칙을 명시적으로 추가한다.
@@ -239,7 +240,7 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
 ## RLS와 권한
 
 - exposed `public` schema의 모든 table에 RLS를 켠다.
-- `anon`에는 `is_published = true and deleted_at is null`인 행의 SELECT만
+- 공개 메뉴 `anon`에는 `is_published = true and is_available = true and deleted_at is null`인 행의 SELECT만
   허용한다.
 - `anon`에 INSERT, UPDATE, DELETE policy를 만들지 않는다.
 - Storage public bucket이어도 upload·delete policy는 별도로 제한한다.
@@ -349,3 +350,28 @@ Supabase·SEO·라우팅 변경은 추가로 확인한다.
 - [Supabase Storage buckets](https://supabase.com/docs/guides/storage/buckets/fundamentals)
 - [Supabase Storage access control](https://supabase.com/docs/guides/storage/security/access-control)
 - [Serving Storage assets](https://supabase.com/docs/guides/storage/serving/downloads)
+
+## 관리자 이미지·순서 편집 (2026-10-13)
+
+- 관리자 목록과 폼에 메뉴 이미지를 표시한다. 추가·변경·제거는 메뉴 저장 시 반영한다.
+- 업로드는 JPG·PNG·WebP, 최대 1MiB(화면 표기 1MB)다. SVG·GIF·AVIF는 받지 않는다.
+  클라이언트 decode 후 width/height를 전달하고 서버는 MIME·signature·파일 크기와
+  치수 범위(1..16384, 최대 4천만 픽셀)를 확인한다. 치수는 표시 메타데이터이며
+  서버가 이미지 전체를 decode하지 않는다.
+- multipart 여유를 위해 Server Action 본문 한도는 2MB로 두되 파일 자체는 1MiB다.
+- Storage 새 UUID 경로 업로드 → media_assets insert → 메뉴 연결 순서다.
+  DB 실패 시 이번 요청의 새 asset/object만 정리를 시도한다. 정리 실패는 서버 로그에 남긴다.
+  기존 이미지를 제거·교체할 때는 연결만 해제하고 공용 asset/object는 유지한다.
+- 카테고리 안 비삭제 메뉴(비공개 포함)의 순서는 목록의 ‘순서 편집’에서 변경한다.
+  Pointer Events 손잡이와 위·아래 버튼을 제공하며 ‘순서 저장’이 원자 RPC를 호출한다.
+  취소·저장 실패는 운영 순서를 변경하지 않는다. 순서 편집 중 추가·수정·복구는 막는다.
+- reorder_menu_items RPC는 관리자 권한, 모든 항목 ID 집합, sort_order/updated_at snapshot을
+  확인한다. 삽입·카테고리 이동·복구는 trigger가 카테고리 마지막에 붙인다.
+  같은 카테고리를 잠그지만 일반 UPDATE와 RPC의 잠금 순서가 달라 동시 작업은
+  deadlock으로 하나가 실패할 수 있다. 실패를 안내하고 다시 시도하며 부분 저장은 없다.
+- 공개 메뉴 조회와 RLS가 모두 공개·판매 중·비삭제 조건을 적용한다. migration 적용 전후의
+  공개 상태가 달라질 수 있으므로 운영 적용은 명시 승인을 받아 진행한다.
+
+- 미저장 순서는 링크 이동·로그아웃 submit을 capture 단계에서 확인하고 문서 이탈은
+  beforeunload로 확인한다. 같은 문서의 브라우저 뒤로가기는 native 취소 API가 없어
+  별도 history 조작 없이 차단하지 않는다. 이동 전에 저장·취소해야 한다.

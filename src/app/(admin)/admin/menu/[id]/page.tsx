@@ -33,7 +33,7 @@ export default async function EditMenuPage({ params }: EditMenuPageProps) {
           <Link href="/admin/menu">목록으로</Link>
         </ActionButton>
       </header>
-      <MenuForm categories={categories} item={item} nextSortOrder={0} />
+      <MenuForm categories={categories} item={item} />
     </>
   );
 }

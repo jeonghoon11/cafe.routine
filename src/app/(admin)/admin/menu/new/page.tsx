@@ -8,13 +8,6 @@ import * as styles from '../page.css';
 
 export default async function NewMenuPage() {
   const categories = await getAdminMenu();
-  const nextSortOrder =
-    Math.max(
-      0,
-      ...categories.flatMap((category) =>
-        category.menu_items.map((item) => item.sort_order),
-      ),
-    ) + 1;
 
   return (
     <>
@@ -28,7 +21,7 @@ export default async function NewMenuPage() {
           <Link href="/admin/menu">목록으로</Link>
         </ActionButton>
       </header>
-      <MenuForm categories={categories} nextSortOrder={nextSortOrder} />
+      <MenuForm categories={categories} />
     </>
   );
 }

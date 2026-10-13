@@ -42,6 +42,7 @@ export const categoryHeading = style({
   alignItems: 'center',
   gap: 12,
   marginBottom: 16,
+  flexWrap: 'wrap',
 });
 
 export const categoryTitle = style({
@@ -72,7 +73,7 @@ export const items = style({
 
 export const item = style({
   display: 'grid',
-  gridTemplateColumns: 'minmax(0, 1fr) auto auto',
+  gridTemplateColumns: '72px minmax(0, 1fr) auto auto',
   alignItems: 'center',
   gap: 20,
   padding: '16px 18px',
@@ -80,7 +81,7 @@ export const item = style({
   borderRadius: vars.$radius.r2,
   '@media': {
     [mobile]: {
-      gridTemplateColumns: 'minmax(0, 1fr) auto',
+      gridTemplateColumns: '64px minmax(0, 1fr)',
       gap: 12,
       padding: 16,
     },
@@ -117,12 +118,12 @@ export const editLink = style({
   border: '1px solid ' + vars.$color.stroke.neutralMuted,
   borderRadius: vars.$radius.r1,
   fontWeight: vars.$fontWeight.bold,
-  '@media': { [mobile]: { gridColumn: 2, gridRow: 1 } },
+  '@media': { [mobile]: { gridColumn: '1 / -1' } },
 });
 
 export const restoreForm = style({
   margin: 0,
-  '@media': { [mobile]: { gridColumn: 2, gridRow: 1 } },
+  '@media': { [mobile]: { gridColumn: '1 / -1' } },
 });
 
 export const restoreButton = style({
@@ -165,4 +166,40 @@ export const message = style({
 
 export const error = style({
   color: vars.$color.fg.critical,
+});
+
+export const thumbnail = style({
+  width: 72,
+  height: 72,
+  objectFit: 'cover',
+  borderRadius: vars.$radius.r1,
+  '@media': { [mobile]: { width: 64, height: 64 } },
+});
+export const imageEmpty = style({
+  width: 72,
+  height: 72,
+  display: 'grid',
+  alignContent: 'center',
+  textAlign: 'center',
+  border: '1px solid ' + vars.$color.stroke.neutralWeak,
+  fontSize: vars.$fontSize.t3,
+  color: vars.$color.fg.neutralMuted,
+  '@media': { [mobile]: { width: 64, height: 64 } },
+});
+export const orderControls = style({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 8,
+  '@media': { [mobile]: { gridColumn: '1 / -1' } },
+});
+export const dragHandle = style({ touchAction: 'none', cursor: 'grab' });
+export const listActions = style({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  marginBottom: 24,
+});
+export const help = style({
+  color: vars.$color.fg.neutralMuted,
+  fontSize: vars.$fontSize.t3,
+  lineHeight: 1.5,
 });
