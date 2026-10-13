@@ -107,8 +107,8 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
   cookie를 전달한다.
 - browser client는 realtime, Auth, client mutation 사용처가 생겼을 때만
   추가한다.
-- 관리자 페이지는 `@supabase/ssr`의 server/browser client와 Next.js
-  Proxy로 Auth cookie를 유지한다.
+- 관리자 페이지는 `@supabase/ssr`의 server client와 Next.js Proxy로 Auth
+  cookie를 유지한다. Browser client는 현재 필요하지 않다.
 - Proxy는 token refresh만 담당한다. `/admin` layout은 `getClaims()`로
   서명된 Auth token을 검증하고 관리자 권한을 추가로 확인한다.
 
@@ -204,10 +204,18 @@ import { createPublicSupabaseClient } from '@/shared/supabase/server';
   검사 layout에 둔다.
 - 메뉴 목록은 Server Component가 비공개·품절·삭제 상태를 포함해
   읽는다.
-- 메뉴 추가, 수정, 삭제는 라우트 가까이의 `actions.ts` Server
+- 메뉴 추가, 수정, 삭제와 복구는 라우트 가까이의 `actions.ts` Server
   Action으로 구현한다.
-- 모든 Server Action은 `FormData` 입력 검증 → Auth 검증 → 관리자
+- 메뉴 mutation Server Action은 `FormData` 입력 검증 → Auth 검증 → 관리자
   권한 검증 → Supabase mutation → 결과 처리 순서를 지킨다.
+- 로그인은 사전 등록된 Supabase Auth 계정의 이메일·비밀번호를 사용하고,
+  가입 경로는 제공하지 않는다. 로그인 성공 뒤에도 `getClaims()`와
+  `is_admin()` RPC를 확인한다.
+- 관리자 layout과 각 mutation action은 자체적으로 `getClaims()`와
+  `is_admin()`을 확인한다. Proxy 검사는 token refresh를 담당하며 권한
+  경계가 아니다.
+- 관리자 조회와 mutation은 사용자 session cookie와 publishable key를
+  사용한다. `service_role`은 사용하지 않고, RLS를 DB 최종 권한 경계로 둔다.
 - UI에서 삭제를 누르면 확인 절차 후 `deleted_at`을 설정한다.
   공개 query는 `deleted_at is null`인 행만 읽는다.
 - 복구는 `deleted_at` 초기화로 처리한다. Storage 파일과 DB 행의 영구
@@ -272,7 +280,9 @@ React Query를 거치지 않는다. 도입 시 `QueryClientProvider`는 필요�
   호출하지 않는다.
 - Server Action은 실제 form mutation이 생겼을 때만 사용하고 입력 검증,
   Auth, RLS, 오류 처리를 모두 확인한다.
-- 관리자 화면이 배포되기 전까지만 Supabase Dashboard를 사용한다.
+- 최초 활성 관리자는 Supabase Dashboard에서 Auth 계정을 만든 뒤
+  `private.admin_users`에 등록한다. 관리자 화면이 배포되기 전까지만 메뉴
+  데이터 편집에 Supabase Dashboard를 사용한다.
 
 ## PWA와 404
 
